@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7538749610172905234}
   - component: {fileID: 805502466362378823}
   - component: {fileID: 5482269235666702365}
+  - component: {fileID: 2028106490814087781}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHp: 0
-  CurrentHp: 0
+  CurrentHp: -25
   EnemySprite: {fileID: 5482269235666702364}
   EnemyDataSet:
     oEnemySprite: {fileID: 0}
@@ -155,8 +156,16 @@ MonoBehaviour:
     oEnemyName: 
     MaxHp: 0
     ATK: 0
-  SliderHpObj: {fileID: 3158318128952580528, guid: cbdae99e1cf6424429a0463ba2c32c2a, type: 3}
-  HpSlider: {fileID: 3158318128952580524, guid: cbdae99e1cf6424429a0463ba2c32c2a, type: 3}
-  HpDistancefloat: 0
-  HpDistance: {x: 0, y: 0, z: 0}
-  SliderHpText: {fileID: 3158318128952580527, guid: cbdae99e1cf6424429a0463ba2c32c2a, type: 3}
+--- !u!114 &2028106490814087781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482269235666702366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00200c6dd7946ac498441a0996ffcc2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BasicEnemyPos: {x: 0, y: 0, z: 0}

@@ -28,7 +28,6 @@ public class TurnManager : CSingleton<TurnManager>
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
     public static Action<bool> IsOnAddCard; // 델리게이트, IsFront >> true, IsBack >> false
-    public static Action<bool> IsSpawnEnemy;
     #endregion // 변수
 
     #region 프로퍼티

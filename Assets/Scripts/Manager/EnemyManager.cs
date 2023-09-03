@@ -20,6 +20,8 @@ public class EnemyManager : CSingleton<EnemyManager>
     {
         base.Start();
         RandomEnemyData();
+
+        // TODO : 적 소환 위치 조정 필요, Action사용해서 쉽게 사용하게 수정 예정
         SpawnEnemy();
     }
 

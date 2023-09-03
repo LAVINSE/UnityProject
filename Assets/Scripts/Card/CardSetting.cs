@@ -25,8 +25,6 @@ public class CardSetting : MonoBehaviour
 
     #region 프로퍼티
     public PRS OriginPRS { get; set; } // 유틸 함수를 이용한 Position, Rotation, Scale
-    public CardData.oCardType CardType { get; set; } // 카드 타입
-    public CardData.oCardEffect CardEffect { get; set; } // 카드 효과 타입
     public CardData CardSettingData => oCardData;
     #endregion // 프로퍼티
 
@@ -81,8 +79,6 @@ public class CardSetting : MonoBehaviour
             CardDesText.text = this.oCardData.CardDesc;
             CardAttackText.text = this.oCardData.CardAttack.ToString();
             CardCostText.text = this.oCardData.CardCost.ToString();
-            CardType = this.oCardData.CardType;
-            CardEffect = this.oCardData.CardEffect;
         }
         else if(this.IsFront == false)
         {

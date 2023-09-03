@@ -102,10 +102,6 @@ public class GameManager : CSingleton<GameManager>
         {
             TurnManager.Inst.NextTurn();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            TurnManager.IsSpawnEnemy?.Invoke(true);
-        }
     }
 
     /** 게임을 시작한다 */

@@ -314,7 +314,7 @@ public class CardManager : CSingleton<CardManager>
             // 카드 코스트 만큼 현재 코스트 감소
             oPlayerData.oCurrentCost -= SelectCard.CardSettingData.CardCost;
             // 카드 효과를 사용한다
-            SpellManager.Inst.EffectCardSpawn(SelectCard.CardEffect);
+            SpellManager.Inst.EffectCardSpawn(SelectCard.CardSettingData.CardEffect);
             // 카드를 디스폰 시킨다
             CardDelete();
         }
