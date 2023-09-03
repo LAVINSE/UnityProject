@@ -25,24 +25,6 @@ public class EnemySetting : MonoBehaviour
     #endregion // 프로퍼티
 
     #region 함수
-    /** 초기화 */
-    private void Awake()
-    {
-       
-    }
-
-    /** 초기화 */
-    private void Start()
-    {
-
-    }
-
-    /** 초기화  => 상태를 갱신한다 */
-    private void Update()
-    {
-
-    }
-
     /** 적 데이터를 세팅한다 */
     public void EnemySetup(EnemyDataSetting EnemyDataSetup)
     {
