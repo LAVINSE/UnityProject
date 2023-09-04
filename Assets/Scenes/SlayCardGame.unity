@@ -3511,7 +3511,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerObject: {fileID: 1599921501}
   PlayerSpellRoot: {fileID: 815038582}
-  EnemyObject: {fileID: 5482269235666702366, guid: 30abc60381eb11048af613379ef11ba4, type: 3}
   AttackDamageParticle: {fileID: 3416551679987220853, guid: 3355fa43ef1a0f240946211c6705569c, type: 3}
   MagicCircleSnowParticle: {fileID: 4320646278703886654, guid: 27088102356b2d24782d36e24f818f29, type: 3}
 --- !u!114 &1599921505
