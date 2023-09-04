@@ -226,15 +226,15 @@ public class CardManager : CSingleton<CardManager>
     /** 카드를 움직일 수 있는 상태를 정한다 */
     private void SetECardState()
     {
-        if(TurnManager.Inst.bIsLoading)
+        if(TurnManager.Instacne.bIsLoading)
         {
             CardState = ECardState.NOTHING;
         }
-        else if(!TurnManager.Inst.bIsMyTurn)
+        else if(!TurnManager.Instacne.bIsMyTurn)
         {
             CardState = ECardState.CANMOUSEOVER;
         }
-        else if(TurnManager.Inst.bIsMyTurn)
+        else if(TurnManager.Instacne.bIsMyTurn)
         {
             CardState = ECardState.CANMOUSEDRAG;
         }

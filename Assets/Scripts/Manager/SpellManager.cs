@@ -13,11 +13,6 @@ public class SpellManager : CSingleton<SpellManager>
     #endregion // 프로퍼티
 
     #region 함수 
-    public override void Awake()
-    {
-        base.Awake();
-    }
-
     /** 효과 카드 사용이 되었는지 확인하고 사용한다 */
     public void EffectCardSpawn(CardData.oCardEffect CardEffect)
     {

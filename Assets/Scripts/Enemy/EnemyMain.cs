@@ -6,9 +6,10 @@ using DG.Tweening;
 public class EnemyMain : MonoBehaviour
 {
     #region 변수
-    [SerializeField] private Vector3 BasicEnemyPos;
+    [SerializeField] private Vector3 BasicEnemyPos; // 적 고정 위치
 
     private SpriteRenderer EnemySprite;
+    private EnemySetting oEnemySetting;
     #endregion // 변수
 
     #region 함수
@@ -16,22 +17,24 @@ public class EnemyMain : MonoBehaviour
     private void Awake()
     {
         EnemySprite = GetComponent<SpriteRenderer>();
-        BasicEnemyPos = this.transform.position;
+        oEnemySetting = GetComponent<EnemySetting>();
     }
 
     /** 초기화 >> 접촉했을 때*/
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // 파티클과 접촉 했을 경우
-        if(collision.gameObject.CompareTag("CardSpell"))
+        if(collision.gameObject.CompareTag("Disappear_Type"))
         {
-            StartCoroutine(EnemyHitRender(2.0f, 0.1f));
-            Debug.Log($"{collision.gameObject.name}");
+            StartCoroutine(EnemyHitRender(0.05f));
+            Debug.Log($"{collision.gameObject.name}");        
         }
-        else if(collision.gameObject.CompareTag("CardSpellCirCle"))
+        else if(collision.gameObject.CompareTag("Continuous_Type"))
         {
-            StartCoroutine(EnemyHitRender(4.0f, 1.0f));
-            Debug.Log($"{collision.gameObject.name}");
+            var Particle = collision.gameObject.GetComponent<ParticleSystem>();
+            var ParticleMain = Particle.main;
+            var ParticleDuration = ParticleMain.duration;
+            StartCoroutine(EnemyHitContinuousRender(ParticleDuration, 0.05f));
         }
     }
 
@@ -39,36 +42,40 @@ public class EnemyMain : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         // 파티클과 접촉 했을 경우
-        if (collision.gameObject.CompareTag("CardSpell") || collision.gameObject.CompareTag("CardSpellCirCle"))
+        if (collision.gameObject.CompareTag("Disappear_Type"))
+        {
+            EnemyOriginPos();
+        }
+
+        if(collision.gameObject.CompareTag("Continuous_Type"))
         {
             EnemyOriginPos();
         }
     }
 
     /** 적 피격 효과를 생성한다 */
-    private IEnumerator EnemyHitRender(float CounTimeEnd, float WaitForseconds)
+    private IEnumerator EnemyHitRender(float WaitSeconds)
     {
-        int CountTime = 0;
-        while (CountTime < CounTimeEnd)
+        EnemySprite.color = Color.red;
+        yield return new WaitForSeconds(WaitSeconds);
+        EnemySprite.color = Color.white;
+    }
+
+    /** 파티클 지속시간동안 적 피격 효과를 생성한다 */
+    private IEnumerator EnemyHitContinuousRender(float ParticleTime, float WaitSeconds)
+    {
+        while(ParticleTime > 0)
         {
-            if (CountTime % 2 == 0)
-            {
-                EnemySprite.color = new Color32(255, 255, 255, 90);
-
-            }
-            else
-            {
-                EnemySprite.color = new Color32(255, 255, 255, 180);
-            }
-
-            yield return new WaitForSeconds(WaitForseconds);
-            CountTime++;
+            EnemySprite.color = Color.red;
+            yield return new WaitForSeconds(WaitSeconds);
+            EnemySprite.color = Color.white;
+            yield return new WaitForSeconds(ParticleTime/ ParticleTime);
+            ParticleTime--;
         }
-        EnemySprite.color = new Color(255, 255, 255, 250);
     }
 
     /** 적을 원래 위치로 되돌린다 */
-    private void EnemyOriginPos()
+    public void EnemyOriginPos()
     {
         transform.DOMove(BasicEnemyPos, 0.1f);
     }

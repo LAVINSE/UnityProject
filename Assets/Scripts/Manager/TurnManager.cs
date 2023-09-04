@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnManager : CSingleton<TurnManager>
+public class TurnManager : MonoBehaviour
 {
     private enum ETurnMode
     {
@@ -28,14 +28,22 @@ public class TurnManager : CSingleton<TurnManager>
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
     public static Action<bool> IsOnAddCard; // 델리게이트, IsFront >> true, IsBack >> false
+    public static Action<bool> IsSpawnEnemy; // 델리게이트, IsFront >> true, IsBack >> false
     #endregion // 변수
 
     #region 프로퍼티
     public bool bIsLoading => IsLoading;
     public bool bIsMyTurn => IsMyTurn;
+    public static TurnManager Instacne { get; private set; }
     #endregion // 프로퍼티
 
     #region 함수
+    /** 초기화 */
+    private void Awake()
+    {
+        Instacne = this;
+    }
+
     /** 카드 배분을 관리한다 */
     private void GameSetup()
     {
@@ -73,6 +81,9 @@ public class TurnManager : CSingleton<TurnManager>
             yield return oDelay;
             IsOnAddCard?.Invoke(IsFrontCard);
         }
+
+        // TODO : 적 출현 이펙트 추가 예정
+        IsSpawnEnemy(true);
 
         // 카드 배분이 끝나면
         StartCoroutine(StartTurnCo());

@@ -23,7 +23,7 @@ public class CardData
 
     public Sprite CardSprite; // 카드 이미지
     public string CardName; // 카드 이름
-    public int CardAttack; // 카드 공격력
+    public float CardAttack; // 카드 공격력
     public int CardCost; // 카드 코스트 
     public int CardCount; // 카드 수
     public oCardType CardType = oCardType.NONE; // 카드 타입

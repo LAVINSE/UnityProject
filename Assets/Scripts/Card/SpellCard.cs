@@ -14,24 +14,12 @@ public class SpellCard : MonoBehaviour
     [SerializeField] private GameObject PlayerObject; // 플레이어 오브젝트
     [SerializeField] private GameObject PlayerSpellRoot; // 플레이어 스펠위치 오브젝트
 
-    [Header("=====> Enemy <=====")]
-    [SerializeField] private EnemySetting oEnemyDataSetting; // 적 데이터를 가져오는 변수  
-    [SerializeField] private GameObject EnemyObject; // 적 오브젝트
-
-
     [Header("=====> 파티클 <=====")]
     [SerializeField] private GameObject AttackDamageParticle;
     [SerializeField] private GameObject MagicCircleSnowParticle;
-
-    private Vector3 ParticleBasicPos;
     #endregion // 변수
 
     #region 함수
-    private void Awake()
-    {
-        ParticleBasicPos = this.transform.position;
-    }
-
     /** 카드 한장을 뽑는다 */
     public void DrawCard()
     {
@@ -41,57 +29,57 @@ public class SpellCard : MonoBehaviour
     /** 카드 기본 공격 */
     public void AttacDamageCard()
     {
+        StopCoroutine(AttackDamage());
         StartCoroutine(AttackDamage());
     }
 
     /** 카드 얼음마법진을 사용한다 */
     public void MagicCircleSnowCard()
     {
+        StopCoroutine(MagicCircleSnow());
         StartCoroutine(MagicCircleSnow());
     }
 
     /** 기본 공격 생성 */
     private IEnumerator AttackDamage()
     {
-        int oCardAttack = CardManager.Inst.SelectCard.CardSettingData.CardAttack;
-        var oParticle = CFactory.CreateCloneObj("AttackDamage", AttackDamageParticle, PlayerSpellRoot,
+        var oCardAttack = CardManager.Inst.SelectCard.CardSettingData.CardAttack;
+        var oParticle = CFactory.CreateCloneObj("Disappear_Type", AttackDamageParticle, PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
+        var EnemyPosition = EnemyManager.Instance.SelectEnemy.transform.position;
 
-        ParticleMove(oParticle, EnemyObject.transform.position, true, 0.2f);
+        ParticleMove(oParticle, EnemyPosition, true, 0.2f);
 
-        // 0.2초 후 데미지 주고 비활성화
         yield return new WaitForSeconds(0.2f);
-
-        oEnemyDataSetting.oCurrentHp -= oCardAttack;
+        EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
 
         Destroy(oParticle);
-        ParticleOriginPos(oParticle);
     }
 
     /** 얼음마법진 생성 */
     private IEnumerator MagicCircleSnow()
     {
         var oCardAttack = CardManager.Inst.SelectCard.CardSettingData.CardAttack;
-        var oParticle = CFactory.CreateCloneObj("MagicCircleSnow", MagicCircleSnowParticle, PlayerSpellRoot,
+        var oParticle = CFactory.CreateCloneObj("Continuous_Type", MagicCircleSnowParticle, PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
-        Vector3 EnemyPos = EnemyObject.transform.position + Vector3.down * 1.3f;
-        int CountTime = 0;
 
+        // 파티클 위치 세팅
+        var EnemyPosition = EnemyManager.Instance.SelectEnemy.transform.position;
+        Vector3 EnemyPos = EnemyPosition + Vector3.down * 1.3f;
+
+        // 파티클 움직이기
         ParticleMove(oParticle, EnemyPos, true, 0.2f);
 
-        // 파티클 실행 후 모션 나오기까지 대기시간
-        yield return new WaitForSeconds(0.5f);
-
         // 4초 동안 지속 피해
+        int CountTime = 0;
         while (CountTime < 4)
         {
-            oEnemyDataSetting.oCurrentHp -= oCardAttack;
+            EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
             yield return new WaitForSeconds(1f);
             CountTime++;
         }
 
         Destroy(oParticle);
-        ParticleOriginPos(oParticle);     
     }
 
     /** 파티클을 두트윈을 사용해 움직인다 */
@@ -105,12 +93,6 @@ public class SpellCard : MonoBehaviour
         {
             ParticleObject.transform.position = EndVector3;
         }
-    }
-
-    /** 파티클을 원래 위치로 되돌린다 */
-    private void ParticleOriginPos(GameObject ParticleObject)
-    {
-        ParticleObject.transform.position = ParticleBasicPos;
     }
     #endregion // 함수
 }

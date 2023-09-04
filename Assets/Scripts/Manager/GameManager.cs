@@ -100,14 +100,14 @@ public class GameManager : CSingleton<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            TurnManager.Inst.NextTurn();
+            TurnManager.Instacne.NextTurn();
         }
     }
 
     /** 게임을 시작한다 */
     public void StartGame()
     {
-        StartCoroutine(TurnManager.Inst.StartGameCo());
+        StartCoroutine(TurnManager.Instacne.StartGameCo());
     }
 
     /** 턴 시작을 알린다 */
