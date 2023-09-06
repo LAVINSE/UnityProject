@@ -10,6 +10,7 @@ public class GameManager : CSingleton<GameManager>
     [SerializeField] private GameObject Popup;
     #endregion // 변수
 
+
     #region 프로퍼티
     public ObjectPoolManager PoolManager { get; private set; } = null;
     #endregion // 프로퍼티
@@ -31,7 +32,7 @@ public class GameManager : CSingleton<GameManager>
         StartGame();
     }
 
-    /** 초기화 */
+    /** 초기화 >> 상태를 갱신한다 */
     public override void Update()
     {
         base.Update();

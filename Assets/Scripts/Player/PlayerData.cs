@@ -54,13 +54,14 @@ public class PlayerData : MonoBehaviour
     #endregion // 프로퍼티
 
     #region 함수
+    /** 초기화 */
     private void Awake()
     {
         CurrentHp = MaxHp; // 현재 체력을 최대 체력과 같게 설정
         CurrentCost = MaxCost; // 현재 코스트를 최대 코스트와 같게 설정
     }
 
-    /** 상태를 갱신한다 */
+    /** 초기화 >> 상태를 갱신한다 */
     private void Update()
     {
 
