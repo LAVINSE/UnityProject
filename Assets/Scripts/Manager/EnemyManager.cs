@@ -4,20 +4,29 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-#region 변수
+    public enum EnemyPeturnRandom
+    {
+        NONE = 0,
+        MAGIC,
+        SL,
+        TL
+    }
+    #region 변수
     [Header("=====> Scriptable Objects <=====")]
     [SerializeField] private EnemyDataMain oEnemyDataMain; // 적 스크립트 테이블
     [SerializeField] private GameObject EnemyPrefab;
     [SerializeField] private GameObject EnemyOriginRoot;
 
     [Header("=====> 인스펙터 확인용 <=====")]
+    [SerializeField] private EnemyPeturnRandom ePeturnRandom;
     [SerializeField] private List<EnemyDataSetting> EnemyBuffer = new List<EnemyDataSetting>(); // 적을 리스트에 넣는다
-
     #endregion // 변수
 
     #region 프로퍼티
     public EnemySetting SelectEnemy { get; set; }
     public static EnemyManager Instance { get; private set; }
+    public EnemyPeturnRandom o_ePeturnRandom => ePeturnRandom;
+    public bool IsEnemyAttackReady { get; private set; } = false;
     #endregion // 프로퍼티
 
     #region 함수
@@ -95,6 +104,43 @@ public class EnemyManager : MonoBehaviour
     public void SeletedEnemy(EnemySetting Enemy)
     {
         SelectEnemy = Enemy;
+    }
+
+    /** 패턴을 선택한다 */
+    public void EnemySelectPeturn()
+    {
+        var Random = RandomPeturnEnum();
+        switch (Random)
+        {
+            case EnemyPeturnRandom.NONE:
+                Debug.Log("없음");
+                ePeturnRandom = EnemyPeturnRandom.NONE;
+                IsEnemyAttackReady = true;
+                break;
+             case EnemyPeturnRandom.MAGIC:
+                Debug.Log("MAGIC");
+                ePeturnRandom = EnemyPeturnRandom.MAGIC;
+                IsEnemyAttackReady = true;
+                break;
+            case EnemyPeturnRandom.SL:
+                Debug.Log("SL");
+                ePeturnRandom = EnemyPeturnRandom.SL;
+                IsEnemyAttackReady = true;
+                break;
+            case EnemyPeturnRandom.TL:
+                Debug.Log("TL");
+                ePeturnRandom = EnemyPeturnRandom.TL;
+                IsEnemyAttackReady = true;
+                break;
+        }
+
+    }
+
+    /** 패턴을 랜덤하게 선택한다 */
+    private EnemyPeturnRandom RandomPeturnEnum()
+    {
+        var EnumValues = System.Enum.GetValues(enumType: typeof(EnemyPeturnRandom));
+        return (EnemyPeturnRandom)EnumValues.GetValue(Random.Range(0, EnumValues.Length));
     }
     #endregion // 함수
 }

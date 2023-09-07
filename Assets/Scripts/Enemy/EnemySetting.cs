@@ -25,6 +25,8 @@ public class EnemySetting : MonoBehaviour
         get => CurrentHp;
         set => CurrentHp = Mathf.Max(0, value);
     }
+
+    public EnemyDataSetting oEnemyDataSet => EnemyDataSet;
     #endregion // 프로퍼티
 
     #region 함수
