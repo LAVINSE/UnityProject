@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -12,11 +14,19 @@ public class EnemyManager : MonoBehaviour
         TL
     }
     #region 변수
-    [Header("=====> Scriptable Objects <=====")]
-    [SerializeField] private EnemyDataMain oEnemyDataMain; // 적 스크립트 테이블
+    [Header("=====> Player Option <=====")]
+    [SerializeField] private PlayerData oPlayerData;
+    [SerializeField] private GameObject oPlayer;
+
+    [Header("=====> Enemy Option <=====")]
+    [SerializeField] private List<GameObject> ParticleObjectList = new List<GameObject>();
     [SerializeField] private GameObject EnemyPrefab;
     [SerializeField] private GameObject EnemyOriginRoot;
+    [SerializeField] private GameObject EnemySpellRoot;
 
+    [Header("=====> Scriptable Objects <=====")]
+    [SerializeField] private EnemyDataMain oEnemyDataMain; // 적 스크립트 테이블
+    
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private EnemyPeturnRandom ePeturnRandom;
     [SerializeField] private List<EnemyDataSetting> EnemyBuffer = new List<EnemyDataSetting>(); // 적을 리스트에 넣는다
@@ -147,27 +157,42 @@ public class EnemyManager : MonoBehaviour
         switch (o_ePeturnRandom)
         {
             case EnemyPeturnRandom.NONE:
+                StopCoroutine(EnemyNonePeturn());
                 StartCoroutine(EnemyNonePeturn());
                 break;
             case EnemyPeturnRandom.MAGIC:
+                StopCoroutine(EnemyMagicPeturn());
                 StartCoroutine(EnemyMagicPeturn());
                 break;
             case EnemyPeturnRandom.SL:
+                StopCoroutine(EnemySLPeturn());
                 StartCoroutine(EnemySLPeturn());
                 break;
             case EnemyPeturnRandom.TL:
+                StopCoroutine(EnemyTLPeturn());
                 StartCoroutine(EnemyTLPeturn());
                 break;
         }
-
-        // 초기화
-        ePeturnRandom = EnemyPeturnRandom.NONE;
     }
 
     /** NONE 패턴을 사용한다 */
     private IEnumerator EnemyNonePeturn()
     {
+        var EnemyATK = SelectEnemy.oEnemyDataSet.ATK;
+        var PlayerPosition = oPlayerData.transform.position;
+
         yield return new WaitForSeconds(3f);
+        var oParticle = CFactory.CreateCloneObj("Disappear_Type", ParticleObjectList[0], EnemySpellRoot,
+                                                Vector3.zero, Vector3.one, Vector3.zero);
+
+        ParticleMove(oParticle, PlayerPosition, true, 0.2f);
+
+        yield return new WaitForSeconds(0.2f);
+        oPlayerData.TakeDamage(EnemyATK);
+        Destroy(oParticle);
+
+        yield return new WaitForSeconds(3f);
+        
         Debug.Log("NONE");
         IsEnemyAttackReady = false;
     }
@@ -194,6 +219,19 @@ public class EnemyManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Debug.Log("TL");
         IsEnemyAttackReady = false;
+    }
+
+    /** 파티클을 두트윈을 사용해 움직인다 */
+    private void ParticleMove(GameObject ParticleObject, Vector3 EndVector3, bool IsDotween, float Time = 0)
+    {
+        if (IsDotween == true)
+        {
+            ParticleObject.transform.DOMove(EndVector3, Time);
+        }
+        else
+        {
+            ParticleObject.transform.position = EndVector3;
+        }
     }
     #endregion // 함수
 }

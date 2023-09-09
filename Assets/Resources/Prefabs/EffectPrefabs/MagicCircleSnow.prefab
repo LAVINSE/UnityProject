@@ -19532,7 +19532,7 @@ GameObject:
   - component: {fileID: -711077433718180201}
   m_Layer: 0
   m_Name: MagicCircleSnow
-  m_TagString: Continuous_Type
+  m_TagString: Player_Continuous_Type
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

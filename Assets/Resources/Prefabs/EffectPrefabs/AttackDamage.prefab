@@ -9773,7 +9773,7 @@ GameObject:
   - component: {fileID: -453696970600875968}
   m_Layer: 0
   m_Name: AttackDamage
-  m_TagString: Disappear_Type
+  m_TagString: Player_Disappear_Type
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -44,7 +44,7 @@ public class SpellCard : MonoBehaviour
     private IEnumerator AttackDamage()
     {
         var oCardAttack = CardManager.Inst.SelectCard.CardSettingData.CardAttack;
-        var oParticle = CFactory.CreateCloneObj("Disappear_Type", AttackDamageParticle, PlayerSpellRoot,
+        var oParticle = CFactory.CreateCloneObj("Player_Disappear_Type", AttackDamageParticle, PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
         var EnemyPosition = EnemyManager.Instance.SelectEnemy.transform.position;
 
@@ -60,7 +60,7 @@ public class SpellCard : MonoBehaviour
     private IEnumerator MagicCircleSnow()
     {
         var oCardAttack = CardManager.Inst.SelectCard.CardSettingData.CardAttack;
-        var oParticle = CFactory.CreateCloneObj("Continuous_Type", MagicCircleSnowParticle, PlayerSpellRoot,
+        var oParticle = CFactory.CreateCloneObj("Player_Continuous_Type", MagicCircleSnowParticle, PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
 
         // 파티클 위치 세팅

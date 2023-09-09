@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Card
-  - Continuous_Type
-  - Disappear_Type
+  - Player_Disappear_Type
+  - Player_Continuous_Type
   layers:
   - Default
   - TransparentFX
