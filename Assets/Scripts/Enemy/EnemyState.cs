@@ -55,6 +55,7 @@ public class EnemyState : MonoBehaviour
         CurrentState = States[(int)NewState];
         CurrentState.EnemyStateEnter(this);
     }
+
     #endregion // 함수
 }
 
@@ -71,16 +72,21 @@ public class EnemyWaitState : State
     /** 적 상태 갱신 */
     public override void EnemyStateUpdate(EnemyState eState)
     {
-        // 적 턴일 경우
-        if (TurnManager.Instacne.bIsMyTurn == false)
+        // 적이 살아있을 경우
+        if (EnemyManager.Instance.IsEnemyAlive == true)
         {
-            Debug.Log("패턴을 선택합니다.");
-            EnemyManager.Instance.EnemySelectPeturn();
-
-            if(EnemyManager.Instance.IsEnemyAttackReady == true)
+            // 적 턴일 경우
+            if (TurnManager.Instacne.bIsMyTurn == false)
             {
+                Debug.Log("패턴을 선택합니다.");
+                EnemyManager.Instance.EnemySelectPeturn();
+
                 eState.EnemyChangeState(EnemyState.eEnemyState.ATTACK);
-            } 
+            }
+        }
+        else
+        {
+            eState.EnemyChangeState(EnemyState.eEnemyState.DIE);
         }
     }
 
@@ -96,18 +102,33 @@ public class EnemyWaitState : State
 public class EnemyAttackState : State
 {
     #region 함수
+    /** 적 상태 시작 */
     public override void EnemyStateEnter(EnemyState eState)
     {
         Debug.Log("공격 시작");
+        EnemyManager.Instance.IsEnemyAttackReady = true;
+        // 적 턴일 경우
+        if (TurnManager.Instacne.bIsMyTurn == false)
+        {
+            // 적이 공격 준비 상태 일 경우
+            if (EnemyManager.Instance.IsEnemyAttackReady == true)
+            {
+                EnemyManager.Instance.EnemyExecutePeturn();
+            }
+        }
     }
 
+    /** 적 상태 갱신 */
     public override void EnemyStateUpdate(EnemyState eState)
     {
-        Debug.Log("공격 갱신");
-        var o = EnemyManager.Instance.o_ePeturnRandom;
-        Debug.Log($"{o}");
+        if(EnemyManager.Instance.IsEnemyAttackReady == false)
+        {
+            eState.EnemyChangeState(EnemyState.eEnemyState.WAIT);
+            TurnManager.Instacne.NextTurn();
+        }
     }
 
+    /** 적 상태 종료 */
     public override void EnemyStateExit(EnemyState eState)
     {
         Debug.Log("공격 종료");
@@ -119,17 +140,20 @@ public class EnemyAttackState : State
 public class EnemyDieState : State
 {
     #region 함수
+    /** 적 상태 시작 */
     public override void EnemyStateEnter(EnemyState eState)
     {
         Debug.Log("죽음 시작");
     }
 
+    /** 적 상태 갱신 */
     public override void EnemyStateUpdate(EnemyState eState)
     {
         Debug.Log("죽음 갱신");
         eState.EnemyChangeState(EnemyState.eEnemyState.WAIT);
     }
 
+    /** 적 상태 종료 */
     public override void EnemyStateExit(EnemyState eState)
     {
         Debug.Log("죽음 종료");

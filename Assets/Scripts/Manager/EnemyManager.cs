@@ -26,7 +26,9 @@ public class EnemyManager : MonoBehaviour
     public EnemySetting SelectEnemy { get; set; }
     public static EnemyManager Instance { get; private set; }
     public EnemyPeturnRandom o_ePeturnRandom => ePeturnRandom;
-    public bool IsEnemyAttackReady { get; private set; } = false;
+    public bool IsEnemyAttackReady { get; set; } = false;
+    public bool IsEnemyAlive { get; set; } = true;
+    public bool IsPeturn { get; set; } = false;
     #endregion // 프로퍼티
 
     #region 함수
@@ -115,22 +117,18 @@ public class EnemyManager : MonoBehaviour
             case EnemyPeturnRandom.NONE:
                 Debug.Log("없음");
                 ePeturnRandom = EnemyPeturnRandom.NONE;
-                IsEnemyAttackReady = true;
                 break;
              case EnemyPeturnRandom.MAGIC:
                 Debug.Log("MAGIC");
                 ePeturnRandom = EnemyPeturnRandom.MAGIC;
-                IsEnemyAttackReady = true;
                 break;
             case EnemyPeturnRandom.SL:
                 Debug.Log("SL");
                 ePeturnRandom = EnemyPeturnRandom.SL;
-                IsEnemyAttackReady = true;
                 break;
             case EnemyPeturnRandom.TL:
                 Debug.Log("TL");
                 ePeturnRandom = EnemyPeturnRandom.TL;
-                IsEnemyAttackReady = true;
                 break;
         }
 
@@ -141,6 +139,61 @@ public class EnemyManager : MonoBehaviour
     {
         var EnumValues = System.Enum.GetValues(enumType: typeof(EnemyPeturnRandom));
         return (EnemyPeturnRandom)EnumValues.GetValue(Random.Range(0, EnumValues.Length));
+    }
+
+    /** 패턴을 사용한다 */
+    public void EnemyExecutePeturn()
+    {
+        switch (o_ePeturnRandom)
+        {
+            case EnemyPeturnRandom.NONE:
+                StartCoroutine(EnemyNonePeturn());
+                break;
+            case EnemyPeturnRandom.MAGIC:
+                StartCoroutine(EnemyMagicPeturn());
+                break;
+            case EnemyPeturnRandom.SL:
+                StartCoroutine(EnemySLPeturn());
+                break;
+            case EnemyPeturnRandom.TL:
+                StartCoroutine(EnemyTLPeturn());
+                break;
+        }
+
+        // 초기화
+        ePeturnRandom = EnemyPeturnRandom.NONE;
+    }
+
+    /** NONE 패턴을 사용한다 */
+    private IEnumerator EnemyNonePeturn()
+    {
+        yield return new WaitForSeconds(3f);
+        Debug.Log("NONE");
+        IsEnemyAttackReady = false;
+    }
+
+    /** Magic 패턴을 사용한다 */
+    private IEnumerator EnemyMagicPeturn()
+    {
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Magic");
+        IsEnemyAttackReady = false;
+    }
+
+    /** SL 패턴을 사용한다 */
+    private IEnumerator EnemySLPeturn()
+    {
+        yield return new WaitForSeconds(3f);
+        Debug.Log("SL");
+        IsEnemyAttackReady = false;
+    }
+
+    /** TL 패턴을 사용한다 */
+    private IEnumerator EnemyTLPeturn()
+    {
+        yield return new WaitForSeconds(3f);
+        Debug.Log("TL");
+        IsEnemyAttackReady = false;
     }
     #endregion // 함수
 }
