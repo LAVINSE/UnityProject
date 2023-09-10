@@ -6,7 +6,6 @@ public class SliderPositionAuto : MonoBehaviour
 {
     #region 변수
     private Vector3 oDistance;
-
     private Transform targetTransform;
     private RectTransform oRectTransform;
     #endregion // 변수

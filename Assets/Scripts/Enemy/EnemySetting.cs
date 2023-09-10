@@ -20,6 +20,12 @@ public class EnemySetting : MonoBehaviour
     #endregion // 변수
 
     #region 프로퍼티
+    public float oMaxHp
+    {
+        get => MaxHp;
+        set => MaxHp = Mathf.Max(0, value);
+    }
+
     public float oCurrentHp
     {
         get => CurrentHp;

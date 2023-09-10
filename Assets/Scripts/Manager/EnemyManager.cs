@@ -24,6 +24,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject EnemyOriginRoot;
     [SerializeField] private GameObject EnemySpellRoot;
 
+    [Header("=====> Enemy UI <=====")]
+    [SerializeField] private GameObject EnemyHpSlider;
+    [SerializeField] private Transform CanvasTransform;
+    [SerializeField] private Vector3 Distance;
+
     [Header("=====> Scriptable Objects <=====")]
     [SerializeField] private EnemyDataMain oEnemyDataMain; // 적 스크립트 테이블
     
@@ -79,6 +84,7 @@ public class EnemyManager : MonoBehaviour
                                             Vector3.zero, Vector3.one, Vector3.zero);
         var EnemyComponent = Enemy.GetComponent<EnemySetting>();
         EnemyComponent.EnemySetup(SpawnReadyEnemy());
+        CreateEnemyHpSlider(Enemy);
     }
 
     /** 적을 선택해 소환할 준비를 한다 */
@@ -116,6 +122,17 @@ public class EnemyManager : MonoBehaviour
     public void SeletedEnemy(EnemySetting Enemy)
     {
         SelectEnemy = Enemy;
+    }
+
+    /** 적 HpSlider 생성한다 */
+    private void CreateEnemyHpSlider(GameObject Enemy)
+    {
+        var HpSlider = CFactory.CreateCloneObj("EnemyHpSlider", EnemyHpSlider, null,
+                                            Vector3.zero, Vector3.one, Vector3.zero);
+        HpSlider.transform.SetParent(CanvasTransform);
+        HpSlider.transform.localScale = Vector3.one;
+        HpSlider.GetComponent<SliderPositionAuto>().Setup(Enemy.transform, Distance);
+        HpSlider.GetComponent<EnemySliderViewer>().Setup(Enemy.GetComponent<EnemySetting>());
     }
 
     /** 패턴을 선택한다 */
