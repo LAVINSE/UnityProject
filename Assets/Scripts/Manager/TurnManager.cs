@@ -27,8 +27,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private PlayerData oPlayerData; // 플레이어 데이터
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
-    public static Action<bool> IsOnAddCard; // 델리게이트, IsFront >> true, IsBack >> false
-    public static Action<bool> IsSpawnEnemy; // 델리게이트, IsFront >> true, IsBack >> false
+    public static Action<bool> IsOnAddCard; // 카드 뽑는 델리게이트
+    public static Action<bool> IsSpawnEnemy; // 적 소환 델리게이트
     #endregion // 변수
 
     #region 프로퍼티
@@ -98,7 +98,7 @@ public class TurnManager : MonoBehaviour
         // 내 턴일 경우
         if(IsMyTurn == true)
         {
-            // FIXME : 나의 턴 이라고 직접 작성하지말고 데이터를 불러와서 대입하는 형식으로 코드 수정해야됨
+            // TODO : 나의 턴 이라고 직접 작성하지말고 데이터를 불러와서 대입하는 형식으로 코드 수정해야됨
             GameManager.Inst.Notification("나의 턴");
 
             yield return oDelay;
@@ -116,6 +116,15 @@ public class TurnManager : MonoBehaviour
     {
         IsMyTurn = !IsMyTurn;
         StartCoroutine(StartTurnCo());
+    }
+
+    /** 턴을 넘기는 버튼을 활성화 한다 */
+    public void ClickNextTurnButton()
+    {
+        if(IsMyTurn == true)
+        {
+            NextTurn();
+        }
     }
     #endregion // 함수
 }
