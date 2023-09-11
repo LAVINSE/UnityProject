@@ -27,6 +27,5 @@ public class SliderPositionAuto : MonoBehaviour
         oDistance = Distance;
         oRectTransform = GetComponent<RectTransform>();
     }
-
     #endregion // 함수
 }

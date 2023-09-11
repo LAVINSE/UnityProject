@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.ParticleSystem;
 using UnityEngine.UIElements;
 
 public class SpellCard : MonoBehaviour

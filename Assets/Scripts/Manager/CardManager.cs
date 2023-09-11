@@ -61,7 +61,7 @@ public class CardManager : CSingleton<CardManager>
     public override void Update()
     {
         base.Update();
-
+        
         // 마우스 오른쪽 버튼을 눌렀을 경우
         if (Input.GetMouseButtonDown(1))
         {
@@ -152,7 +152,6 @@ public class CardManager : CSingleton<CardManager>
         CreateCard(CardPrefab, CardOriginRoot, IsFront);
     }
 
-    /** TODO : ObjectPoolManager.DespawnObj로 객체 비활성화 코드 작성 필요 */
     /** 카드를 생성한다 */
     public void CreateCard(GameObject OriginCard, GameObject CardRoot, bool IsFront)
     {
@@ -226,15 +225,15 @@ public class CardManager : CSingleton<CardManager>
     /** 카드를 움직일 수 있는 상태를 정한다 */
     private void SetECardState()
     {
-        if(TurnManager.Instacne.bIsLoading)
+        if(TurnManager.Instacne.bIsLoading == true)
         {
             CardState = ECardState.NOTHING;
         }
-        else if(!TurnManager.Instacne.bIsMyTurn)
+        else if(TurnManager.Instacne.bIsMyTurn == false)
         {
             CardState = ECardState.CANMOUSEOVER;
         }
-        else if(TurnManager.Instacne.bIsMyTurn)
+        else if(TurnManager.Instacne.bIsMyTurn == true)
         {
             CardState = ECardState.CANMOUSEDRAG;
         }
@@ -260,7 +259,7 @@ public class CardManager : CSingleton<CardManager>
             return;
         }
 
-        if(!IsOnMyCardArea)
+        if(!IsOnMyCardArea == true)
         {
             // 마우스 포지션으로 이동하고, 기본 크기, Dotween X
             SelectCard.MoveTransform
@@ -272,7 +271,7 @@ public class CardManager : CSingleton<CardManager>
     public void CardMouseOver(CardSetting Card)
     {
         // 아무것도 할 수 없을 경우
-        if(CardState == ECardState.NOTHING)
+        if (CardState == ECardState.NOTHING)
         {
             // 함수를 종료한다
             return;

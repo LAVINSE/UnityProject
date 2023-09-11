@@ -32,7 +32,7 @@ public class CardSetting : MonoBehaviour
     /** 초기화 >> 마우스를 올렸을 때*/
     private void OnMouseOver()
     {
-        if(IsFront == true)
+        if (IsFront == true)
         {
             CardManager.Inst.CardMouseOver(this);
         }

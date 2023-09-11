@@ -32,8 +32,18 @@ public class TurnManager : MonoBehaviour
     #endregion // 변수
 
     #region 프로퍼티
-    public bool bIsLoading => IsLoading;
-    public bool bIsMyTurn => IsMyTurn;
+    public bool bIsLoading
+    {
+        get => IsLoading;
+        set => IsLoading = value;
+    }
+     
+    public bool bIsMyTurn
+    {
+        get => IsMyTurn;
+        set => IsMyTurn = value;
+    }
+    
     public static TurnManager Instacne { get; private set; }
     #endregion // 프로퍼티
 

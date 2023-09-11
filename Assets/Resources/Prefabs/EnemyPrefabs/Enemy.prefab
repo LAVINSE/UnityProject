@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 805502466362378823}
   - component: {fileID: 5482269235666702365}
   - component: {fileID: 2028106490814087781}
-  - component: {fileID: 128737897799991213}
+  - component: {fileID: 1227654075279266504}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BasicEnemyPos: {x: 5, y: 1.5, z: 0}
---- !u!114 &128737897799991213
+--- !u!114 &1227654075279266504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
