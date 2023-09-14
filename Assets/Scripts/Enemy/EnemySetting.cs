@@ -60,6 +60,23 @@ public class EnemySetting : MonoBehaviour
     public void TakeDamage(float Damage)
     {
         oCurrentHp -= Damage;
+
+        if(CurrentHp <= 0)
+        {
+            EnemyOnDie();
+        }
+    }
+
+    /** 적 죽음 처리를 한다 */
+    private void EnemyOnDie()
+    {
+        // 점수 추가
+
+        // 사망 애니메이션
+        // 아이템 드랍 함수
+
+        // 적 제거
+        Destroy(this.gameObject);
     }
     #endregion // 함수
 }

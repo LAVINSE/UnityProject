@@ -17,8 +17,8 @@ public class CardManager : CSingleton<CardManager>
     }
 
     #region 변수
-    [Header("=====> Scriptable Objects <=====")]
-    [SerializeField] private CardDataMain oCardDataMain; // 카드 스크립트 테이블
+    [Header("=====> 기본 Scriptable Objects <=====")]
+    [SerializeField] private List<CardScirptTable> CardTable = new List<CardScirptTable>(); // 카드 스크립트 테이블
 
     [Header("=====> 카드 <=====")]
     [SerializeField] private GameObject CardPrefab; // 카드 원본 객체
@@ -36,7 +36,7 @@ public class CardManager : CSingleton<CardManager>
     [SerializeField] private PlayerData oPlayerData;
 
     [Header("=====> 인스펙터 확인용 <=====")]
-    [SerializeField] private List<CardData> CardBuffer; // 카드 데이터에 들어있는 카드를 리스트에 넣는다
+    [SerializeField] private List<CardScirptTable> CardBuffer; // 카드 데이터에 들어있는 카드를 리스트에 넣는다
     [SerializeField] private List<CardSetting> DespawnCard; // 사용한 카드를 리스트에 넣는다
 
     private PRS OriginPRS; // 위치,크기,회전을 편리하게 사용하는 변수
@@ -103,7 +103,7 @@ public class CardManager : CSingleton<CardManager>
     }
 
     /** 카드를 뽑을 준비를 한다 */
-    public CardData PopCard()
+    public CardScirptTable PopCard()
     {
         // FIXME : 이미 쓴 카드들에 대한 검사를 하고, 코드 생성
 
@@ -115,7 +115,7 @@ public class CardManager : CSingleton<CardManager>
 
         // 맨 앞에 있는 카드를 뽑는다
         // FIXME : Queue에 넣어서 사용해도됨
-        CardData Data = CardBuffer[0];
+        CardScirptTable Data = CardBuffer[0];
         CardBuffer.RemoveAt(0);
         return Data;
     }
@@ -123,12 +123,12 @@ public class CardManager : CSingleton<CardManager>
     /** oCardData에 있는 카드 데이터를 셔플한다 >> 덱 생성 */
     public void SetupCardBuffer()
     {
-        CardBuffer = new List<CardData>();
+        CardBuffer = new List<CardScirptTable>();
 
         // CardData에 있는 리스트 수 만큼 반복
-        for(int i = 0; i< oCardDataMain.MainData.Length; i++)
+        for(int i = 0; i< CardTable.Count; i++)
         {
-            CardData Data = oCardDataMain.MainData[i];
+            CardScirptTable Data = CardTable[i];
             for(int j = 0; j< Data.CardCount; j++)
             {
                 CardBuffer.Add(Data);
@@ -138,9 +138,9 @@ public class CardManager : CSingleton<CardManager>
         // 중복으로 나오는걸 방지
         for(int i = 0; i< CardBuffer.Count; i++)
         {
-            // 인덱스가 증가함에 따라서 그 인덱스를 순서를 맘대로 선택해서 대입 
+            // 인덱스가 증가함에 따라서 그 인덱스를 순서를 랜덤으로 선택해서 대입 
             int Rand = Random.Range(i, CardBuffer.Count);
-            CardData Temp = CardBuffer[i]; 
+            CardScirptTable Temp = CardBuffer[i]; 
             CardBuffer[i] = CardBuffer[Rand]; 
             CardBuffer[Rand] = Temp;
         }

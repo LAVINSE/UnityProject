@@ -14,19 +14,19 @@ public class SpellManager : CSingleton<SpellManager>
 
     #region 함수 
     /** 효과 카드 사용이 되었는지 확인하고 사용한다 */
-    public void EffectCardSpawn(CardData.oCardEffect CardEffect)
+    public void EffectCardSpawn(CardScirptTable.oCardEffect CardEffect)
     {
         switch(CardEffect)
         {
-            case CardData.oCardEffect.NONE:
+            case CardScirptTable.oCardEffect.NONE:
                 break;
-            case CardData.oCardEffect.DRAWCARD:
+            case CardScirptTable.oCardEffect.DRAWCARD:
                 PlayerSpell.DrawCard();
                 break;
-            case CardData.oCardEffect.ATTACKCARD:
+            case CardScirptTable.oCardEffect.ATTACKCARD:
                 PlayerSpell.AttacDamageCard();
                 break;
-            case CardData.oCardEffect.MagicCircleSnowCard:
+            case CardScirptTable.oCardEffect.MagicCircleSnowCard:
                 PlayerSpell.MagicCircleSnowCard();
                 break;
             default:

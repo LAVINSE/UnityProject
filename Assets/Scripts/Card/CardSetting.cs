@@ -18,14 +18,14 @@ public class CardSetting : MonoBehaviour
     [SerializeField] private Sprite CardBack; // 카드 뒷면
 
     [Header("=====> 카드 셋업 후 보여주는 데이터 <=====")]
-    [SerializeField] private CardData oCardData; // 카드에 담겨있는 내용 확인용 변수
+    [SerializeField] private CardScirptTable oCardData; // 카드에 담겨있는 내용 확인용 변수
 
     private bool IsFront = true; // 앞면, 뒷면 확인용 변수
     #endregion // 변수
 
     #region 프로퍼티
     public PRS OriginPRS { get; set; } // 유틸 함수를 이용한 Position, Rotation, Scale
-    public CardData CardSettingData => oCardData;
+    public CardScirptTable CardSettingData => oCardData;
     #endregion // 프로퍼티
 
     #region 함수
@@ -66,7 +66,7 @@ public class CardSetting : MonoBehaviour
     }
 
     /** 카드를 세팅한다 */
-    public void CardSetup(CardData oCardData, bool IsFront)
+    public void CardSetup(CardScirptTable oCardData, bool IsFront)
     {
         this.oCardData = oCardData;
         this.IsFront = IsFront;
