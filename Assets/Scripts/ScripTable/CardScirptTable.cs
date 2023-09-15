@@ -30,9 +30,6 @@ public class CardScirptTable : ScriptableObject
     public oCardEffect CardEffect = oCardEffect.NONE; // 카드 효과 타입
     public string CardDesc; // 카드 설명
 
-    [Header("=====> Card Drop <=====")]
-    public float CardDropPercent;
-
     [Header("=====> Card Sprite <=====")]
     public Sprite CardSprite; // 카드 이미지
 }

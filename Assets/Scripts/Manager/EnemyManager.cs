@@ -38,8 +38,9 @@ public class EnemyManager : MonoBehaviour
     #endregion // 변수
 
     #region 프로퍼티
-    public EnemySetting SelectEnemy { get; set; }
     public static EnemyManager Instance { get; private set; }
+    public EnemySetting SelectEnemy { get; set; }
+    public GameObject oEnemyHpSlider => EnemyHpSlider;
     public EnemyPeturnRandom o_ePeturnRandom => ePeturnRandom;
     public bool IsEnemyAttackReady { get; set; } = false;
     public bool IsEnemyAlive { get; set; } = true;

@@ -17,6 +17,11 @@ public class EnemySliderViewer : MonoBehaviour
     private void Update()
     {
         EnemyHpViewerUpdate();
+
+        if(EnemyHp.oCurrentHp <= 0)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     /** 체력 정보를 HpSlider에 세팅한다 */

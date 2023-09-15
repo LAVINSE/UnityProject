@@ -18,7 +18,7 @@ public class CardManager : CSingleton<CardManager>
 
     #region 변수
     [Header("=====> 기본 Scriptable Objects <=====")]
-    [SerializeField] private List<CardScirptTable> CardTable = new List<CardScirptTable>(); // 카드 스크립트 테이블
+    [SerializeField] public List<CardScirptTable> CardBasicTableDeck = new List<CardScirptTable>(); // 카드 스크립트 테이블
 
     [Header("=====> 카드 <=====")]
     [SerializeField] private GameObject CardPrefab; // 카드 원본 객체
@@ -47,6 +47,11 @@ public class CardManager : CSingleton<CardManager>
 
     #region 프로퍼티
     public CardSetting SelectCard { get; set; } // 선택된 카드
+    public List<CardScirptTable> oCardBasicTableDeck
+    {
+        get => CardBasicTableDeck;
+        set => CardBasicTableDeck = value;
+    }
     #endregion // 프로퍼티
 
     #region 함수
@@ -126,9 +131,9 @@ public class CardManager : CSingleton<CardManager>
         CardBuffer = new List<CardScirptTable>();
 
         // CardData에 있는 리스트 수 만큼 반복
-        for(int i = 0; i< CardTable.Count; i++)
+        for(int i = 0; i< CardBasicTableDeck.Count; i++)
         {
-            CardScirptTable Data = CardTable[i];
+            CardScirptTable Data = CardBasicTableDeck[i];
             for(int j = 0; j< Data.CardCount; j++)
             {
                 CardBuffer.Add(Data);

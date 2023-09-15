@@ -8,6 +8,7 @@ public class GameManager : CSingleton<GameManager>
     #region 변수
     [SerializeField] private NotificationPanel oNotificationPanel;
     [SerializeField] private GameObject Popup;
+    [SerializeField] private DropUI oDropUI;
     #endregion // 변수
 
 
@@ -83,7 +84,6 @@ public class GameManager : CSingleton<GameManager>
         }
     }
 
-
     /** 치트키 키 입력 */
     private void InputCheatKey()
     {
@@ -115,6 +115,11 @@ public class GameManager : CSingleton<GameManager>
     public void Notification(string Message)
     {
         oNotificationPanel.Show(Message);
+    }
+
+    public void ShowDropUI()
+    {
+        oDropUI.ShowDropUI();
     }
 #endregion // 함수
 }

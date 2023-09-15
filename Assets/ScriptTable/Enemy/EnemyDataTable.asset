@@ -16,15 +16,15 @@ MonoBehaviour:
   - oEnemySprite: {fileID: 21300000, guid: 00648886bd037384eb1d9afb92307fcb, type: 3}
     oEnemyType: 0
     oEnemyName: 1
-    MaxHp: 20
+    MaxHp: 1
     ATK: 1
   - oEnemySprite: {fileID: 21300000, guid: 6dedc8e01c249ed4b8fa6e4f13958caf, type: 3}
     oEnemyType: 1
     oEnemyName: 2
-    MaxHp: 30
+    MaxHp: 1
     ATK: 1
   - oEnemySprite: {fileID: 21300000, guid: f262d2c8fe7a1f04b9ee5440e7674249, type: 3}
     oEnemyType: 2
     oEnemyName: 3
-    MaxHp: 40
+    MaxHp: 1
     ATK: 1

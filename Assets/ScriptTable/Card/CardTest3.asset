@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d2bfd04cfdd168418b567485fa9d823, type: 3}
-  m_Name: CardTest
+  m_Name: CardTest3
   m_EditorClassIdentifier: 
-  CardName: Attack
+  CardName: Upgrade
   CardAttack: 2
   CardCost: 1
   CardCount: 1
   CardType: 0
-  CardEffect: 2
+  CardEffect: 0
   CardDesc: UpgradeCard
-  CardSprite: {fileID: 21300000, guid: 64c280bfad6061940932eac80487131a, type: 3}
+  CardSprite: {fileID: 21300000, guid: 4d3b1edd16a8d274c9d7808deeb1daee, type: 3}

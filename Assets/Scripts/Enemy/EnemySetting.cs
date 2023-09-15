@@ -72,11 +72,13 @@ public class EnemySetting : MonoBehaviour
     {
         // 점수 추가
 
-        // 사망 애니메이션
-        // 아이템 드랍 함수
+        // 드랍 아이템 창 보여주기
+        GameManager.Inst.ShowDropUI();
 
-        // 적 제거
-        Destroy(this.gameObject);
+        // 사망 애니메이션
+
+        // 객체 비활성화
+        this.gameObject.SetActive(false);
     }
     #endregion // 함수
 }
