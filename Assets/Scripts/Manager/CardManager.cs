@@ -138,7 +138,6 @@ public class CardManager : CSingleton<CardManager>
         // 중복으로 나오는걸 방지
         for(int i = 0; i< CardBuffer.Count; i++)
         {
-            // 인덱스가 증가함에 따라서 그 인덱스를 순서를 랜덤으로 선택해서 대입 
             int Rand = Random.Range(i, CardBuffer.Count);
             CardScirptTable Temp = CardBuffer[i]; 
             CardBuffer[i] = CardBuffer[Rand]; 
