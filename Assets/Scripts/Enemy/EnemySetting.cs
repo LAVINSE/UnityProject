@@ -1,4 +1,5 @@
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,6 +18,8 @@ public class EnemySetting : MonoBehaviour
 
     [Header("=====> 적 데이터 셋업 후 보여지는 데이터 <=====")]
     [SerializeField] private EnemyDataSetting EnemyDataSet = null;
+
+    private bool IsEnemyLive = true;
     #endregion // 변수
 
     #region 프로퍼티
@@ -63,6 +66,7 @@ public class EnemySetting : MonoBehaviour
 
         if(CurrentHp <= 0)
         {
+            IsEnemyLive = false;
             EnemyOnDie();
         }
     }
@@ -73,7 +77,10 @@ public class EnemySetting : MonoBehaviour
         // 점수 추가
 
         // 드랍 아이템 창 보여주기
-        GameManager.Inst.ShowDropUI();
+        if (IsEnemyLive == false)
+        {
+            GameManager.Inst.ShowDropUI();
+        }
 
         // 사망 애니메이션
 

@@ -26,6 +26,7 @@ public class EnemyManager : MonoBehaviour
 
     [Header("=====> Enemy UI <=====")]
     [SerializeField] private GameObject EnemyHpSlider;
+    [SerializeField] private GameObject EnemyHpSliderRoot;
     [SerializeField] private Transform CanvasTransform;
     [SerializeField] private Vector3 Distance;
 
@@ -128,9 +129,9 @@ public class EnemyManager : MonoBehaviour
     /** 적 HpSlider 생성한다 */
     private void CreateEnemyHpSlider(GameObject Enemy)
     {
-        var HpSlider = CFactory.CreateCloneObj("EnemyHpSlider", EnemyHpSlider, null,
+        var HpSlider = CFactory.CreateCloneObj("EnemyHpSlider", EnemyHpSlider, EnemyHpSliderRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
-        HpSlider.transform.SetParent(CanvasTransform);
+        //HpSlider.transform.SetParent(CanvasTransform);
         HpSlider.transform.localScale = Vector3.one;
         HpSlider.GetComponent<SliderPositionAuto>().Setup(Enemy.transform, Distance);
         HpSlider.GetComponent<EnemySliderViewer>().Setup(Enemy.GetComponent<EnemySetting>());

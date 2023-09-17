@@ -2,13 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : CSingleton<GameManager>
 {
     #region 변수
     [SerializeField] private NotificationPanel oNotificationPanel;
-    [SerializeField] private GameObject Popup;
-    [SerializeField] private DropUI oDropUI;
+    [SerializeField] private GameObject PopupRoot;
+    [SerializeField] private GameObject DropUIRoot;
+    [SerializeField] private GameObject LeaveButton;
+    [SerializeField] private string OptionTitleText;
     #endregion // 변수
 
 
@@ -37,7 +40,6 @@ public class GameManager : CSingleton<GameManager>
     public override void Update()
     {
         base.Update();
-
         // 옵션 창
         OptionShow();
 
@@ -53,12 +55,12 @@ public class GameManager : CSingleton<GameManager>
         // 계속한다 버튼을 눌렀을 경우
         if(Isbool == true)
         {
-            Debug.Log("Test");
+            // Do Somthing
         }
         // 나가기 버튼을 눌렀을 경우
         else
         {
-            Debug.Log("Test2");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
@@ -68,7 +70,7 @@ public class GameManager : CSingleton<GameManager>
         // Esc 키를 눌렀을 경우
         if (Input.GetKeyDown(KeyCode.Escape) || IsClick == true)
         {
-            var Option = Popup.GetComponentInChildren<OptionPopup>();
+            var Option = PopupRoot.GetComponentInChildren<OptionPopup>();
 
             // 옵션 팝업이 존재 할 경우
             if (Option != null)
@@ -77,11 +79,35 @@ public class GameManager : CSingleton<GameManager>
             }
             else
             {
-                Option = OptionPopup.CreateOptionPopup("테스트", Popup);
+                Option = OptionPopup.CreateOptionPopup(OptionTitleText, PopupRoot);
 
                 Option.PopupShow(OnReceivePopup);
             }
         }
+    }
+
+    /** 드랍 UI를 보여준다 */
+    public void ShowDropUI()
+    {
+        var GetDropUI = DropUIRoot.GetComponentInChildren<DropUI>();
+
+        // 나가기 버튼을 보여준다
+        ActiveLeaveButton();
+
+        // DropUI가 존재하지 않을 경우
+        if (GetDropUI == null)
+        {
+            GetDropUI = DropUI.CreateDropUI(DropUIRoot);
+
+            GetDropUI.DropShow();
+        }
+
+    }
+
+    /** 나가기 버튼을 활성화 한다 */
+    private void ActiveLeaveButton()
+    {
+        LeaveButton.SetActive(true);
     }
 
     /** 치트키 키 입력 */
@@ -116,10 +142,5 @@ public class GameManager : CSingleton<GameManager>
     {
         oNotificationPanel.Show(Message);
     }
-
-    public void ShowDropUI()
-    {
-        oDropUI.ShowDropUI();
-    }
-#endregion // 함수
+    #endregion // 함수
 }

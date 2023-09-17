@@ -55,7 +55,7 @@ public class DropCard : MonoBehaviour
         return Data;
     }
 
-    /** 선택한 카드를 추가한다 */
+    /** 선택한 카드를 기본덱에 추가한다 */
     public void DropCardAdd()
     {
         CardScirptTable Data = CardBuffer[0];

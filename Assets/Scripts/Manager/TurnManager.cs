@@ -25,6 +25,7 @@ public class TurnManager : MonoBehaviour
 
     [Header("=====> 턴 관리자 <=====")]
     [SerializeField] private PlayerData oPlayerData; // 플레이어 데이터
+    [SerializeField] private GameObject DropObject;
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
     public static Action<bool> IsOnAddCard; // 카드 뽑는 델리게이트

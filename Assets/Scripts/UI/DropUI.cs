@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class DropUI : MonoBehaviour
+public class DropUI : Popup
 {
     #region 변수
-    private RectTransform Rect;
+    [SerializeField] private GameObject BackGround = null;
+
     private DropCard[] oDropCard;
     #endregion // 변수
 
@@ -13,12 +15,24 @@ public class DropUI : MonoBehaviour
     /** 초기화 */
     private void Awake()
     {
-        Rect = GetComponent<RectTransform>();
         oDropCard = GetComponentsInChildren<DropCard>();
+        Option_Background_Img = BackGround ;
     }
 
-    /** Ui를 보여준다 */
-    public void ShowDropUI()
+    /** 드랍 UI를 닫는다 */
+    public void DropClose()
+    {
+        base.PopupClose();
+    }
+
+    /** 드랍 UI를 보여준다 */
+    public void DropShow()
+    {
+        base.PopupShow();
+    }
+
+    /** 드랍 초기화를 한다 */
+    private void ResetDrop()
     {
         for(int i=0; i<oDropCard.Length; i++)
         {
@@ -29,28 +43,16 @@ public class DropUI : MonoBehaviour
         {
             oDropCard[i].ShowDropCard();
         }
-
-        Rect.localScale = Vector3.one;
     }
 
-    /** Ui를 숨긴다 */
-    public void HideDropUI()
+    /** 드랍 UI를 생성한다 */
+    public static DropUI CreateDropUI(GameObject DropUIRoot)
     {
-        Rect.localScale = Vector3.zero;
-    }
-
-    /** 인스펙터 우클릭 크기 조절을 생성한다 */
-    [ContextMenu("ScaleZero")]
-    private void ScaleZero()
-    {
-        transform.localScale = Vector3.zero;
-    }
-
-    /** 인스펙터 우클릭 크기 조절을 생성한다 */
-    [ContextMenu("ScaleOne")]
-    private void ScaleOne()
-    {
-        transform.localScale = Vector3.one;
+        var CreateDrop = CFactory.CreateCloneObj<DropUI>("DropUI",
+            Resources.Load<GameObject>("Prefabs/UiPrefabs/DropItem_UI"), DropUIRoot,
+            Vector3.zero, Vector3.one, Vector3.zero);
+        CreateDrop.ResetDrop();
+        return CreateDrop;
     }
     #endregion // 함수
 }

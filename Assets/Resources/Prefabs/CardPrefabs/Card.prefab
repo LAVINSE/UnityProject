@@ -487,15 +487,7 @@ MonoBehaviour:
   CardDesText: {fileID: 2902131409516955016}
   CardFront: {fileID: 657332151, guid: 245825d89f4dec240b7e13493c9c8511, type: 3}
   CardBack: {fileID: 425695817, guid: 245825d89f4dec240b7e13493c9c8511, type: 3}
-  oCardData:
-    CardSprite: {fileID: 0}
-    CardName: 
-    CardAttack: 0
-    CardCost: 0
-    CardCount: 0
-    CardType: 0
-    CardEffect: 0
-    CardDesc: 
+  oCardData: {fileID: 0}
 --- !u!114 &3090573264529754732
 MonoBehaviour:
   m_ObjectHideFlags: 0
