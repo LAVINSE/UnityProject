@@ -7,7 +7,7 @@ using DG.Tweening;
 using Random = UnityEngine.Random;
 
 /** 싱글톤 적용 */
-public class CardManager : CSingleton<CardManager>
+public class CardManager : MonoBehaviour
 {
     private enum ECardState
     { 
@@ -17,9 +17,6 @@ public class CardManager : CSingleton<CardManager>
     }
 
     #region 변수
-    [Header("=====> 기본 Scriptable Objects <=====")]
-    [SerializeField] public List<CardScirptTable> CardBasicTableDeck = new List<CardScirptTable>(); // 카드 스크립트 테이블
-
     [Header("=====> 카드 <=====")]
     [SerializeField] private GameObject CardPrefab; // 카드 원본 객체
     [SerializeField] private GameObject CardOriginRoot; // 카드가 오브젝트 하위에 생성될 위치
@@ -34,6 +31,7 @@ public class CardManager : CSingleton<CardManager>
 
     [Header("=====> 플레이어 데이터 <=====")]
     [SerializeField] private PlayerData oPlayerData;
+    [SerializeField] private SpellCard PlayerSpellCard;
 
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private List<CardScirptTable> CardBuffer; // 카드 데이터에 들어있는 카드를 리스트에 넣는다
@@ -46,27 +44,21 @@ public class CardManager : CSingleton<CardManager>
     #endregion // 변수
 
     #region 프로퍼티
+    public static CardManager Instance { get; private set; }
     public CardSetting SelectCard { get; set; } // 선택된 카드
-    public List<CardScirptTable> oCardBasicTableDeck
-    {
-        get => CardBasicTableDeck;
-        set => CardBasicTableDeck = value;
-    }
     #endregion // 프로퍼티
 
     #region 함수
     /** 초기화 */
-    public override void Awake()
+    private void Awake()
     {
-        base.Awake();
         oCardPanel = GetComponent<CardPanel>();
+        Instance = this;
     }
 
     /** 초기화 >> 상태를 갱신한다 */
-    public override void Update()
-    {
-        base.Update();
-        
+    private void Update()
+    {       
         // 마우스 오른쪽 버튼을 눌렀을 경우
         if (Input.GetMouseButtonDown(1))
         {
@@ -93,25 +85,21 @@ public class CardManager : CSingleton<CardManager>
     }
 
     /** 초기화 */
-    public override void Start()
+    private void Start()
     {
-        base.Start();
         SetupCardBuffer();
         TurnManager.IsOnAddCard += AddCard;
     }
 
     /** 초기화 >> 제거 되었을 경우 */
-    public override void OnDestroy()
+    private void OnDestroy()
     {
-        base.OnDestroy();
         TurnManager.IsOnAddCard -= AddCard;
     }
 
     /** 카드를 뽑을 준비를 한다 */
     public CardScirptTable PopCard()
     {
-        // FIXME : 이미 쓴 카드들에 대한 검사를 하고, 코드 생성
-
         // 카드 데이터 리스트에 아무것도 없다면
         if (CardBuffer.Count == 0)
         {
@@ -131,9 +119,9 @@ public class CardManager : CSingleton<CardManager>
         CardBuffer = new List<CardScirptTable>();
 
         // CardData에 있는 리스트 수 만큼 반복
-        for(int i = 0; i< CardBasicTableDeck.Count; i++)
+        for(int i = 0; i< CardDeck.Instance.oCardBasicTableDeck.Count; i++)
         {
-            CardScirptTable Data = CardBasicTableDeck[i];
+            CardScirptTable Data = CardDeck.Instance.oCardBasicTableDeck[i];
             for(int j = 0; j< Data.CardCount; j++)
             {
                 CardBuffer.Add(Data);
@@ -317,7 +305,7 @@ public class CardManager : CSingleton<CardManager>
             // 카드 코스트 만큼 현재 코스트 감소
             oPlayerData.oCurrentCost -= SelectCard.CardSettingData.CardCost;
             // 카드 효과를 사용한다
-            SpellManager.Inst.EffectCardSpawn(SelectCard.CardSettingData.CardEffect);
+            PlayerSpellCard.EffectCardSpawn(SelectCard.CardSettingData.CardEffect);
             // 카드를 디스폰 시킨다
             CardDelete();
         }
@@ -392,7 +380,7 @@ public class CardManager : CSingleton<CardManager>
     /** 사용한 카드를 디스폰 시킨다 */
     public void CardDespawn()
     {
-        GameManager.Inst.PoolManager.DeSpawnObj<CardSetting>(SelectCard.gameObject, CompleteDespawn);
+        GameManager.Instance.PoolManager.DeSpawnObj<CardSetting>(SelectCard.gameObject, CompleteDespawn);
     }
 
     /** 카드 비활성화가 완료 되었을 경우 */
@@ -404,7 +392,7 @@ public class CardManager : CSingleton<CardManager>
     /** 카드 오브젝트 풀링 */
     private CardSetting CardObjectPool(GameObject OriginCard, GameObject CardRoot)
     {
-        var Card = GameManager.Inst.PoolManager.SpawnObj<CardSetting>(() =>
+        var Card = GameManager.Instance.PoolManager.SpawnObj<CardSetting>(() =>
         {
             return CFactory.CreateCloneObj("Card", OriginCard, CardRoot, Vector3.zero, Vector3.one, Vector3.zero);
         }) as GameObject;

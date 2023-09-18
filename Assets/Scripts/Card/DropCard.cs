@@ -17,6 +17,7 @@ public class DropCard : MonoBehaviour
     [SerializeField] private TMP_Text Card_Attack;
     [SerializeField] private TMP_Text Card_Cost;
 
+    [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField]private List<CardScirptTable> CardBuffer = new List<CardScirptTable>();
     #endregion // 변수
 
@@ -60,7 +61,7 @@ public class DropCard : MonoBehaviour
     {
         CardScirptTable Data = CardBuffer[0];
         CardBuffer.RemoveAt(0);
-        CardManager.Inst.oCardBasicTableDeck.Add(Data);
+        CardDeck.Instance.oCardBasicTableDeck.Add(Data);
     }
 
     /** 카드버퍼를 초기화 한다 */
@@ -68,5 +69,7 @@ public class DropCard : MonoBehaviour
     {
         CardBuffer.Clear();
     }
+
+    // 게임이 끝났을 때 버퍼초기화, 함수 구현해야됨
     #endregion // 함수
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CardPanel : CSingleton<CardPanel>
+public class CardPanel : MonoBehaviour
 {
     #region 변수
     [Header("=====> 카드 패널 정보 <=====")]
@@ -24,7 +24,7 @@ public class CardPanel : CSingleton<CardPanel>
     public void CardInfoPanelTrue()
     {
         // 선택된 카드가 있을 경우
-        if (CardManager.Inst.SelectCard != null)
+        if (CardManager.Instance.SelectCard != null)
         {
             CardInfoImgPanel.SetActive(true);
             CardPanelSetup();
@@ -41,10 +41,10 @@ public class CardPanel : CSingleton<CardPanel>
     /** 카드 패널 정보를 업데이트 한다 */
     public void CardPanelSetup()
     {
-        CardInfoNameText.text = CardManager.Inst.SelectCard.CardSettingData.CardName;
-        CardInfoATKText.text = "공격력 : " + CardManager.Inst.SelectCard.CardSettingData.CardAttack.ToString();
-        CardInfoCostText.text = "마나 :" + CardManager.Inst.SelectCard.CardSettingData.CardCost.ToString();
-        CardInfoDescText.text = "설명" + "\n" + CardManager.Inst.SelectCard.CardSettingData.CardDesc;
+        CardInfoNameText.text = CardManager.Instance.SelectCard.CardSettingData.CardName;
+        CardInfoATKText.text = "공격력 : " + CardManager.Instance.SelectCard.CardSettingData.CardAttack.ToString();
+        CardInfoCostText.text = "마나 :" + CardManager.Instance.SelectCard.CardSettingData.CardCost.ToString();
+        CardInfoDescText.text = "설명" + "\n" + CardManager.Instance.SelectCard.CardSettingData.CardDesc;
     }
     #endregion // 함수
 }

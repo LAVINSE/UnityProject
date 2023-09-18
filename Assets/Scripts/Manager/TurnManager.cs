@@ -110,7 +110,7 @@ public class TurnManager : MonoBehaviour
         if(IsMyTurn == true)
         {
             // TODO : 나의 턴 이라고 직접 작성하지말고 데이터를 불러와서 대입하는 형식으로 코드 수정해야됨
-            GameManager.Inst.Notification("나의 턴");
+            UIManager.Instance.Notification("나의 턴");
 
             yield return oDelay;
 

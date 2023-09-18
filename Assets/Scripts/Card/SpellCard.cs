@@ -18,6 +18,27 @@ public class SpellCard : MonoBehaviour
     #endregion // 변수
 
     #region 함수
+    /** 효과 카드 사용이 되었는지 확인하고 사용한다 */
+    public void EffectCardSpawn(CardScirptTable.oCardEffect CardEffect)
+    {
+        switch (CardEffect)
+        {
+            case CardScirptTable.oCardEffect.NONE:
+                break;
+            case CardScirptTable.oCardEffect.DRAWCARD:
+                DrawCard();
+                break;
+            case CardScirptTable.oCardEffect.ATTACKCARD:
+                AttacDamageCard();
+                break;
+            case CardScirptTable.oCardEffect.MagicCircleSnowCard:
+                MagicCircleSnowCard();
+                break;
+            default:
+                break;
+        }
+    }
+
     /** 카드 한장을 뽑는다 */
     public void DrawCard()
     {
@@ -41,7 +62,7 @@ public class SpellCard : MonoBehaviour
     /** 기본 공격 생성 */
     private IEnumerator AttackDamage()
     {
-        var oCardAttack = CardManager.Inst.SelectCard.CardSettingData.CardAttack;
+        var oCardAttack = CardManager.Instance.SelectCard.CardSettingData.CardAttack;
         var oParticle = CFactory.CreateCloneObj("Player_Disappear_Type", AttackDamageParticle, PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
         var EnemyPosition = EnemyManager.Instance.SelectEnemy.transform.position;
@@ -57,7 +78,7 @@ public class SpellCard : MonoBehaviour
     /** 얼음마법진 생성 */
     private IEnumerator MagicCircleSnow()
     {
-        var oCardAttack = CardManager.Inst.SelectCard.CardSettingData.CardAttack;
+        var oCardAttack = CardManager.Instance.SelectCard.CardSettingData.CardAttack;
         var oParticle = CFactory.CreateCloneObj("Player_Continuous_Type", MagicCircleSnowParticle, PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonUI : MonoBehaviour
+public class NextButtonUI : MonoBehaviour
 {
     #region 변수
     private Button NextTurnButton;

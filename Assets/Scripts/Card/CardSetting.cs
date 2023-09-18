@@ -34,7 +34,7 @@ public class CardSetting : MonoBehaviour
     {
         if (IsFront == true)
         {
-            CardManager.Inst.CardMouseOver(this);
+            CardManager.Instance.CardMouseOver(this);
         }
     }
 
@@ -43,7 +43,7 @@ public class CardSetting : MonoBehaviour
     {
         if (IsFront == true)
         {
-            CardManager.Inst.CardMouseDown();
+            CardManager.Instance.CardMouseDown();
         }
     }
 
@@ -52,7 +52,7 @@ public class CardSetting : MonoBehaviour
     {
         if (IsFront == true)
         {
-            CardManager.Inst.CardMouseUp();
+            CardManager.Instance.CardMouseUp();
         }
     }
 
@@ -61,7 +61,7 @@ public class CardSetting : MonoBehaviour
     {
         if(IsFront == true)
         {
-            CardManager.Inst.CardMouseExit(this);
+            CardManager.Instance.CardMouseExit(this);
         }
     }
 
