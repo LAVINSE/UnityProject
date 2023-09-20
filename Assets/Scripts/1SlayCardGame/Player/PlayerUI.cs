@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +9,11 @@ public class PlayerUI : MonoBehaviour
 {
     #region 변수
     [Header("=====> Player Hp Slider <=====")]
-    [SerializeField] private GameObject SliderHpObject = null; // 슬라이더 HP 오브젝트
     [SerializeField] private Slider PlayerHpSlider = null; // HP 슬라이더
-    [SerializeField] private TMP_Text PlayerHpText = null; // HP 텍스트
-    [SerializeField] private GameObject PlayerImg = null; // 대상으로 설정할 플레이어
-    [SerializeField] private float HpDistancefloat = 0; // 슬라이더 거리 조정 변수
-    [SerializeField] private Vector3 HpDistance = Vector3.zero; // 플레이어와 HP슬라이더 사이의 거리 
+    [SerializeField] private GameObject PlayerSlider = null; // HP 슬라이더 객체
+    [SerializeField] private TMP_Text PlayerHpSliderText = null; // HP 슬라이더 텍스트
+    [SerializeField] private RectTransform PlayerHpSliderRect = null; // HP 슬라이더 객체
+    [SerializeField] private Vector3 Distance = Vector3.zero;
 
     [Header("=====> Player TopUI <=====")]
     [SerializeField] private TMP_Text PlayerHpTextUI = null; // 상단바 HP 텍스트
@@ -33,23 +33,29 @@ public class PlayerUI : MonoBehaviour
     {
         oPlayerData = GetComponent<PlayerData>();
         IntegratedManaObject.SetActive(true); // 객체 활성화
-        SliderHpObject.SetActive(true); // 객체 활성화
+        PlayerSlider.SetActive(true);
     }
 
     /** 상태를 갱신한다 */
     private void Update()
     {
-        SliderHpObject.GetComponent<SliderPositionAuto>().Setup(PlayerImg.transform, SetupHpSliderDistance());
-        SetUpManaSlider();
-        SetupHpSlider();
-        TopUISetup();
+        if(this.gameObject.activeSelf == true)
+        {
+            SetupHpSlider();
+            SetUpManaSlider();
+            TopUISetup();
+        }  
     }
 
-    /** 체력 슬라이더 위치를 조정한다 */
-    public Vector3 SetupHpSliderDistance()
+    /** 체력 슬라이더를 세팅한다 */
+    private void SetupHpSlider()
     {
-        HpDistance = Vector3.down * HpDistancefloat;
-        return HpDistance;
+        Vector3 ScreenPos = Camera.main.WorldToScreenPoint(this.transform.position);
+        PlayerHpSliderRect.position = ScreenPos + Distance;
+
+        PlayerHpSlider.maxValue = oPlayerData.oMaxHp;
+        PlayerHpSlider.value = oPlayerData.oCurrentHp;
+        PlayerHpSliderText.text = (oPlayerData.oCurrentHp.ToString() + "/" + oPlayerData.oMaxHp.ToString());
     }
 
     /** 마나 슬라이더를 세팅한다 */
@@ -58,14 +64,6 @@ public class PlayerUI : MonoBehaviour
         PlayerManaSlider.maxValue = oPlayerData.oMaxCost;
         PlayerManaSlider.value = oPlayerData.oCurrentCost;
         PlayerManaText.text = (oPlayerData.oCurrentCost.ToString() + "/" + oPlayerData.oMaxCost.ToString());
-    }
-
-    /** 체력 슬라이더를 세팅한다 */
-    private void SetupHpSlider()
-    {
-        PlayerHpSlider.maxValue = oPlayerData.oMaxHp;
-        PlayerHpSlider.value = oPlayerData.oCurrentHp;
-        PlayerHpText.text = (oPlayerData.oCurrentHp.ToString() + "/" + oPlayerData.oMaxHp.ToString());
     }
 
     /** 상단 바 UI를 세팅한다 */
