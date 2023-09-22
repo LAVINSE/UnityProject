@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     #region 변수
     [SerializeField] private List<GameObject> StageUIList = new List<GameObject>();
     [SerializeField] private List<GameObject> StageObjectList = new List<GameObject>();
+
+    [SerializeField] private StageInfo.EnemyType StageEnemyType = StageInfo.EnemyType.NONE;
     #endregion // 변수
 
 
@@ -18,6 +20,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public ObjectPoolManager PoolManager { get; private set; } = null;
     public bool IsGameStart { get; set; } = false;
+
+    public StageInfo.EnemyType oStageEnemyType
+    {
+        get => StageEnemyType;
+        set => StageEnemyType = value;
+    }
     #endregion // 프로퍼티
 
     #region 함수
@@ -41,7 +49,7 @@ public class GameManager : MonoBehaviour
         if (IsGameStart == true)
         {
             // 게임을 시작한다
-            StartGame();
+            StartGame(oStageEnemyType);
             IsGameStart = false;
         }
 
@@ -73,9 +81,9 @@ public class GameManager : MonoBehaviour
     }
 
     /** 게임을 시작한다 */
-    public void StartGame()
+    public void StartGame(StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        StartCoroutine(TurnManager.Instacne.StartGameCo());
+        StartCoroutine(TurnManager.Instacne.StartGameCo(StageEnemyTypeInfo));
     }
 
     /** 게임 스테이지UI를 활성화 한다 */

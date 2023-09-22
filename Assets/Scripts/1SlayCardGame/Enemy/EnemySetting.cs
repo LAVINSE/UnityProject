@@ -17,7 +17,7 @@ public class EnemySetting : MonoBehaviour
     [SerializeField] private Vector3 EnemyScale; // 적 크기
 
     [Header("=====> 적 데이터 셋업 후 보여지는 데이터 <=====")]
-    [SerializeField] private EnemyDataSetting EnemyDataSet = null;
+    [SerializeField] private EnemyBasicData EnemyDataSet = null;
 
     private bool IsEnemyLive = true;
     #endregion // 변수
@@ -35,7 +35,7 @@ public class EnemySetting : MonoBehaviour
         set => CurrentHp = Mathf.Max(0, value);
     }
 
-    public EnemyDataSetting oEnemyDataSet => EnemyDataSet;
+    public EnemyBasicData oEnemyDataSet => EnemyDataSet;
     #endregion // 프로퍼티
 
     #region 함수
@@ -46,7 +46,7 @@ public class EnemySetting : MonoBehaviour
     }
 
     /** 적 데이터를 세팅한다 */
-    public void EnemySetup(EnemyDataSetting EnemyDataSetup)
+    public void EnemySetup(EnemyBasicData EnemyDataSetup)
     {
         this.EnemyDataSet = EnemyDataSetup;
 

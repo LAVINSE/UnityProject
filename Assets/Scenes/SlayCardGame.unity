@@ -433,6 +433,7 @@ MonoBehaviour:
   - {fileID: 1625034779}
   StageObjectList:
   - {fileID: 1263256237}
+  StageEnemyType: 0
 --- !u!1 &95081180
 GameObject:
   m_ObjectHideFlags: 0
@@ -4438,7 +4439,9 @@ MonoBehaviour:
   EnemyHpSliderRoot: {fileID: 1161021325}
   CanvasTransform: {fileID: 1879663357}
   Distance: {x: 0, y: -180, z: 0}
-  oEnemyDataMain: {fileID: 11400000, guid: d4be3593145fc8441a60e35f53758d06, type: 2}
+  EnemyNormal: {fileID: 11400000, guid: 6bb2eec59bbf7074f925c8fe7ca71332, type: 2}
+  EnemyElite: {fileID: 11400000, guid: fa33d2ca84f8aab4faf995c13deb9d73, type: 2}
+  EnemyBoss: {fileID: 11400000, guid: ad9ab6a9e26e9ea49adef69a640601aa, type: 2}
   ePeturnRandom: 0
   EnemyBuffer: []
 --- !u!1 &1268171790
@@ -6235,10 +6238,13 @@ MonoBehaviour:
   StageInfoArray:
   - StageInfoName: Test_1
     StageInfoImg: {fileID: 21300000, guid: 49999b4f86fcb0a4497ceddb45351b2d, type: 3}
+    StageEnemyType: 0
   - StageInfoName: Test_2
     StageInfoImg: {fileID: 21300000, guid: fa6f026564881004e96dbe8f8adbdc49, type: 3}
+    StageEnemyType: 1
   - StageInfoName: Test_3
     StageInfoImg: {fileID: 21300000, guid: be98ba8dc7c79ee42862dfde3ac065c4, type: 3}
+    StageEnemyType: 2
   StageNameText: {fileID: 559123082}
   StageImg: {fileID: 572861574}
 --- !u!1 &1743662559

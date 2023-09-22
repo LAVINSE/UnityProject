@@ -31,11 +31,13 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Vector3 Distance;
 
     [Header("=====> Scriptable Objects <=====")]
-    [SerializeField] private EnemyDataMain oEnemyDataMain; // 적 스크립트 테이블
+    [SerializeField] private EnemyBasic EnemyNormal; // 적 스크립트 테이블
+    [SerializeField] private EnemyBasic EnemyElite; // 적 스크립트 테이블
+    [SerializeField] private EnemyBasic EnemyBoss; // 적 스크립트 테이블
     
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private EnemyPeturnRandom ePeturnRandom;
-    [SerializeField] private List<EnemyDataSetting> EnemyBuffer = new List<EnemyDataSetting>(); // 적을 리스트에 넣는다
+    [SerializeField] private List<EnemyBasicData> EnemyBuffer = new List<EnemyBasicData>(); // 적을 리스트에 넣는다
     #endregion // 변수
 
     #region 프로퍼티
@@ -58,7 +60,6 @@ public class EnemyManager : MonoBehaviour
     /** 초기화 */
     private void Start()
     {
-        RandomEnemyData();
         TurnManager.IsSpawnEnemy += SpawnEnemy;
     }
 
@@ -69,52 +70,60 @@ public class EnemyManager : MonoBehaviour
     }
 
     /** 적을 소환한다 */
-    private void SpawnEnemy(bool IsCreateEnemy = true)
+    private void SpawnEnemy(StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        CreateEnemy(EnemyPrefab, EnemyOriginRoot, IsCreateEnemy);
+        CreateEnemy(EnemyPrefab, EnemyOriginRoot, StageEnemyTypeInfo);
     }
 
     /** 적을 생성한다 */
-    private void CreateEnemy(GameObject EnemyPrefab, GameObject EnemyRoot, bool IsCreateEnemy = true)
+    private void CreateEnemy(GameObject EnemyPrefab, GameObject EnemyRoot, StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        if(IsCreateEnemy == false)
-        {
-            return;
-        }
-
         var Enemy = CFactory.CreateCloneObj("Enemy", EnemyPrefab, EnemyRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
         var EnemyComponent = Enemy.GetComponent<EnemySetting>();
-        EnemyComponent.EnemySetup(SpawnReadyEnemy());
+        EnemyComponent.EnemySetup(SpawnReadyEnemy(StageEnemyTypeInfo));
         CreateEnemyHpSlider(Enemy);
     }
 
     /** 적을 선택해 소환할 준비를 한다 */
-    private EnemyDataSetting SpawnReadyEnemy()
+    private EnemyBasicData SpawnReadyEnemy(StageInfo.EnemyType StageEnemyTypeInfo)
     {
         if(EnemyBuffer.Count == 0)
         {
-            RandomEnemyData();
+            switch (StageEnemyTypeInfo)
+            {
+                case StageInfo.EnemyType.NORMAL:
+                    RandomEnemyData(EnemyNormal);
+                    break;
+                case StageInfo.EnemyType.ELITE:
+                    RandomEnemyData(EnemyElite);
+                    break;
+                case StageInfo.EnemyType.BOSS:
+                    RandomEnemyData(EnemyBoss);
+                    break;
+            }
         }
 
-        EnemyDataSetting Data = EnemyBuffer[0];   
+        EnemyBasicData Data = EnemyBuffer[0];   
         EnemyBuffer.RemoveAt(0);
         return Data;
     }
 
     /** 랜덤하게 적을 설정한다 */
-    private void RandomEnemyData()
+    private void RandomEnemyData(EnemyBasic EnemyScirptTable)
     {
-        for (int i = 0; i < oEnemyDataMain.MainList.Length; i++)
+        EnemyBuffer.Clear();
+
+        for (int i = 0; i < EnemyScirptTable.MainList.Length; i++)
         {
-            EnemyDataSetting Enemy = oEnemyDataMain.MainList[i];
+            EnemyBasicData Enemy = EnemyScirptTable.MainList[i];
             EnemyBuffer.Add(Enemy);
         }
 
         for (int i = 0; i < EnemyBuffer.Count; i++)
         {
             int Rand = Random.Range(i, EnemyBuffer.Count);
-            EnemyDataSetting Temp = EnemyBuffer[i];
+            EnemyBasicData Temp = EnemyBuffer[i];
             EnemyBuffer[i] = EnemyBuffer[Rand];
             EnemyBuffer[Rand] = Temp;
         }

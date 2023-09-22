@@ -7,8 +7,19 @@ using UnityEngine.UI;
 [System.Serializable]
 public struct StageInfo
 {
+    public enum EnemyType
+    {
+        // NONE 사용 X
+        NONE = -1,
+
+        NORMAL,
+        ELITE,
+        BOSS,
+    }
+
     public string StageInfoName;
     public Sprite StageInfoImg;
+    public EnemyType StageEnemyType;
 }
 
 public class StageMenuUI : MonoBehaviour
@@ -60,6 +71,7 @@ public class StageMenuUI : MonoBehaviour
     {
         GameManager.Instance.ActiveStageUI("StageUI_0");
         GameManager.Instance.ActiveStageObject("StageObject_0");
+        GameManager.Instance.oStageEnemyType = StageInfoArray[CurrentStage].StageEnemyType;
         this.gameObject.SetActive(false);
         GameManager.Instance.IsGameStart = true;
     }
