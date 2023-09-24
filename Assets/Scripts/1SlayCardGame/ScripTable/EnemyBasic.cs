@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyBasicData
 {
-    public Sprite oEnemySprite;
+    public GameObject oEnemyObject;
     public float MaxHp;
     public float ATK;
 }

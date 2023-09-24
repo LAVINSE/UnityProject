@@ -20,7 +20,6 @@ public class EnemyManager : MonoBehaviour
 
     [Header("=====> Enemy Option <=====")]
     [SerializeField] private List<GameObject> ParticleObjectList = new List<GameObject>();
-    [SerializeField] private GameObject EnemyPrefab;
     [SerializeField] private GameObject EnemyOriginRoot;
     [SerializeField] private GameObject EnemySpellRoot;
 
@@ -72,13 +71,13 @@ public class EnemyManager : MonoBehaviour
     /** 적을 소환한다 */
     private void SpawnEnemy(StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        CreateEnemy(EnemyPrefab, EnemyOriginRoot, StageEnemyTypeInfo);
+        CreateEnemy(EnemyOriginRoot, StageEnemyTypeInfo);
     }
 
     /** 적을 생성한다 */
-    private void CreateEnemy(GameObject EnemyPrefab, GameObject EnemyRoot, StageInfo.EnemyType StageEnemyTypeInfo)
+    private void CreateEnemy(GameObject EnemyRoot, StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        var Enemy = CFactory.CreateCloneObj("Enemy", EnemyPrefab, EnemyRoot,
+        var Enemy = CFactory.CreateCloneObj("Enemy", SpawnReadyEnemy(StageEnemyTypeInfo).oEnemyObject, EnemyRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
         var EnemyComponent = Enemy.GetComponent<EnemySetting>();
         EnemyComponent.EnemySetup(SpawnReadyEnemy(StageEnemyTypeInfo));

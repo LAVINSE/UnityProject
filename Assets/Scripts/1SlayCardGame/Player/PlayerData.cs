@@ -19,7 +19,7 @@ public class PlayerData : MonoBehaviour
 
     [Header("=====> Player Data Option <=====")]
     [SerializeField] private SpriteRenderer PlayerSprite;
-    [SerializeField] private Vector3 BasicEnemyPos; // 플레이어 고정 위치
+    [SerializeField] private Vector3 BasicPlayerPos; // 플레이어 고정 위치
     #endregion //변수
 
     #region 프로퍼티
@@ -98,15 +98,16 @@ public class PlayerData : MonoBehaviour
         // 파티클과 접촉 했을 경우
         if (collision.gameObject.CompareTag("Player_Disappear_Type"))
         {
-            EnemyOriginPos();
+            PlayerOriginPos();
         }
 
         if (collision.gameObject.CompareTag("Player_Continuous_Type"))
         {
-            EnemyOriginPos();
+            PlayerOriginPos();
         }
     }
 
+    // FIXME 피격 효과 부분에서 플레이어 전용으로 수정해야됨
     /** 적 피격 효과를 생성한다 */
     private IEnumerator EnemyHitRender(float WaitSeconds)
     {
@@ -129,9 +130,9 @@ public class PlayerData : MonoBehaviour
     }
 
     /** 적을 원래 위치로 되돌린다 */
-    public void EnemyOriginPos()
+    public void PlayerOriginPos()
     {
-        transform.DOMove(BasicEnemyPos, 0.1f);
+        transform.DOMove(BasicPlayerPos, 0.1f);
     }
     #endregion // 함수
 }

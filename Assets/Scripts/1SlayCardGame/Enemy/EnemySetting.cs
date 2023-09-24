@@ -13,8 +13,6 @@ public class EnemySetting : MonoBehaviour
     [Header("=====> 적 정보 <=====")]
     [SerializeField] private float MaxHp = 0f; // 최대 체력
     [SerializeField] private float CurrentHp = 0.0f; // 현재 체력
-    [SerializeField] private SpriteRenderer EnemySprite; // 적 스프라이트
-    [SerializeField] private Vector3 EnemyScale; // 적 크기
 
     [Header("=====> 적 데이터 셋업 후 보여지는 데이터 <=====")]
     [SerializeField] private EnemyBasicData EnemyDataSet = null;
@@ -49,10 +47,6 @@ public class EnemySetting : MonoBehaviour
     public void EnemySetup(EnemyBasicData EnemyDataSetup)
     {
         this.EnemyDataSet = EnemyDataSetup;
-
-        // 스프라이트 교체, 크기 변경
-        this.EnemySprite.sprite = EnemyDataSetup.oEnemySprite;
-        this.transform.localScale = EnemyScale;
 
         // 체력 세팅
         this.MaxHp = EnemyDataSetup.MaxHp;

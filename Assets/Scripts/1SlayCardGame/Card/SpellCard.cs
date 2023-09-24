@@ -9,7 +9,6 @@ public class SpellCard : MonoBehaviour
 {
     #region 변수
     [Header("=====> Player <=====")]
-    [SerializeField] private GameObject PlayerObject; // 플레이어 오브젝트
     [SerializeField] private GameObject PlayerSpellRoot; // 플레이어 스펠위치 오브젝트
 
     [Header("=====> 파티클 <=====")]

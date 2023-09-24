@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: EnemyElite
   m_EditorClassIdentifier: 
   MainList:
-  - oEnemySprite: {fileID: 21300000, guid: fae0791ce4c1d5d4b9b17ea6fc319099, type: 3}
+  - oEnemyObject: {fileID: 8845373745087624746, guid: 8380884e642db8443af87c7857bf7829, type: 3}
     MaxHp: 40
     ATK: 2
-  - oEnemySprite: {fileID: 21300000, guid: e95e5053a5207cd41850cd611835462e, type: 3}
+  - oEnemyObject: {fileID: 2667064324438211130, guid: 77be1b8f1402d744cb067e39258fcedc, type: 3}
     MaxHp: 30
     ATK: 4
-  - oEnemySprite: {fileID: 21300000, guid: 93b7864302b49404c9ee17889f53aabe, type: 3}
+  - oEnemyObject: {fileID: 4777254194347893091, guid: 108430a325e08c14a980d8c5955d7732, type: 3}
     MaxHp: 20
     ATK: 6
