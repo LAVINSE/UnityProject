@@ -326,7 +326,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 1
   m_GravityScale: 0
@@ -391,7 +391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00200c6dd7946ac498441a0996ffcc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BasicEnemyPos: {x: 5, y: 1.5, z: 0}
+  BasicEnemyPos: {x: 5, y: 0.7, z: 0}
+  Mount: {fileID: 6859101804613653658}
+  Body: {fileID: 6859101805483024917}
+  WingRight: {fileID: 6859101804655167916}
+  WingLeft: {fileID: 6859101806481336926}
 --- !u!114 &-8354792297093389267
 MonoBehaviour:
   m_ObjectHideFlags: 0

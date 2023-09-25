@@ -14,9 +14,17 @@ public class SpellCard : MonoBehaviour
     [Header("=====> 파티클 <=====")]
     [SerializeField] private GameObject AttackDamageParticle;
     [SerializeField] private GameObject MagicCircleSnowParticle;
+
+    private Animator PlayerAnim;
     #endregion // 변수
 
     #region 함수
+    /** 초기화 */
+    private void Awake()
+    {
+        PlayerAnim = GetComponent<Animator>();
+    }
+
     /** 효과 카드 사용이 되었는지 확인하고 사용한다 */
     public void EffectCardSpawn(CardScirptTable.oCardEffect CardEffect)
     {
@@ -47,6 +55,7 @@ public class SpellCard : MonoBehaviour
     /** 카드 기본 공격 */
     public void AttacDamageCard()
     {
+        AttackAnimation();
         StopCoroutine(AttackDamage());
         StartCoroutine(AttackDamage());
     }
@@ -54,6 +63,7 @@ public class SpellCard : MonoBehaviour
     /** 카드 얼음마법진을 사용한다 */
     public void MagicCircleSnowCard()
     {
+        AttackAnimation();
         StopCoroutine(MagicCircleSnow());
         StartCoroutine(MagicCircleSnow());
     }
@@ -98,6 +108,12 @@ public class SpellCard : MonoBehaviour
         }
 
         Destroy(oParticle);
+    }
+
+    /** 공격 애니메이션을 사용한다 */
+    private void AttackAnimation()
+    {
+        PlayerAnim.SetTrigger("Attack");
     }
 
     /** 파티클을 두트윈을 사용해 움직인다 */

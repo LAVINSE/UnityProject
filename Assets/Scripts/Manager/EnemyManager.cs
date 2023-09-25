@@ -34,8 +34,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private EnemyBasic EnemyElite; // 적 스크립트 테이블
     [SerializeField] private EnemyBasic EnemyBoss; // 적 스크립트 테이블
     
-    [Header("=====> 인스펙터 확인용 <=====")]
+    [Header("=====> 개발자 인스펙터 확인용 <=====")]
     [SerializeField] private EnemyPeturnRandom ePeturnRandom;
+    [SerializeField] private bool IsSelectPeturn = false;
     [SerializeField] private List<EnemyBasicData> EnemyBuffer = new List<EnemyBasicData>(); // 적을 리스트에 넣는다
     #endregion // 변수
 
@@ -148,6 +149,11 @@ public class EnemyManager : MonoBehaviour
     /** 패턴을 선택한다 */
     public void EnemySelectPeturn()
     {
+        if(IsSelectPeturn == true)
+        {
+            return;
+        }
+
         var Random = RandomPeturnEnum();
         switch (Random)
         {

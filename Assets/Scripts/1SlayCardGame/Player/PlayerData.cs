@@ -17,9 +17,14 @@ public class PlayerData : MonoBehaviour
     [SerializeField] private float CurrentCost = 0; // 현재 코스트
     [SerializeField] private float CurrentGold = 50; // 현재 골드
 
-    [Header("=====> Player Data Option <=====")]
-    [SerializeField] private SpriteRenderer PlayerSprite;
+    [Header("=====> Player Data Position <=====")]
     [SerializeField] private Vector3 BasicPlayerPos; // 플레이어 고정 위치
+
+    [Header("=====> Player Sprite Parts <=====")]
+    [SerializeField] private SpriteRenderer Body = null;
+    [SerializeField] private SpriteRenderer Head = null;
+    [SerializeField] private SpriteRenderer Arms = null;
+    [SerializeField] private SpriteRenderer ArmRight = null;
     #endregion //변수
 
     #region 프로퍼티
@@ -80,15 +85,11 @@ public class PlayerData : MonoBehaviour
         // 파티클과 접촉 했을 경우
         if (collision.gameObject.CompareTag("Player_Disappear_Type"))
         {
-            StartCoroutine(EnemyHitRender(0.05f));
-            Debug.Log($"{collision.gameObject.name}");
+            EnemyHitRender();
         }
         else if (collision.gameObject.CompareTag("Player_Continuous_Type"))
         {
-            var Particle = collision.gameObject.GetComponent<ParticleSystem>();
-            var ParticleMain = Particle.main;
-            var ParticleDuration = ParticleMain.duration;
-            StartCoroutine(EnemyHitContinuousRender(ParticleDuration, 0.05f));
+            // Do Somthing
         }
     }
 
@@ -98,40 +99,35 @@ public class PlayerData : MonoBehaviour
         // 파티클과 접촉 했을 경우
         if (collision.gameObject.CompareTag("Player_Disappear_Type"))
         {
-            PlayerOriginPos();
+            EnemyExitHitRender();
         }
 
         if (collision.gameObject.CompareTag("Player_Continuous_Type"))
         {
-            PlayerOriginPos();
+            // Do Somthing
         }
     }
 
     // FIXME 피격 효과 부분에서 플레이어 전용으로 수정해야됨
-    /** 적 피격 효과를 생성한다 */
-    private IEnumerator EnemyHitRender(float WaitSeconds)
+    /** 플레이어 피격 효과를 시작한다 */
+    private void EnemyHitRender()
     {
-        PlayerSprite.color = Color.red;
-        yield return new WaitForSeconds(WaitSeconds);
-        PlayerSprite.color = Color.white;
+        Body.color = Color.red;
+        Head.color = Color.red;
+        Arms.color = Color.red;
+        ArmRight.color = Color.red;
+
+        transform.DOMove(this.transform.position + Vector3.left, 0.1f);
     }
 
-    /** 파티클 지속시간동안 적 피격 효과를 생성한다 */
-    private IEnumerator EnemyHitContinuousRender(float ParticleTime, float WaitSeconds)
+    /** 플레이어 피격 효과를 종료한다 */
+    private void EnemyExitHitRender()
     {
-        while (ParticleTime > 0)
-        {
-            PlayerSprite.color = Color.red;
-            yield return new WaitForSeconds(WaitSeconds);
-            PlayerSprite.color = Color.white;
-            yield return new WaitForSeconds(ParticleTime / ParticleTime);
-            ParticleTime--;
-        }
-    }
+        Body.color = Color.white;
+        Head.color = Color.white;
+        Arms.color = Color.white;
+        ArmRight.color = Color.white;
 
-    /** 적을 원래 위치로 되돌린다 */
-    public void PlayerOriginPos()
-    {
         transform.DOMove(BasicPlayerPos, 0.1f);
     }
     #endregion // 함수

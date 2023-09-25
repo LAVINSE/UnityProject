@@ -17,6 +17,6 @@ MonoBehaviour:
   CardCost: 1
   CardCount: 2
   CardType: 0
-  CardEffect: 1
+  CardEffect: 3
   CardDesc: Draw
   CardSprite: {fileID: 21300000, guid: 21ccd6f5aa28ef3499b891472a705c95, type: 3}
