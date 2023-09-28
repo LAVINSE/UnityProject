@@ -19,7 +19,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject oPlayer;
 
     [Header("=====> Enemy Option <=====")]
-    [SerializeField] private List<GameObject> ParticleObjectList = new List<GameObject>();
+    [SerializeField] private List<GameObject> ParticleDisappearList = new List<GameObject>();
+    [SerializeField] private List<GameObject> ParticleContinuousList = new List<GameObject>();
     [SerializeField] private GameObject EnemyOriginRoot;
     [SerializeField] private GameObject EnemySpellRoot;
 
@@ -215,7 +216,7 @@ public class EnemyManager : MonoBehaviour
         var PlayerPosition = oPlayerData.transform.position;
 
         yield return new WaitForSeconds(3f);
-        var oParticle = CFactory.CreateCloneObj("Disappear_Type", ParticleObjectList[0], EnemySpellRoot,
+        var oParticle = CFactory.CreateCloneObj("Disappear_Type", ParticleDisappearList[0], EnemySpellRoot,
                                                 Vector3.zero, Vector3.one, Vector3.zero);
 
         ParticleMove(oParticle, PlayerPosition, true, 0.2f);
@@ -226,15 +227,34 @@ public class EnemyManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         
-        Debug.Log("NONE");
         IsEnemyAttackReady = false;
     }
 
     /** Magic 패턴을 사용한다 */
     private IEnumerator EnemyMagicPeturn()
     {
+        var EnemyATK = SelectEnemy.oEnemyDataSet.ATK;
+        var PlayerPosition = oPlayerData.transform.position;
+
         yield return new WaitForSeconds(3f);
-        Debug.Log("Magic");
+
+        var oParticle = CFactory.CreateCloneObj("Continuous_Type", ParticleContinuousList[0], EnemySpellRoot,
+                                                Vector3.zero, Vector3.one, Vector3.zero);
+
+        ParticleMove(oParticle, PlayerPosition, true, 0.2f);
+
+        var ParticleComponent = oParticle.gameObject.GetComponent<ParticleSystem>();
+        var ParticleMain = ParticleComponent.main;
+        var ParticleDuration = ParticleMain.duration;
+
+        while (ParticleDuration > 0)
+        {
+            oPlayerData.TakeDamage(EnemyATK);
+            yield return new WaitForSeconds(1f);
+            ParticleDuration--;
+        }
+
+        Destroy(oParticle);
         IsEnemyAttackReady = false;
     }
 

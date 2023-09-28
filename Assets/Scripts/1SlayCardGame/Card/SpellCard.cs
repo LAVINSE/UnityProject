@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UIElements;
+using static UnityEngine.ParticleSystem;
 
 public class SpellCard : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class SpellCard : MonoBehaviour
     [SerializeField] private GameObject PlayerSpellRoot; // 플레이어 스펠위치 오브젝트
 
     [Header("=====> 파티클 <=====")]
-    [SerializeField] private GameObject AttackDamageParticle;
-    [SerializeField] private GameObject MagicCircleSnowParticle;
+    [SerializeField] private List<GameObject> ParticleDisappearList = new List<GameObject>();
+    [SerializeField] private List<GameObject> ParticleContinuousList = new List<GameObject>();
 
     private Animator PlayerAnim;
     #endregion // 변수
@@ -72,7 +73,7 @@ public class SpellCard : MonoBehaviour
     private IEnumerator AttackDamage()
     {
         var oCardAttack = CardManager.Instance.SelectCard.CardSettingData.CardAttack;
-        var oParticle = CFactory.CreateCloneObj("Player_Disappear_Type", AttackDamageParticle, PlayerSpellRoot,
+        var oParticle = CFactory.CreateCloneObj("Player_Disappear_Type", ParticleDisappearList[0], PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
         var EnemyPosition = EnemyManager.Instance.SelectEnemy.transform.position;
 
@@ -88,7 +89,7 @@ public class SpellCard : MonoBehaviour
     private IEnumerator MagicCircleSnow()
     {
         var oCardAttack = CardManager.Instance.SelectCard.CardSettingData.CardAttack;
-        var oParticle = CFactory.CreateCloneObj("Player_Continuous_Type", MagicCircleSnowParticle, PlayerSpellRoot,
+        var oParticle = CFactory.CreateCloneObj("Player_Continuous_Type", ParticleContinuousList[0], PlayerSpellRoot,
             Vector3.zero, Vector3.one, Vector3.zero);
 
         // 파티클 위치 세팅
@@ -98,13 +99,15 @@ public class SpellCard : MonoBehaviour
         // 파티클 움직이기
         ParticleMove(oParticle, EnemyPos, true, 0.2f);
 
-        // 4초 동안 지속 피해
-        int CountTime = 0;
-        while (CountTime < 4)
+        var ParticleComponent = oParticle.gameObject.GetComponent<ParticleSystem>();
+        var ParticleMain = ParticleComponent.main;
+        var ParticleDuration = ParticleMain.duration;
+
+        while (ParticleDuration > 0)
         {
             EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
-            yield return new WaitForSeconds(1f);
-            CountTime++;
+            yield return new WaitForSeconds(1.1f);
+            ParticleDuration--;
         }
 
         Destroy(oParticle);

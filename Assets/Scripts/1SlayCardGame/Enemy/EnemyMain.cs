@@ -6,6 +6,9 @@ using DG.Tweening;
 public class EnemyMain : MonoBehaviour
 {
     #region 변수
+    [Header("=====> public <=====")]
+    [SerializeField] private HitRender EnemyHitRender = null;
+
     [Header("=====> Enemy Data Position <=====")]
     [SerializeField] private Vector3 BasicEnemyPos; // 적 고정 위치
 
@@ -23,7 +26,7 @@ public class EnemyMain : MonoBehaviour
         // 파티클과 접촉 했을 경우
         if(collision.gameObject.CompareTag("Player_Disappear_Type"))
         {
-            EnemyHitRender();    
+            EnemyHitRender();
         }
         else if(collision.gameObject.CompareTag("Player_Continuous_Type"))
         {

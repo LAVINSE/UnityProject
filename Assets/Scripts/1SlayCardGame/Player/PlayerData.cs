@@ -83,11 +83,11 @@ public class PlayerData : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // 파티클과 접촉 했을 경우
-        if (collision.gameObject.CompareTag("Player_Disappear_Type"))
+        if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
         {
-            EnemyHitRender();
+            PlayerHitRender();
         }
-        else if (collision.gameObject.CompareTag("Player_Continuous_Type"))
+        else if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
         {
             // Do Somthing
         }
@@ -97,12 +97,12 @@ public class PlayerData : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         // 파티클과 접촉 했을 경우
-        if (collision.gameObject.CompareTag("Player_Disappear_Type"))
+        if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
         {
-            EnemyExitHitRender();
+            PlayerExitHitRender();
         }
 
-        if (collision.gameObject.CompareTag("Player_Continuous_Type"))
+        if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
         {
             // Do Somthing
         }
@@ -110,7 +110,7 @@ public class PlayerData : MonoBehaviour
 
     // FIXME 피격 효과 부분에서 플레이어 전용으로 수정해야됨
     /** 플레이어 피격 효과를 시작한다 */
-    private void EnemyHitRender()
+    private void PlayerHitRender()
     {
         Body.color = Color.red;
         Head.color = Color.red;
@@ -121,7 +121,7 @@ public class PlayerData : MonoBehaviour
     }
 
     /** 플레이어 피격 효과를 종료한다 */
-    private void EnemyExitHitRender()
+    private void PlayerExitHitRender()
     {
         Body.color = Color.white;
         Head.color = Color.white;
