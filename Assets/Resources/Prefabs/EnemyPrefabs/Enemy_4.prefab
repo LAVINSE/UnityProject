@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 2850311707094252403}
   - component: {fileID: -1929774776217371247}
   - component: {fileID: -9062633461405802783}
+  - component: {fileID: 8152802353181870985}
   m_Layer: 0
   m_Name: Enemy_4
   m_TagString: Untagged
@@ -475,6 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00200c6dd7946ac498441a0996ffcc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitRender: {fileID: 0}
   BasicEnemyPos: {x: 5, y: 0.7, z: 0}
   Mount: {fileID: 2667064324024293849}
   Body: {fileID: 2667064324192268166}
@@ -490,5 +492,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a1bc671056c4964d9dac8ccc7e041f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8152802353181870985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2667064324438211130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e432696c642f5e6488e293a813f320ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

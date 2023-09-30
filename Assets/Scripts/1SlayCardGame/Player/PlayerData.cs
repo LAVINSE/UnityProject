@@ -25,6 +25,8 @@ public class PlayerData : MonoBehaviour
     [SerializeField] private SpriteRenderer Head = null;
     [SerializeField] private SpriteRenderer Arms = null;
     [SerializeField] private SpriteRenderer ArmRight = null;
+
+    private HitRender HitRender = null;
     #endregion //변수
 
     #region 프로퍼티
@@ -71,6 +73,7 @@ public class PlayerData : MonoBehaviour
     {
         CurrentHp = MaxHp; // 현재 체력을 최대 체력과 같게 설정
         CurrentCost = MaxCost; // 현재 코스트를 최대 코스트와 같게 설정
+        HitRender = GetComponent<HitRender>();
     }
 
     /** 데미지를 받는다 */
@@ -85,11 +88,14 @@ public class PlayerData : MonoBehaviour
         // 파티클과 접촉 했을 경우
         if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
         {
-            PlayerHitRender();
+            HitRender.HitRenderer(Body, Head, Arms, ArmRight, this.transform.position + Vector3.left, 0.1f);
         }
         else if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
         {
-            // Do Somthing
+            var Particle = collision.gameObject.GetComponent<ParticleSystem>();
+            var ParticleMain = Particle.main;
+            var ParticleDuration = ParticleMain.duration;
+            HitRender.UseHitContinuousRenderer(Body, Head, Arms, ArmRight, ParticleDuration, 0.1f);
         }
     }
 
@@ -99,36 +105,13 @@ public class PlayerData : MonoBehaviour
         // 파티클과 접촉 했을 경우
         if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
         {
-            PlayerExitHitRender();
+            HitRender.ExitHitRenderer(Body, Head, Arms, ArmRight, BasicPlayerPos, 0.1f);
         }
 
         if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
         {
-            // Do Somthing
+            HitRender.ExitHitRenderer(Body, Head, Arms, ArmRight, BasicPlayerPos, 0.1f);
         }
-    }
-
-    // FIXME 피격 효과 부분에서 플레이어 전용으로 수정해야됨
-    /** 플레이어 피격 효과를 시작한다 */
-    private void PlayerHitRender()
-    {
-        Body.color = Color.red;
-        Head.color = Color.red;
-        Arms.color = Color.red;
-        ArmRight.color = Color.red;
-
-        transform.DOMove(this.transform.position + Vector3.left, 0.1f);
-    }
-
-    /** 플레이어 피격 효과를 종료한다 */
-    private void PlayerExitHitRender()
-    {
-        Body.color = Color.white;
-        Head.color = Color.white;
-        Arms.color = Color.white;
-        ArmRight.color = Color.white;
-
-        transform.DOMove(BasicPlayerPos, 0.1f);
     }
     #endregion // 함수
 }

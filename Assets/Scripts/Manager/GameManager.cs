@@ -37,12 +37,6 @@ public class GameManager : MonoBehaviour
             Vector3.zero, Vector3.one, Vector3.zero);
     }
 
-    /** 초기화 */
-    private void Start()
-    {
-        
-    }
-
     /** 초기화 >> 상태를 갱신한다 */
     private void Update()
     {

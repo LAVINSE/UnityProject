@@ -17,7 +17,7 @@ public struct StageInfo
         BOSS,
     }
 
-    public string StageInfoName;
+    public string StageInfoTitleName;
     public Sprite StageInfoImg;
     public EnemyType StageEnemyType;
 }
@@ -25,8 +25,11 @@ public struct StageInfo
 public class StageMenuUI : MonoBehaviour
 {
     #region 변수
+    [Header("=====> Stage Info <=====")]
     [SerializeField] private StageInfo[] StageInfoArray = null;
-    [SerializeField] private TMP_Text StageNameText = null;
+
+    [Header("=====> Stage UI <=====")]
+    [SerializeField] private TMP_Text StageTitleText = null;
     [SerializeField] private Image StageImg = null;
 
     private int CurrentStage = 0;
@@ -62,7 +65,7 @@ public class StageMenuUI : MonoBehaviour
     /** 스테이지 정보를 세팅한다 */
     private void SettingStageInfo()
     {
-        StageNameText.text = StageInfoArray[CurrentStage].StageInfoName;
+        StageTitleText.text = StageInfoArray[CurrentStage].StageInfoTitleName;
         StageImg.sprite = StageInfoArray[CurrentStage].StageInfoImg;
     }
 
