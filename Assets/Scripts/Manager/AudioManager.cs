@@ -8,16 +8,30 @@ public class AudioManager : MonoBehaviour
     #region 변수
     [Header("=====> BGM Setting <=====")]
     [Tooltip(" 배경음 등록 ")] [SerializeField] private AudioClip[] BGMClips; // 배경음
-    [SerializeField] private float BGMVolume = 0.0f;
+    [SerializeField] private float BGMVolume = 0.0f; // 배경음 음량
 
     [Header("=====> SFX Setting <=====")]
     [Tooltip(" 효과음 등록 ")] [SerializeField] private AudioClip[] SFXClips; // 효과음
-    [SerializeField] private float SFXVolume = 0.0f;
+    [SerializeField] private float SFXVolume = 0.0f; // 효과음 음량
     [Tooltip(" 효과음 채널 개수 ")] [SerializeField] private int SFXChannel = 0;
 
     private AudioSource[] BGMPlayers;
     private AudioSource[] SFXPlayers;
     #endregion // 변수
+
+    #region 프로퍼티
+    public float oBGMVolume
+    {
+        get => BGMVolume;
+        set => BGMVolume = Mathf.Max(0, value);
+    }
+
+    public float oSFXVolume
+    {
+        get => SFXVolume;
+        set => SFXVolume = Mathf.Max(0, value);
+    }
+    #endregion // 프로퍼티
 
     #region 함수
     /** 초기화 */

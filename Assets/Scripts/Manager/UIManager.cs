@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    /** 나가기 버튼을 활성화 한다 */
+    /** 드랍 UI 나가기 버튼을 활성화 한다 */
     private void ActiveLeaveButton()
     {
         LeaveButton.SetActive(true);

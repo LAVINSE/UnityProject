@@ -21,7 +21,7 @@ public class OptionPopup : Popup
     [SerializeField] private Button CancelButton = null;
     [SerializeField] private GameObject BackGround = null;
 
-    private System.Action<OptionPopup, bool> ActionCallback = null;
+    private System.Action<OptionPopup, bool> OptionAction = null;
     #endregion // 변수
 
     #region 프로퍼티
@@ -47,10 +47,10 @@ public class OptionPopup : Popup
     }
 
     /** Option을 출력한다 */
-    public void PopupShow(System.Action<OptionPopup, bool> ActionCallback)
+    public void PopupShow(System.Action<OptionPopup, bool> OptionAction)
     {
         base.PopupShow();
-        this.ActionCallback = ActionCallback;
+        this.OptionAction = OptionAction;
     }
 
     /** Option 상태를 갱신한다 */
@@ -68,14 +68,14 @@ public class OptionPopup : Popup
     /** ContinueButton 눌렀을 경우 */
     private void OnClickContinue()
     {
-        ActionCallback?.Invoke(this, true);
+        OptionAction?.Invoke(this, true);
         PopupClose();
     }
 
     /** CancelButton 눌렀을 경우 */
     private void OnClickCancel()
     {
-        ActionCallback?.Invoke(this, false);
+        OptionAction?.Invoke(this, false);
         PopupClose();
     }
 
