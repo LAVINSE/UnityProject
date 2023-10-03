@@ -49,6 +49,8 @@ public class StageMenuUI : MonoBehaviour
         {
             CurrentStage = 0;
         }
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.NextBackButton);
         SettingStageInfo();
     }
 
@@ -59,6 +61,7 @@ public class StageMenuUI : MonoBehaviour
         {
             CurrentStage = StageInfoArray.Length - 1;
         }
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.NextBackButton);
         SettingStageInfo();
     }
 
@@ -75,6 +78,9 @@ public class StageMenuUI : MonoBehaviour
         GameManager.Instance.ActiveStageUI("StageUI_0");
         GameManager.Instance.ActiveStageObject("StageObject_0");
         GameManager.Instance.oStageEnemyType = StageInfoArray[CurrentStage].StageEnemyType;
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameStartButton);
+
         this.gameObject.SetActive(false);
         GameManager.Instance.IsGameStart = true;
     }
@@ -82,7 +88,7 @@ public class StageMenuUI : MonoBehaviour
     /** 뒤로가기 버튼을 눌렀을 때 */
     public void OnClickBackButton()
     {
-        // Do Somthing
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.LeaveButton);
     }
     #endregion // 함수
 }

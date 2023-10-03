@@ -2699,10 +2699,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BGMClips:
   - {fileID: 8300000, guid: b6e80cfade34349139b4cab82fae797f, type: 3}
-  - {fileID: 8300000, guid: 035535025d1534133be16c31ff9dd1a9, type: 3}
+  - {fileID: 8300000, guid: 0cdfec09723604b7abd9105298d94297, type: 3}
   BGMVolume: 0
-  SFXClips: []
-  SFXVolume: 0
+  SFXClips:
+  - {fileID: 8300000, guid: f96dd7b18d5d2424691c71b7dc1912d7, type: 3}
+  - {fileID: 8300000, guid: 659a79ce0eebccf448850a7c6d401983, type: 3}
+  - {fileID: 8300000, guid: 170dedf21b9565349872a795784cf42f, type: 3}
+  - {fileID: 8300000, guid: ffe09740cf5edb74e854d9376b1f606c, type: 3}
+  - {fileID: 8300000, guid: 6534847ceb86b894491dc0afcb171586, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  SFXVolume: 0.1
   SFXChannel: 16
 --- !u!1 &559123080
 GameObject:
@@ -4246,7 +4262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 957149678}
   m_Layer: 0
-  m_Name: "\uC704 \uB9C1\uD06C 13:15\uCD08"
+  m_Name: "\uC704 \uB9C1\uD06C 23:12\uCD08"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

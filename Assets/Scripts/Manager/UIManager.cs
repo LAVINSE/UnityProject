@@ -49,6 +49,7 @@ public class UIManager : MonoBehaviour
             }
             else
             {
+                AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.OptionButton);
                 Option = OptionPopup.CreateOptionPopup(OptionTitleText, PopupRoot);
 
                 Option.PopupShow(OnReceivePopup);
