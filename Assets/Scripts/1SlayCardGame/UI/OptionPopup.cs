@@ -17,9 +17,15 @@ public class OptionPopup : Popup
     #region 변수
     [Header("=====> Option UIs <=====")]
     [SerializeField] private TMP_Text TitleText = null;
+    [SerializeField] private TMP_Text BGMVolumeText = null;
+    [SerializeField] private TMP_Text SFXVolumeText = null;
     [SerializeField] private Button ContinueButton = null;
     [SerializeField] private Button CancelButton = null;
+    [SerializeField] private Slider BGMVolumeSlider = null;
+    [SerializeField] private Slider SFXVolumeSlider = null;
     [SerializeField] private GameObject BackGround = null;
+    [SerializeField] private string BGMVolume_Text = string.Empty;
+    [SerializeField] private string SFXVolume_Text = string.Empty;
 
     private System.Action<OptionPopup, bool> OptionAction = null;
     #endregion // 변수
@@ -37,6 +43,16 @@ public class OptionPopup : Popup
         // 버튼을 설정한다
         ContinueButton.onClick.AddListener(OnClickContinue);
         CancelButton.onClick.AddListener(OnClickCancel);
+
+        // 텍스트를 설정한다
+        BGMVolumeText.text = BGMVolume_Text;
+        SFXVolumeText.text = SFXVolume_Text;
+
+        // 슬라이더를 설정한다
+        BGMVolumeSlider.value = AudioManager.Instance.oBGMVolume;
+        SFXVolumeSlider.value = AudioManager.Instance.oSFXVolume;
+        BGMVolumeSlider.onValueChanged.AddListener(BGMSliderValue);
+        SFXVolumeSlider.onValueChanged.AddListener(SFXSliderValue);
     }
 
     /** Option 초기화 */
@@ -69,6 +85,7 @@ public class OptionPopup : Popup
     private void OnClickContinue()
     {
         OptionAction?.Invoke(this, true);
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.OptionButton);
         PopupClose();
     }
 
@@ -76,7 +93,20 @@ public class OptionPopup : Popup
     private void OnClickCancel()
     {
         OptionAction?.Invoke(this, false);
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.OptionButton);
         PopupClose();
+    }
+
+    /** 베경음 슬라이더 핸들을 움직였을 경우 */
+    private void BGMSliderValue(float Volume)
+    {
+        AudioManager.Instance.oBGMVolume = Volume;
+    }
+
+    /** 효과음 슬라이더 핸들을 움직였을 경우 */
+    private void SFXSliderValue(float Volume)
+    {
+        AudioManager.Instance.oSFXVolume = Volume;
     }
 
     /** 매개 변수를 생성한다 */

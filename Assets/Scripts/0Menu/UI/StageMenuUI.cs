@@ -40,6 +40,7 @@ public class StageMenuUI : MonoBehaviour
     private void Start()
     {
         SettingStageInfo();
+        AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.MenuBGM);
     }
 
     /** Next 스테이지 버튼을 눌렀을 때*/
@@ -80,7 +81,7 @@ public class StageMenuUI : MonoBehaviour
         GameManager.Instance.oStageEnemyType = StageInfoArray[CurrentStage].StageEnemyType;
 
         AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameStartButton);
-
+        AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_1_BGM);
         this.gameObject.SetActive(false);
         GameManager.Instance.IsGameStart = true;
     }

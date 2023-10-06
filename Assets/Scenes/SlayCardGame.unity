@@ -2700,7 +2700,7 @@ MonoBehaviour:
   BGMClips:
   - {fileID: 8300000, guid: b6e80cfade34349139b4cab82fae797f, type: 3}
   - {fileID: 8300000, guid: 0cdfec09723604b7abd9105298d94297, type: 3}
-  BGMVolume: 0
+  BGMVolume: 0.2
   SFXClips:
   - {fileID: 8300000, guid: f96dd7b18d5d2424691c71b7dc1912d7, type: 3}
   - {fileID: 8300000, guid: 659a79ce0eebccf448850a7c6d401983, type: 3}
@@ -2718,7 +2718,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  SFXVolume: 0.1
+  SFXVolume: 0.2
   SFXChannel: 16
 --- !u!1 &559123080
 GameObject:
@@ -4704,7 +4704,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1161393124}
   m_Layer: 0
-  m_Name: "\uD658\uACBD\uC124\uC815 \uAD6C\uD604\uC911"
+  m_Name: "\uD658\uACBD\uC124\uC815 \uAD6C\uD604\uC911, \uC74C\uC18C\uAC70 \uAD6C\uD604
+    \uD574\uC57C\uB428"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

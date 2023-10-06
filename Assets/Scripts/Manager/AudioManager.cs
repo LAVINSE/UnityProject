@@ -6,12 +6,14 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     #region 열거형
+    /** 배경음 종류 */
     public enum BGMEnum
     {
         MenuBGM,
         Battle_1_BGM,
     }
 
+    /** 효과음 종류 */
     public enum SFXEnum
     {
         OptionButton = 0,
@@ -39,6 +41,16 @@ public class AudioManager : MonoBehaviour
 
     #region 프로퍼티
     public static AudioManager Instance;
+    public float oBGMVolume
+    {
+        get => BGMVolume;
+        set => BGMVolume = value;
+    }
+    public float oSFXVolume
+    {
+        get => SFXVolume;
+        set => SFXVolume = value;
+    }
     #endregion // 프로퍼티
 
     #region 함수
@@ -54,6 +66,7 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         SFXSettingVolume(SFXVolume);
+        BGMSettingVolume(BGMVolume);
     }
 
     /** 배경음을 세팅한다 */
@@ -108,12 +121,42 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /** 배경음을 재생한다 */
+    public void PlayBGM(BGMEnum BGMType)
+    {
+        for (int i = 0; i < BGMPlayers.Length; i++)
+        {
+            int LoopIndex = (i + ChannelIndex) % BGMPlayers.Length;
+
+            // 효과음이 재생중일 경우
+            if (BGMPlayers[LoopIndex].isPlaying)
+            {
+                BGMPlayers[LoopIndex].Stop();
+                continue;
+            }
+
+            ChannelIndex = LoopIndex;
+            BGMPlayers[LoopIndex].clip = BGMClips[(int)BGMType];
+            BGMPlayers[LoopIndex].Play();
+            break;
+        }
+    }
+
     /** 효과음 볼륨을 세팅한다 */
     public void SFXSettingVolume(float SFXVolume)
     {
         for(int i = 0; i < SFXPlayers.Length; i++)
         {
             SFXPlayers[i].volume = SFXVolume;
+        }
+    }
+
+    /** 배경음 볼륨을 세팅한다 */
+    public void BGMSettingVolume(float BGMVolume)
+    {
+        for(int i =0; i< BGMPlayers.Length; i++)
+        {
+            BGMPlayers[i].volume = BGMVolume;
         }
     }
     #endregion // 함수
