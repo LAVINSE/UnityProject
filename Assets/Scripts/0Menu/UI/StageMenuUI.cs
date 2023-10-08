@@ -81,7 +81,7 @@ public class StageMenuUI : MonoBehaviour
         GameManager.Instance.oStageEnemyType = StageInfoArray[CurrentStage].StageEnemyType;
 
         AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameStartButton);
-        AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_1_BGM);
+        
         this.gameObject.SetActive(false);
         GameManager.Instance.IsGameStart = true;
     }

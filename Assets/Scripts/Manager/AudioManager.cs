@@ -10,7 +10,9 @@ public class AudioManager : MonoBehaviour
     public enum BGMEnum
     {
         MenuBGM,
-        Battle_1_BGM,
+        Battle_BGM_Normal,
+        Battle_BGM_Elite,
+        Battle_BGM_Boss,
     }
 
     /** 효과음 종류 */
@@ -126,22 +128,29 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < BGMPlayers.Length; i++)
         {
-            int LoopIndex = (i + ChannelIndex) % BGMPlayers.Length;
 
             // 효과음이 재생중일 경우
-            if (BGMPlayers[LoopIndex].isPlaying)
+            if (BGMPlayers[i].isPlaying)
             {
-                BGMPlayers[LoopIndex].Stop();
+                BGMPlayers[i].Stop();
                 continue;
             }
 
-            ChannelIndex = LoopIndex;
-            BGMPlayers[LoopIndex].clip = BGMClips[(int)BGMType];
-            BGMPlayers[LoopIndex].Play();
+            BGMPlayers[i].clip = BGMClips[(int)BGMType];
+            BGMPlayers[i].Play();
             break;
         }
     }
 
+    /** 배경음을 멈춘다 */
+    public void StopBGM()
+    {
+        for(int i = 0; i< BGMPlayers.Length;i++)
+        {
+            BGMPlayers[i].Stop();
+        }
+    }
+    
     /** 효과음 볼륨을 세팅한다 */
     public void SFXSettingVolume(float SFXVolume)
     {

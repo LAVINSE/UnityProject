@@ -93,6 +93,8 @@ public class TurnManager : MonoBehaviour
             IsOnAddCard?.Invoke(IsFrontCard);
         }
 
+        StageBGMSetting(StageEnemyTypeInfo);
+
         // TODO : 적 출현 이펙트 추가 예정
         IsSpawnEnemy(StageEnemyTypeInfo);
 
@@ -135,6 +137,22 @@ public class TurnManager : MonoBehaviour
         if(IsMyTurn == true)
         {
             NextTurn();
+        }
+    }
+
+    private void StageBGMSetting(StageInfo.EnemyType StageEnemyTypeInfo)
+    {
+        switch (StageEnemyTypeInfo)
+        {
+            case StageInfo.EnemyType.NORMAL:
+                AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Normal);
+                break;
+            case StageInfo.EnemyType.ELITE:
+                AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Elite);
+                break;
+            case StageInfo.EnemyType.BOSS:
+                AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Boss);
+                break;
         }
     }
     #endregion // 함수

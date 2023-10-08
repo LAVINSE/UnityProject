@@ -61,15 +61,17 @@ public class EnemySetting : MonoBehaviour
         if(CurrentHp <= 0)
         {
             IsEnemyLive = false;
-            EnemyOnDie();
+            StartCoroutine(EnemyOnDie());
         }
     }
 
     /** 적 죽음 처리를 한다 */
-    private void EnemyOnDie()
+    private IEnumerator EnemyOnDie()
     {
-        // 점수 추가
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameOver);
 
+        yield return new WaitForSeconds(2.0f);
         // 드랍 아이템 창 보여주기
         if (IsEnemyLive == false)
         {

@@ -124,7 +124,6 @@ public class OptionPopup : Popup
     public static OptionPopup CreateOptionPopup(string TItleMsg, GameObject ParentObject)
     {
         var Params = OptionPopup.MakeParams(TItleMsg, "계속", "나가기");
-
         var CreateOption = CFactory.CreateCloneObj<OptionPopup>("OptionPopup",
             Resources.Load<GameObject>("Prefabs/UiPrefabs/Option_Popup"), ParentObject,
             Vector3.zero, Vector3.one, Vector3.zero);

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2bfd04cfdd168418b567485fa9d823, type: 3}
   m_Name: CardTest2
   m_EditorClassIdentifier: 
-  CardName: Draw
+  CardName: Magic
   CardAttack: 2
   CardCost: 1
-  CardCount: 2
+  CardCount: 1
   CardType: 0
   CardEffect: 3
   CardDesc: Draw

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2bfd04cfdd168418b567485fa9d823, type: 3}
   m_Name: CardTest3
   m_EditorClassIdentifier: 
-  CardName: Upgrade
-  CardAttack: 2
+  CardName: Draw
+  CardAttack: 0
   CardCost: 1
   CardCount: 1
   CardType: 0
-  CardEffect: 0
+  CardEffect: 1
   CardDesc: UpgradeCard
   CardSprite: {fileID: 21300000, guid: 4d3b1edd16a8d274c9d7808deeb1daee, type: 3}
