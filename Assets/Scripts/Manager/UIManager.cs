@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject PopupRoot;
     [SerializeField] private GameObject DropUIRoot;
     [SerializeField] private GameObject LeaveButton;
+    [SerializeField] private GameObject DeckListShowObject;
 
     [Header("=====> UI 텍스트 입력 <=====")]
     [SerializeField] private string OptionTitleText;
@@ -19,6 +20,7 @@ public class UIManager : MonoBehaviour
 
     #region 프로퍼티
     public static UIManager Instance { get; private set; }
+    public bool IsDeckListShow = false;
     #endregion // 프로퍼티
 
     #region 함수
@@ -100,6 +102,14 @@ public class UIManager : MonoBehaviour
             GetDropUI.DropShow();
         }
 
+    }
+
+    /** 버튼을 누를경우 덱 리스트를 보여준다 */
+    public void ShowDeckList()
+    {
+        IsDeckListShow = true;
+        CardManager.Instance.sfd();
+        DeckListShowObject.SetActive(true);
     }
     #endregion // 함수
 }

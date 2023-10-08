@@ -33,6 +33,10 @@ public class CardManager : MonoBehaviour
     [SerializeField] private PlayerData oPlayerData;
     [SerializeField] private SpellCard PlayerSpellCard;
 
+    [Header("=====> 플레이어 덱 <=====")]
+    [SerializeField] private GameObject CardListGroupRoot;
+    [SerializeField] private List<CardScirptTable> CardList = new List<CardScirptTable>();
+
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private List<CardScirptTable> CardBuffer; // 카드 데이터에 들어있는 카드를 리스트에 넣는다
     [SerializeField] private List<CardSetting> DespawnCard; // 사용한 카드를 리스트에 넣는다
@@ -399,6 +403,39 @@ public class CardManager : MonoBehaviour
 
         Card.SetActive(true);
         return Card.GetComponent<CardSetting>();
+    }
+
+    public void sfd()
+    {
+        var CardObject = CardObjectPool(CardPrefab, CardListGroupRoot);
+        var Card = CardObject.GetComponent<CardSetting>();
+        Card.CardSetup(so(), true);
+    }
+
+    private CardScirptTable so()
+    {
+        var CardDeckList = CardDeck.Instance.oCardBasicTableDeck;
+
+        if(CardList.Count == 0)
+        {
+            for(int i = 0; i< CardDeckList.Count; i++)
+            {
+                CardList.Add(CardDeckList[i]);
+            }
+        }
+
+        for(int i = 0; i< CardDeckList.Count; i++)
+        {
+            if(CardDeckList[i] != CardList[i])
+            {
+                CardList.Add(CardDeckList[i]);
+            }
+        }
+
+        // FIXME : 반환 함수 고쳐야함
+        CardScirptTable Card = CardList[0];
+        CardList.RemoveAt(0);
+        return Card;
     }
     #endregion // 함수
 }
