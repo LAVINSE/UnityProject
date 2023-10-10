@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
     public void ShowDeckList()
     {
         IsDeckListShow = true;
-        CardManager.Instance.sfd();
+        CardManager.Instance.CardDeckCreate();
         DeckListShowObject.SetActive(true);
     }
     #endregion // 함수

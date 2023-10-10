@@ -34,8 +34,8 @@ public class CardManager : MonoBehaviour
     [SerializeField] private SpellCard PlayerSpellCard;
 
     [Header("=====> 플레이어 덱 <=====")]
-    [SerializeField] private GameObject CardListGroupRoot;
-    [SerializeField] private List<CardScirptTable> CardList = new List<CardScirptTable>();
+    [SerializeField] private GameObject CardListGroupRoot; // 카드 덱 오브젝트 하위에 생성될 위치
+    [SerializeField] private GameObject CardDeckPrefab; // 카드 덱 원본 객체
 
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private List<CardScirptTable> CardBuffer; // 카드 데이터에 들어있는 카드를 리스트에 넣는다
@@ -405,37 +405,31 @@ public class CardManager : MonoBehaviour
         return Card.GetComponent<CardSetting>();
     }
 
-    public void sfd()
+    /** 카드 덱을 생성한다 */
+    public void CardDeckCreate()
     {
-        var CardObject = CardObjectPool(CardPrefab, CardListGroupRoot);
-        var Card = CardObject.GetComponent<CardSetting>();
-        Card.CardSetup(so(), true);
+        var oCardDeck = CardDeck.Instance.oCardBasicTableDeck;
+        if (oCardDeck != null)
+        {
+            for (int i = 0; i < oCardDeck.Count; i++)
+            {
+                var CardDeckObject = CardDeckObjectPool(CardDeckPrefab, CardListGroupRoot);
+                var Card = CardDeckObject.GetComponent<CardDeckSetting>();
+                Card.SettingCardDeck(oCardDeck[i]);
+            }
+        }
     }
 
-    private CardScirptTable so()
+    /** 카드 덱을 오브젝트 풀링한다 */
+    public CardDeckSetting CardDeckObjectPool(GameObject CardDeckPrefab, GameObject CardListGroupRoot)
     {
-        var CardDeckList = CardDeck.Instance.oCardBasicTableDeck;
-
-        if(CardList.Count == 0)
+        var CardDeckObejct = GameManager.Instance.PoolManager.SpawnObj<CardDeckSetting>(() =>
         {
-            for(int i = 0; i< CardDeckList.Count; i++)
-            {
-                CardList.Add(CardDeckList[i]);
-            }
-        }
-
-        for(int i = 0; i< CardDeckList.Count; i++)
-        {
-            if(CardDeckList[i] != CardList[i])
-            {
-                CardList.Add(CardDeckList[i]);
-            }
-        }
-
-        // FIXME : 반환 함수 고쳐야함
-        CardScirptTable Card = CardList[0];
-        CardList.RemoveAt(0);
-        return Card;
+            return CFactory.CreateCloneObj("CardDeck", CardDeckPrefab, CardListGroupRoot, Vector3.zero, Vector3.one, Vector3.zero);
+        }) as GameObject;
+        
+        CardDeckObejct.SetActive(true);
+        return CardDeckObejct.GetComponent<CardDeckSetting>();
     }
     #endregion // 함수
 }
