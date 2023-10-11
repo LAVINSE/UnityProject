@@ -28,5 +28,11 @@ public class CardDeckSetting : MonoBehaviour
         CardAtkText.text = CardTable.CardAttack.ToString();
         CardCostText.text = CardTable.CardCost.ToString();
     }
+
+    /** 카드 덱을 디스폰 한다 */
+    public void DespawnCardDeck()
+    {
+        CardManager.Instance.CardDeckListDespawn(this.gameObject);
+    }
     #endregion // 함수
 }

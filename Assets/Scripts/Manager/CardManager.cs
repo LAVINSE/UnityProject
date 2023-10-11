@@ -384,11 +384,11 @@ public class CardManager : MonoBehaviour
     /** 사용한 카드를 디스폰 시킨다 */
     public void CardDespawn()
     {
-        GameManager.Instance.PoolManager.DeSpawnObj<CardSetting>(SelectCard.gameObject, CompleteDespawn);
+        GameManager.Instance.PoolManager.DeSpawnObj<CardSetting>(SelectCard.gameObject, CardCompleteDespawn);
     }
 
     /** 카드 비활성화가 완료 되었을 경우 */
-    private void CompleteDespawn(object Obj)
+    private void CardCompleteDespawn(object Obj)
     {
         (Obj as GameObject).SetActive(false);
     }
@@ -409,6 +409,7 @@ public class CardManager : MonoBehaviour
     public void CardDeckCreate()
     {
         var oCardDeck = CardDeck.Instance.oCardBasicTableDeck;
+
         if (oCardDeck != null)
         {
             for (int i = 0; i < oCardDeck.Count; i++)
@@ -418,6 +419,18 @@ public class CardManager : MonoBehaviour
                 Card.SettingCardDeck(oCardDeck[i]);
             }
         }
+    }
+
+    /** 카드 덱을 디스폰 시킨다 */
+    public void CardDeckListDespawn(GameObject CardDeck)
+    {
+        GameManager.Instance.PoolManager.DeSpawnObj<CardDeckSetting>(CardDeck, CardDeckCompleteDespawn);
+    }
+
+    /** 카드 덱 비활성화가 완료 되었을 경우 */
+    private void CardDeckCompleteDespawn(object Obj)
+    {
+        (Obj as GameObject).SetActive(false);
     }
 
     /** 카드 덱을 오브젝트 풀링한다 */

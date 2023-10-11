@@ -104,12 +104,25 @@ public class UIManager : MonoBehaviour
 
     }
 
-    /** 버튼을 누를경우 덱 리스트를 보여준다 */
+    /** 덱 버튼을 누를경우 덱 리스트를 보여준다 */
     public void ShowDeckList()
     {
         IsDeckListShow = true;
         CardManager.Instance.CardDeckCreate();
         DeckListShowObject.SetActive(true);
+    }
+
+    /** 덱 리스트에서 취소를 누를경우 */
+    public void CancelShowDeckList()
+    {
+        IsDeckListShow = false;
+        var DeckComponents = DeckListShowObject.GetComponentsInChildren<CardDeckSetting>();
+        for (int i =0; i < DeckComponents.Length; i++)
+        {
+            DeckComponents[i].DespawnCardDeck();
+            Debug.Log("123");
+        }
+        DeckListShowObject.SetActive(false);
     }
     #endregion // 함수
 }
