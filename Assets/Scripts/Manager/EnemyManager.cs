@@ -10,8 +10,6 @@ public class EnemyManager : MonoBehaviour
     {
         NONE = 0,
         MAGIC,
-        SL,
-        TL
     }
     #region 변수
     [Header("=====> Player Option <=====")]
@@ -166,14 +164,6 @@ public class EnemyManager : MonoBehaviour
                 Debug.Log("MAGIC");
                 ePeturnRandom = EnemyPeturnRandom.MAGIC;
                 break;
-            case EnemyPeturnRandom.SL:
-                Debug.Log("SL");
-                ePeturnRandom = EnemyPeturnRandom.SL;
-                break;
-            case EnemyPeturnRandom.TL:
-                Debug.Log("TL");
-                ePeturnRandom = EnemyPeturnRandom.TL;
-                break;
         }
 
     }
@@ -197,14 +187,6 @@ public class EnemyManager : MonoBehaviour
             case EnemyPeturnRandom.MAGIC:
                 StopCoroutine(EnemyMagicPeturn());
                 StartCoroutine(EnemyMagicPeturn());
-                break;
-            case EnemyPeturnRandom.SL:
-                StopCoroutine(EnemySLPeturn());
-                StartCoroutine(EnemySLPeturn());
-                break;
-            case EnemyPeturnRandom.TL:
-                StopCoroutine(EnemyTLPeturn());
-                StartCoroutine(EnemyTLPeturn());
                 break;
         }
     }
@@ -256,22 +238,6 @@ public class EnemyManager : MonoBehaviour
 
         Destroy(oParticle);
         yield return new WaitForSeconds(3f);
-        IsEnemyAttackReady = false;
-    }
-
-    /** SL 패턴을 사용한다 */
-    private IEnumerator EnemySLPeturn()
-    {
-        yield return new WaitForSeconds(3f);
-        Debug.Log("SL");
-        IsEnemyAttackReady = false;
-    }
-
-    /** TL 패턴을 사용한다 */
-    private IEnumerator EnemyTLPeturn()
-    {
-        yield return new WaitForSeconds(3f);
-        Debug.Log("TL");
         IsEnemyAttackReady = false;
     }
 

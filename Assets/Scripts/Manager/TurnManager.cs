@@ -23,9 +23,11 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private bool IsFrontCard = true; // 앞면 카드, 뒷면 카드 확인하는 변수
     [SerializeField] private bool IsLoading; // 로딩중일때 클릭 못하게 하는 변수
 
-    [Header("=====> 턴 관리자 <=====")]
+    [Header("=====> 턴 데이터 관리자 <=====")]
     [SerializeField] private PlayerData oPlayerData; // 플레이어 데이터
     [SerializeField] private GameObject DropObject;
+    [SerializeField] private string MyTurn;
+    [SerializeField] private string EnemyTurn;
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
     public static Action<bool> IsOnAddCard; // 카드 뽑는 델리게이트
@@ -111,13 +113,17 @@ public class TurnManager : MonoBehaviour
         // 내 턴일 경우
         if(IsMyTurn == true)
         {
-            // TODO : 나의 턴 이라고 직접 작성하지말고 데이터를 불러와서 대입하는 형식으로 코드 수정해야됨
-            UIManager.Instance.Notification("나의 턴");
+            UIManager.Instance.Notification(MyTurn);
 
             yield return oDelay;
 
             oPlayerData.oCurrentCost = oPlayerData.oMaxCost; // 최대 마나랑 같게 설정
             IsOnAddCard?.Invoke(IsFrontCard); // 턴 시작시 앞면 카드 한장 뽑기
+        }
+        else
+        {
+            UIManager.Instance.Notification(EnemyTurn);
+            yield return oDelay;
         }
 
         yield return oDelay;
@@ -140,6 +146,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    /** 스테이지 배경음을 세팅한다 */
     private void StageBGMSetting(StageInfo.EnemyType StageEnemyTypeInfo)
     {
         switch (StageEnemyTypeInfo)

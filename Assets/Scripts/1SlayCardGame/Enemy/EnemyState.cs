@@ -66,7 +66,8 @@ public class EnemyWaitState : State
     /** 적 상태 시작 */
     public override void EnemyStateEnter(EnemyState eState)
     {
-        Debug.Log("대기 시작");
+        // 적 패턴 선택
+        EnemyManager.Instance.EnemySelectPeturn();
     }
 
     /** 적 상태 갱신 */
@@ -75,12 +76,8 @@ public class EnemyWaitState : State
         // 적이 살아있을 경우
         if (EnemyManager.Instance.IsEnemyAlive == true)
         {
-            // 적 턴일 경우
-            if (TurnManager.Instacne.bIsMyTurn == false)
+            if (TurnManager.Instacne.bIsMyTurn == false && TurnManager.Instacne.bIsLoading == false)
             {
-                Debug.Log("패턴을 선택합니다.");
-                EnemyManager.Instance.EnemySelectPeturn();
-
                 eState.EnemyChangeState(EnemyState.eEnemyState.ATTACK);
             }
         }
