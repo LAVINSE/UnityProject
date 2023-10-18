@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,17 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private Slider PlayerManaSlider = null; // 마나 슬라이더
     [SerializeField] private TMP_Text PlayerManaText = null; // 마나 텍스트
 
+    [Header("=====> Player Sprite Parts <=====")]
+    [SerializeField] private SpriteRenderer Body = null;
+    [SerializeField] private SpriteRenderer Head = null;
+    [SerializeField] private SpriteRenderer Arms = null;
+    [SerializeField] private SpriteRenderer ArmRight = null;
+
+    [Header("=====> Player Position <=====")]
+    [SerializeField] private Vector3 BasicPlayerPos = new Vector3(-5.0f, 0.7f, 0f); // 플레이어 고정 위치
+
+    private HitRender HitRender = null;
+
     private PlayerData oPlayerData;
     #endregion // 변수
 
@@ -34,6 +46,7 @@ public class PlayerUI : MonoBehaviour
         oPlayerData = GetComponent<PlayerData>();
         IntegratedManaObject.SetActive(true); // 객체 활성화
         PlayerSlider.SetActive(true);
+        HitRender = GetComponent<HitRender>();
     }
 
     /** 상태를 갱신한다 */
@@ -45,6 +58,38 @@ public class PlayerUI : MonoBehaviour
             SetUpManaSlider();
             TopUISetup();
         }  
+    }
+
+    /** 초기화 >> 접촉했을 때*/
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 파티클과 접촉 했을 경우
+        if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
+        {
+            HitRender.HitRenderer(Body, Head, Arms, ArmRight, this.transform.position + Vector3.left, 0.1f);
+        }
+        else if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
+        {
+            var Particle = collision.gameObject.GetComponent<ParticleSystem>();
+            var ParticleMain = Particle.main;
+            var ParticleDuration = ParticleMain.duration;
+            HitRender.UseHitContinuousRenderer(Body, Head, Arms, ArmRight, ParticleDuration, 0.1f);
+        }
+    }
+
+    /** 초기화 >> 접촉이 끝났을 때*/
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // 파티클과 접촉 했을 경우
+        if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
+        {
+            HitRender.ExitHitRenderer(Body, Head, Arms, ArmRight, BasicPlayerPos, 0.1f);
+        }
+
+        if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
+        {
+            HitRender.ExitHitRenderer(Body, Head, Arms, ArmRight, BasicPlayerPos, 0.1f);
+        }
     }
 
     /** 체력 슬라이더를 세팅한다 */

@@ -80,8 +80,12 @@ public class SpellCard : MonoBehaviour
         ParticleMove(oParticle, EnemyPosition, true, 0.2f);
 
         yield return new WaitForSeconds(0.2f);
-        EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
 
+        if (EnemyManager.Instance.SelectEnemy.oIsEnemyDie == false)
+        {
+            EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
+        }
+        
         Destroy(oParticle);
     }
 
@@ -105,7 +109,11 @@ public class SpellCard : MonoBehaviour
 
         while (ParticleDuration > 0)
         {
-            EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
+            if (EnemyManager.Instance.SelectEnemy.oIsEnemyDie == false)
+            {
+                EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
+            }
+
             yield return new WaitForSeconds(1.1f);
             ParticleDuration--;
         }

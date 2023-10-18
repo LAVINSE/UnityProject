@@ -1954,6 +1954,11 @@ MonoBehaviour:
   IntegratedManaObject: {fileID: 95081180}
   PlayerManaSlider: {fileID: 873416023}
   PlayerManaText: {fileID: 1765998226}
+  Body: {fileID: 1663224875}
+  Head: {fileID: 583491651}
+  Arms: {fileID: 648008483}
+  ArmRight: {fileID: 566702778}
+  BasicPlayerPos: {x: -5, y: 0.7, z: 0}
 --- !u!114 &311529633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1966,16 +1971,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d1c2f5c5c7fbd4e914039d2cc7f1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 20
+  MaxHp: 1
   MaxCost: 5
   CurrentHp: 0
   CurrentCost: 0
   CurrentGold: 0
-  BasicPlayerPos: {x: -5, y: 0.7, z: 0}
-  Body: {fileID: 1663224875}
-  Head: {fileID: 583491651}
-  Arms: {fileID: 648008483}
-  ArmRight: {fileID: 566702778}
 --- !u!61 &311529634
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2529,7 +2529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 457370279}
   m_Layer: 0
-  m_Name: "\uD50C\uB808\uC774\uC5B4 \uC8FD\uC74C \uD568\uC218 \uB9CC\uB4E4\uC5B4\uC57C\uD568"
+  m_Name: "\uD50C\uB808\uC774\uC5B4 \uC8FD\uC74C \uD568\uC218 \uAD6C\uD604\uC911"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -204,7 +204,12 @@ public class EnemyManager : MonoBehaviour
         ParticleMove(oParticle, PlayerPosition, true, 0.2f);
 
         yield return new WaitForSeconds(0.2f);
-        oPlayerData.TakeDamage(EnemyATK);
+
+        if(oPlayerData.oIsPlayerDie == false)
+        {
+            oPlayerData.TakeDamage(EnemyATK);
+        }
+
         Destroy(oParticle);
 
         yield return new WaitForSeconds(3f);
@@ -231,7 +236,11 @@ public class EnemyManager : MonoBehaviour
 
         while (ParticleDuration > 0)
         {
-            oPlayerData.TakeDamage(EnemyATK);
+            if (oPlayerData.oIsPlayerDie == false)
+            {
+                oPlayerData.TakeDamage(EnemyATK);
+            }
+
             yield return new WaitForSeconds(1.1f);
             ParticleDuration--;
         }

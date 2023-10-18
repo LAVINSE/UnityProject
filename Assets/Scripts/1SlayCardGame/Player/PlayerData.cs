@@ -15,18 +15,10 @@ public class PlayerData : MonoBehaviour
     [Header("=====> Player Data Current <=====")]
     [SerializeField] private float CurrentHp = 0; // 현재 체력
     [SerializeField] private float CurrentCost = 0; // 현재 코스트
-    [SerializeField] private float CurrentGold = 50; // 현재 골드
+    [SerializeField] private float CurrentGold = 50; // 현재 골드  
 
-    [Header("=====> Player Data Position <=====")]
-    [SerializeField] private Vector3 BasicPlayerPos; // 플레이어 고정 위치
-
-    [Header("=====> Player Sprite Parts <=====")]
-    [SerializeField] private SpriteRenderer Body = null;
-    [SerializeField] private SpriteRenderer Head = null;
-    [SerializeField] private SpriteRenderer Arms = null;
-    [SerializeField] private SpriteRenderer ArmRight = null;
-
-    private HitRender HitRender = null;
+    private bool IsPlayerDie = false;
+    private Animator PlayerAnim;
     #endregion //변수
 
     #region 프로퍼티
@@ -65,53 +57,58 @@ public class PlayerData : MonoBehaviour
         set => CurrentHp = Mathf.Max(0, value);
     }
 
+    public bool oIsPlayerDie
+    {
+        get => IsPlayerDie;
+        set => IsPlayerDie = value;
+    }
     #endregion // 프로퍼티
 
     #region 함수
     /** 초기화 */
     private void Awake()
     {
-        CurrentHp = MaxHp; // 현재 체력을 최대 체력과 같게 설정
-        CurrentCost = MaxCost; // 현재 코스트를 최대 코스트와 같게 설정
-        HitRender = GetComponent<HitRender>();
+        PlayerDataSetting();
+        PlayerAnim = GetComponent<Animator>();
+        PlayerAnim.SetBool("IsLive", true);
+        IsPlayerDie = true;
     }
 
     /** 데미지를 받는다 */
     public void TakeDamage(float Damage)
     {
         oCurrentHp -= Damage;
-    }
 
-    /** 초기화 >> 접촉했을 때*/
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // 파티클과 접촉 했을 경우
-        if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
+        if (CurrentHp <= 0)
         {
-            HitRender.HitRenderer(Body, Head, Arms, ArmRight, this.transform.position + Vector3.left, 0.1f);
-        }
-        else if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
-        {
-            var Particle = collision.gameObject.GetComponent<ParticleSystem>();
-            var ParticleMain = Particle.main;
-            var ParticleDuration = ParticleMain.duration;
-            HitRender.UseHitContinuousRenderer(Body, Head, Arms, ArmRight, ParticleDuration, 0.1f);
+            IsPlayerDie = true;
+            StartCoroutine(PlayerDie());
         }
     }
 
-    /** 초기화 >> 접촉이 끝났을 때*/
-    private void OnCollisionExit2D(Collision2D collision)
+    /** 플레이어 죽음 처리를 한다 */
+    private IEnumerator PlayerDie()
     {
-        // 파티클과 접촉 했을 경우
-        if (collision.gameObject.CompareTag("Enemy_Disappear_Type"))
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameOver);
+        PlayerAnim.SetBool("IsLive", false);
+
+        // 플레이어가 죽었을 경우
+        if (IsPlayerDie)
         {
-            HitRender.ExitHitRenderer(Body, Head, Arms, ArmRight, BasicPlayerPos, 0.1f);
+            PlayerAnim.SetTrigger("Die");
+            // TODO : 다시하기 창 띄우기
+            // TODO : 메인메뉴로 돌아가는 창 띄우기
         }
 
-        if (collision.gameObject.CompareTag("Enemy_Continuous_Type"))
-        {
-            HitRender.ExitHitRenderer(Body, Head, Arms, ArmRight, BasicPlayerPos, 0.1f);
-        }
+        yield return null;
+    }
+
+    /** 플레이어를 데이터를 세팅한다 */
+    public void PlayerDataSetting()
+    {
+        CurrentHp = MaxHp; // 현재 체력을 최대 체력과 같게 설정
+        CurrentCost = MaxCost; // 현재 코스트를 최대 코스트와 같게 설정
     }
     #endregion // 함수
 }
