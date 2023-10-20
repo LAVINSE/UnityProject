@@ -16,7 +16,13 @@ public class DropUI : Popup
     private void Awake()
     {
         oDropCard = GetComponentsInChildren<DropCard>();
-        Option_Background_Img = BackGround ;
+        Option_Background_Img = BackGround;
+    }
+
+    /** 나가기 창을 보여준다 */
+    public void LeaveShow()
+    {
+        UIManager.Inst.LeavePanelShow();
     }
 
     /** 드랍 UI를 닫는다 */

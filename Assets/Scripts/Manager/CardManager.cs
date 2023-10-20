@@ -123,9 +123,9 @@ public class CardManager : MonoBehaviour
         CardBuffer = new List<CardScirptTable>();
 
         // CardData에 있는 리스트 수 만큼 반복
-        for(int i = 0; i< CardDeck.Instance.oCardBasicTableDeck.Count; i++)
+        for(int i = 0; i< CardDeck.Inst.oCardBasicTableDeck.Count; i++)
         {
-            CardScirptTable Data = CardDeck.Instance.oCardBasicTableDeck[i];
+            CardScirptTable Data = CardDeck.Inst.oCardBasicTableDeck[i];
             for(int j = 0; j< Data.CardCount; j++)
             {
                 CardBuffer.Add(Data);
@@ -221,15 +221,15 @@ public class CardManager : MonoBehaviour
     /** 카드를 움직일 수 있는 상태를 정한다 */
     private void SetECardState()
     {
-        if(TurnManager.Instacne.bIsLoading == true)
+        if(TurnManager.Inst.bIsLoading == true)
         {
             CardState = ECardState.NOTHING;
         }
-        else if(TurnManager.Instacne.bIsMyTurn == false)
+        else if(TurnManager.Inst.bIsMyTurn == false)
         {
             CardState = ECardState.CANMOUSEOVER;
         }
-        else if(TurnManager.Instacne.bIsMyTurn == true)
+        else if(TurnManager.Inst.bIsMyTurn == true)
         {
             CardState = ECardState.CANMOUSEDRAG;
         }
@@ -384,7 +384,7 @@ public class CardManager : MonoBehaviour
     /** 사용한 카드를 디스폰 시킨다 */
     public void CardDespawn()
     {
-        GameManager.Instance.PoolManager.DeSpawnObj<CardSetting>(SelectCard.gameObject, CardCompleteDespawn);
+        GameManager.Inst.PoolManager.DeSpawnObj<CardSetting>(SelectCard.gameObject, CardCompleteDespawn);
     }
 
     /** 카드 비활성화가 완료 되었을 경우 */
@@ -396,7 +396,7 @@ public class CardManager : MonoBehaviour
     /** 카드 오브젝트 풀링 */
     private CardSetting CardObjectPool(GameObject OriginCard, GameObject CardRoot)
     {
-        var Card = GameManager.Instance.PoolManager.SpawnObj<CardSetting>(() =>
+        var Card = GameManager.Inst.PoolManager.SpawnObj<CardSetting>(() =>
         {
             return CFactory.CreateCloneObj("Card", OriginCard, CardRoot, Vector3.zero, Vector3.one, Vector3.zero);
         }) as GameObject;
@@ -408,7 +408,7 @@ public class CardManager : MonoBehaviour
     /** 카드 덱을 생성한다 */
     public void CardDeckCreate()
     {
-        var oCardDeck = CardDeck.Instance.oCardBasicTableDeck;
+        var oCardDeck = CardDeck.Inst.oCardBasicTableDeck;
 
         if (oCardDeck != null)
         {
@@ -424,7 +424,7 @@ public class CardManager : MonoBehaviour
     /** 카드 덱을 디스폰 시킨다 */
     public void CardDeckListDespawn(GameObject CardDeck)
     {
-        GameManager.Instance.PoolManager.DeSpawnObj<CardDeckSetting>(CardDeck, CardDeckCompleteDespawn);
+        GameManager.Inst.PoolManager.DeSpawnObj<CardDeckSetting>(CardDeck, CardDeckCompleteDespawn);
     }
 
     /** 카드 덱 비활성화가 완료 되었을 경우 */
@@ -436,7 +436,7 @@ public class CardManager : MonoBehaviour
     /** 카드 덱을 오브젝트 풀링한다 */
     public CardDeckSetting CardDeckObjectPool(GameObject CardDeckPrefab, GameObject CardListGroupRoot)
     {
-        var CardDeckObejct = GameManager.Instance.PoolManager.SpawnObj<CardDeckSetting>(() =>
+        var CardDeckObejct = GameManager.Inst.PoolManager.SpawnObj<CardDeckSetting>(() =>
         {
             return CFactory.CreateCloneObj("CardDeck", CardDeckPrefab, CardListGroupRoot, Vector3.zero, Vector3.one, Vector3.zero);
         }) as GameObject;

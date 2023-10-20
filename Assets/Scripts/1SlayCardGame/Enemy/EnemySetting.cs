@@ -75,14 +75,14 @@ public class EnemySetting : MonoBehaviour
     /** 적 죽음 처리를 한다 */
     private IEnumerator EnemyOnDie()
     {
-        AudioManager.Instance.StopBGM();
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameOver);
+        AudioManager.Inst.StopBGM();
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.GameOver);
 
         yield return new WaitForSeconds(2.0f);
         // 드랍 아이템 창 보여주기
         if (IsEnemyDie == true)
         {
-            UIManager.Instance.ShowDropUI();
+            UIManager.Inst.DropUIShow();
         }
 
         // 사망 애니메이션

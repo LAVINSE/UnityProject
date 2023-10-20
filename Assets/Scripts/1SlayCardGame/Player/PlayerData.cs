@@ -71,7 +71,6 @@ public class PlayerData : MonoBehaviour
         PlayerDataSetting();
         PlayerAnim = GetComponent<Animator>();
         PlayerAnim.SetBool("IsLive", true);
-        IsPlayerDie = true;
     }
 
     /** 데미지를 받는다 */
@@ -89,8 +88,8 @@ public class PlayerData : MonoBehaviour
     /** 플레이어 죽음 처리를 한다 */
     private IEnumerator PlayerDie()
     {
-        AudioManager.Instance.StopBGM();
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameOver);
+        AudioManager.Inst.StopBGM();
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.GameOver);
         PlayerAnim.SetBool("IsLive", false);
 
         // 플레이어가 죽었을 경우

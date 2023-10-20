@@ -4,29 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public struct StageInfo
-{
-    public enum EnemyType
-    {
-        // NONE 사용 X
-        NONE = -1,
-
-        NORMAL,
-        ELITE,
-        BOSS,
-    }
-
-    public string StageInfoTitleName;
-    public Sprite StageInfoImg;
-    public EnemyType StageEnemyType;
-}
-
 public class StageMenuUI : MonoBehaviour
 {
     #region 변수
     [Header("=====> Stage Info <=====")]
-    [SerializeField] private StageInfo[] StageInfoArray = null;
+    [SerializeField] private GameManager.StageInfo[] StageInfoArray = null;
 
     [Header("=====> Stage UI <=====")]
     [SerializeField] private TMP_Text StageTitleText = null;
@@ -40,7 +22,7 @@ public class StageMenuUI : MonoBehaviour
     private void Start()
     {
         SettingStageInfo();
-        AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.MenuBGM);
+        AudioManager.Inst.PlayBGM(AudioManager.BGMEnum.MenuBGM);
     }
 
     /** Next 스테이지 버튼을 눌렀을 때*/
@@ -51,7 +33,7 @@ public class StageMenuUI : MonoBehaviour
             CurrentStage = 0;
         }
 
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.NextBackButton);
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.NextBackButton);
         SettingStageInfo();
     }
 
@@ -62,7 +44,7 @@ public class StageMenuUI : MonoBehaviour
         {
             CurrentStage = StageInfoArray.Length - 1;
         }
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.NextBackButton);
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.NextBackButton);
         SettingStageInfo();
     }
 
@@ -76,20 +58,16 @@ public class StageMenuUI : MonoBehaviour
     /** 플레이 버튼을 눌렀을 때 */
     public void OnClickPlayButton()
     {
-        GameManager.Instance.ActiveStageUI("StageUI_0");
-        GameManager.Instance.ActiveStageObject("StageObject_0");
-        GameManager.Instance.oStageEnemyType = StageInfoArray[CurrentStage].StageEnemyType;
+        GameManager.Inst.oStageEnemyType = StageInfoArray[CurrentStage].StageEnemyType;
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.GameStartButton);
 
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.GameStartButton);
-        
-        this.gameObject.SetActive(false);
-        GameManager.Instance.IsGameStart = true;
+        GameManager.Inst.ChangeScene("SlayCardGame");
     }
 
     /** 뒤로가기 버튼을 눌렀을 때 */
     public void OnClickBackButton()
     {
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.LeaveButton);
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.LeaveButton);
     }
     #endregion // 함수
 }

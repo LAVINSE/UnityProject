@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : CSingleton<AudioManager>
 {
     #region 열거형
     /** 배경음 종류 */
@@ -42,7 +42,6 @@ public class AudioManager : MonoBehaviour
     #endregion // 변수
 
     #region 프로퍼티
-    public static AudioManager Instance;
     public float oBGMVolume
     {
         get => BGMVolume;
@@ -57,9 +56,10 @@ public class AudioManager : MonoBehaviour
 
     #region 함수
     /** 초기화 */
-    private void Awake()
+    public override void Awake()
     {
-        Instance = this;
+        base.Awake();
+
         BGMInit();
         SFXInit();
     }

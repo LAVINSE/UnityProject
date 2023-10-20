@@ -5,19 +5,35 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-public class GameManager : MonoBehaviour
+public class GameManager : CSingleton<GameManager>
 {
-    #region 변수
-    [SerializeField] private List<GameObject> StageUIList = new List<GameObject>();
-    [SerializeField] private List<GameObject> StageObjectList = new List<GameObject>();
+    [System.Serializable]
+    public struct StageInfo
+    {
+        public enum EnemyType
+        {
+            // NONE 사용 X
+            NONE = -1,
 
+            NORMAL,
+            ELITE,
+            BOSS,
+        }
+
+        public string StageInfoTitleName;
+        public Sprite StageInfoImg;
+        public EnemyType StageEnemyType;
+    }
+
+    #region 변수
+    [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private StageInfo.EnemyType StageEnemyType = StageInfo.EnemyType.NONE;
     #endregion // 변수
 
 
     #region 프로퍼티
-    public static GameManager Instance { get; private set; }
     public ObjectPoolManager PoolManager { get; private set; } = null;
     public bool IsGameStart { get; set; } = false;
 
@@ -30,9 +46,10 @@ public class GameManager : MonoBehaviour
 
     #region 함수
     /** 초기화 */
-    private void Awake()
+    public override void Awake()
     {
-        Instance = this;
+        base.Awake();
+
         PoolManager = CFactory.CreateObject<ObjectPoolManager>("ObjectPoolManager", this.gameObject,
             Vector3.zero, Vector3.one, Vector3.zero);
     }
@@ -40,6 +57,7 @@ public class GameManager : MonoBehaviour
     /** 초기화 >> 상태를 갱신한다 */
     private void Update()
     {
+        // TODO : 게임 시작 방법을 바꿔야함
         if (IsGameStart == true)
         {
             // 게임을 시작한다
@@ -70,38 +88,20 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            TurnManager.Instacne.NextTurn();
+            TurnManager.Inst.NextTurn();
         }
     }
 
     /** 게임을 시작한다 */
     public void StartGame(StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        StartCoroutine(TurnManager.Instacne.StartGameCo(StageEnemyTypeInfo));
+        StartCoroutine(TurnManager.Inst.StartGameCo(StageEnemyTypeInfo));
     }
 
-    /** 게임 스테이지UI를 활성화 한다 */
-    public void ActiveStageUI(string StageUIName)
+    /** 씬을 이동한다 */
+    public void ChangeScene(string SceneName)
     {
-        for(int i=0; i< StageUIList.Count; i++)
-        {
-            if (StageUIList[i].gameObject.name == StageUIName)
-            {
-                StageUIList[i].SetActive(true);
-            }
-        }
-    }
-
-    /** 게임 스테이지Object를 활성화 한다 */
-    public void ActiveStageObject(string StageObjectName)
-    {
-        for (int i = 0; i < StageObjectList.Count; i++)
-        {
-            if (StageObjectList[i].gameObject.name == StageObjectName)
-            {
-                StageObjectList[i].SetActive(true);
-            }
-        }
+        LoadingScene.LoadScene(SceneName);
     }
     #endregion // 함수
 }

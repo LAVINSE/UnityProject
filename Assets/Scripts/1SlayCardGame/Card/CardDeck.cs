@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardDeck : MonoBehaviour
+public class CardDeck : CSingleton<CardDeck>
 {
     #region 변수
     [Header("=====> 기본 Scriptable Objects <=====")]
@@ -10,7 +10,6 @@ public class CardDeck : MonoBehaviour
     #endregion // 변수
 
     #region 프로퍼티
-    public static CardDeck Instance { get; private set; }
     public List<CardScirptTable> oCardBasicTableDeck
     {
         get => CardBasicTableDeck;
@@ -19,9 +18,5 @@ public class CardDeck : MonoBehaviour
     #endregion // 프로퍼티
 
     #region 함수
-    private void Awake()
-    {
-        Instance = this;
-    }
     #endregion // 함수
 }

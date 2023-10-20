@@ -49,8 +49,8 @@ public class OptionPopup : Popup
         SFXVolumeText.text = SFXVolume_Text;
 
         // 슬라이더를 설정한다
-        BGMVolumeSlider.value = AudioManager.Instance.oBGMVolume;
-        SFXVolumeSlider.value = AudioManager.Instance.oSFXVolume;
+        BGMVolumeSlider.value = AudioManager.Inst.oBGMVolume;
+        SFXVolumeSlider.value = AudioManager.Inst.oSFXVolume;
         BGMVolumeSlider.onValueChanged.AddListener(BGMSliderValue);
         SFXVolumeSlider.onValueChanged.AddListener(SFXSliderValue);
     }
@@ -85,7 +85,7 @@ public class OptionPopup : Popup
     private void OnClickContinue()
     {
         OptionAction?.Invoke(this, true);
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.OptionButton);
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
         PopupClose();
     }
 
@@ -93,20 +93,20 @@ public class OptionPopup : Popup
     private void OnClickCancel()
     {
         OptionAction?.Invoke(this, false);
-        AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.OptionButton);
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
         PopupClose();
     }
 
     /** 베경음 슬라이더 핸들을 움직였을 경우 */
     private void BGMSliderValue(float Volume)
     {
-        AudioManager.Instance.oBGMVolume = Volume;
+        AudioManager.Inst.oBGMVolume = Volume;
     }
 
     /** 효과음 슬라이더 핸들을 움직였을 경우 */
     private void SFXSliderValue(float Volume)
     {
-        AudioManager.Instance.oSFXVolume = Volume;
+        AudioManager.Inst.oSFXVolume = Volume;
     }
 
     /** 매개 변수를 생성한다 */

@@ -54,11 +54,6 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-
-    /** 초기화 */
-    private void Start()
-    {
         TurnManager.IsSpawnEnemy += SpawnEnemy;
     }
 
@@ -69,13 +64,13 @@ public class EnemyManager : MonoBehaviour
     }
 
     /** 적을 소환한다 */
-    private void SpawnEnemy(StageInfo.EnemyType StageEnemyTypeInfo)
+    private void SpawnEnemy(GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
         CreateEnemy(EnemyOriginRoot, StageEnemyTypeInfo);
     }
 
     /** 적을 생성한다 */
-    private void CreateEnemy(GameObject EnemyRoot, StageInfo.EnemyType StageEnemyTypeInfo)
+    private void CreateEnemy(GameObject EnemyRoot, GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
         var Enemy = CFactory.CreateCloneObj("Enemy", SpawnReadyEnemy(StageEnemyTypeInfo).oEnemyObject, EnemyRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
@@ -85,19 +80,19 @@ public class EnemyManager : MonoBehaviour
     }
 
     /** 적을 선택해 소환할 준비를 한다 */
-    private EnemyBasicData SpawnReadyEnemy(StageInfo.EnemyType StageEnemyTypeInfo)
+    private EnemyBasicData SpawnReadyEnemy(GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
         if(EnemyBuffer.Count == 0)
         {
             switch (StageEnemyTypeInfo)
             {
-                case StageInfo.EnemyType.NORMAL:
+                case GameManager.StageInfo.EnemyType.NORMAL:
                     RandomEnemyData(EnemyNormal);
                     break;
-                case StageInfo.EnemyType.ELITE:
+                case GameManager.StageInfo.EnemyType.ELITE:
                     RandomEnemyData(EnemyElite);
                     break;
-                case StageInfo.EnemyType.BOSS:
+                case GameManager.StageInfo.EnemyType.BOSS:
                     RandomEnemyData(EnemyBoss);
                     break;
             }

@@ -147,6 +147,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1674419071144332952}
+        m_TargetAssemblyTypeName: DropUI, Assembly-CSharp
+        m_MethodName: LeaveShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1674419070803981366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2324,6 +2336,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1674419071144332952}
+        m_TargetAssemblyTypeName: DropUI, Assembly-CSharp
+        m_MethodName: LeaveShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1674419072181281517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2481,6 +2505,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1674419072241739926}
         m_TargetAssemblyTypeName: DropCard, Assembly-CSharp
         m_MethodName: DropCardAdd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1674419071144332952}
+        m_TargetAssemblyTypeName: DropUI, Assembly-CSharp
+        m_MethodName: LeaveShow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -2,16 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : CSingleton<UIManager>
 {
     #region 변수
-    [Header("=====> 턴 시작 알림 <=====")]
-    [SerializeField] private NotificationPanel oNotificationPanel;
-
     [Header("=====> UI 객체, 객체 위치 <=====")]
-    [SerializeField] private GameObject PopupRoot;
-    [SerializeField] private GameObject DropUIRoot;
-    [SerializeField] private GameObject LeaveButton;
     [SerializeField] private GameObject DeckListShowObject;
 
     [Header("=====> UI 텍스트 입력 <=====")]
@@ -19,21 +13,30 @@ public class UIManager : MonoBehaviour
     #endregion // 변수
 
     #region 프로퍼티
-    public static UIManager Instance { get; private set; }
     public bool IsDeckListShow = false;
+
+    public GameObject oPopupRoot { get; set; }
+    public GameObject oDropUIRoot { get; set; }
+    public GameObject oLeavePanelRoot { get; set; }
+    public GameObject oDeckListShowRoot { get; set; }
+    public GameObject oNotiPanelRoot { get; set; }
     #endregion // 프로퍼티
 
     #region 함수
     /** 초기화 */
-    private void Awake()
+    public override void Awake()
     {
-        Instance = this;
+        base.Awake();
+        Setting();
     }
 
     /** 초기화 >> 상태를 갱신한다 */
     private void Update()
     {
         OptionShow();
+
+        // TODO : 수정해야됨, 생각필요
+        Setting();
     }
 
     /** 옵션 팝업을 보여준다 */
@@ -42,7 +45,7 @@ public class UIManager : MonoBehaviour
         // Esc 키를 눌렀을 경우
         if (Input.GetKeyDown(KeyCode.Escape) || IsClick == true)
         {
-            var Option = PopupRoot.GetComponentInChildren<OptionPopup>();
+            var Option = oPopupRoot.GetComponentInChildren<OptionPopup>();
 
             // 옵션 팝업이 존재 할 경우
             if (Option != null)
@@ -51,8 +54,8 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                AudioManager.Instance.PlaySFX(AudioManager.SFXEnum.OptionButton);
-                Option = OptionPopup.CreateOptionPopup(OptionTitleText, PopupRoot);
+                AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
+                Option = OptionPopup.CreateOptionPopup(OptionTitleText, oPopupRoot);
 
                 Option.PopupShow(OnReceivePopup);
             }
@@ -74,34 +77,49 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    /** 드랍 UI 나가기 버튼을 활성화 한다 */
-    private void ActiveLeaveButton()
+    /** 나가기 패널을 보여준다 */
+    public void LeavePanelShow()
     {
-        LeaveButton.SetActive(true);
+        var LeavePanel = oLeavePanelRoot.GetComponentInChildren<LeaveUI>();
+
+        // 나가기 패널이 존재 할 경우
+        if (LeavePanel != null)
+        {
+            LeavePanel.PopupClose();
+        }
+        else
+        {
+            AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
+            LeavePanel = LeaveUI.CreateLeavePanel(oLeavePanelRoot);
+        }
     }
 
-    /** 턴 시작을 알린다 */
+    /** 턴 시작을 알림을 보여준다 */
     public void Notification(string Message)
     {
-        oNotificationPanel.Show(Message);
+        var NotiPanel = oNotiPanelRoot.GetComponentInChildren<NotificationPanel>();
+
+        // 턴 시작 알림창이 없을 경우
+        if(NotiPanel == null)
+        {
+            NotiPanel = NotificationPanel.CreateNotiPanel(oNotiPanelRoot);
+
+            NotiPanel.Show(Message);
+        }
     }
 
     /** 드랍 UI를 보여준다 */
-    public void ShowDropUI()
+    public void DropUIShow()
     {
-        var GetDropUI = DropUIRoot.GetComponentInChildren<DropUI>();
-
-        // 나가기 버튼을 보여준다
-        ActiveLeaveButton();
+        var DropUIPanel = oDropUIRoot.GetComponentInChildren<DropUI>();
 
         // DropUI가 존재하지 않을 경우
-        if (GetDropUI == null)
+        if (DropUIPanel == null)
         {
-            GetDropUI = DropUI.CreateDropUI(DropUIRoot);
+            DropUIPanel = DropUI.CreateDropUI(oDropUIRoot);
 
-            GetDropUI.DropShow();
+            DropUIPanel.DropShow();
         }
-
     }
 
     /** 덱 버튼을 누를경우 덱 리스트를 보여준다 */
@@ -123,6 +141,16 @@ public class UIManager : MonoBehaviour
             Debug.Log("123");
         }
         DeckListShowObject.SetActive(false);
+    }
+
+    /** 객체 초기화 */
+    public void Setting()
+    {
+        oPopupRoot = GameObject.Find("Canvas/PopupRoot");
+        oDropUIRoot = GameObject.Find("Canvas/DropUIRoot");
+        oLeavePanelRoot = GameObject.Find("Canvas/LeavePanelRoot");
+        oDeckListShowRoot = GameObject.Find("Canvas/DeckListShowRoot");
+        oNotiPanelRoot = GameObject.Find("Canvas/NotiPanelRoot");
     }
     #endregion // 함수
 }

@@ -61,7 +61,7 @@ public class DropCard : MonoBehaviour
     {
         CardScirptTable Data = CardBuffer[0];
         CardBuffer.RemoveAt(0);
-        CardDeck.Instance.oCardBasicTableDeck.Add(Data);
+        CardDeck.Inst.oCardBasicTableDeck.Add(Data);
     }
 
     /** 카드버퍼를 초기화 한다 */

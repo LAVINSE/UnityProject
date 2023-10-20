@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnManager : MonoBehaviour
+public class TurnManager : CSingleton<TurnManager>
 {
     private enum ETurnMode
     {
@@ -25,13 +25,12 @@ public class TurnManager : MonoBehaviour
 
     [Header("=====> 턴 데이터 관리자 <=====")]
     [SerializeField] private PlayerData oPlayerData; // 플레이어 데이터
-    [SerializeField] private GameObject DropObject;
     [SerializeField] private string MyTurn;
     [SerializeField] private string EnemyTurn;
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
     public static Action<bool> IsOnAddCard; // 카드 뽑는 델리게이트
-    public static Action<StageInfo.EnemyType> IsSpawnEnemy; // 적 소환 델리게이트
+    public static Action<GameManager.StageInfo.EnemyType> IsSpawnEnemy; // 적 소환 델리게이트
     #endregion // 변수
 
     #region 프로퍼티
@@ -46,17 +45,9 @@ public class TurnManager : MonoBehaviour
         get => IsMyTurn;
         set => IsMyTurn = value;
     }
-    
-    public static TurnManager Instacne { get; private set; }
     #endregion // 프로퍼티
 
     #region 함수
-    /** 초기화 */
-    private void Awake()
-    {
-        Instacne = this;
-    }
-
     /** 카드 배분을 관리한다 */
     private void GameSetup()
     {
@@ -82,7 +73,7 @@ public class TurnManager : MonoBehaviour
     }
 
     /** 게임 시작을 관리한다 */
-    public IEnumerator StartGameCo(StageInfo.EnemyType StageEnemyTypeInfo)
+    public IEnumerator StartGameCo(GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
         GameSetup();
         IsLoading = true;
@@ -113,7 +104,7 @@ public class TurnManager : MonoBehaviour
         // 내 턴일 경우
         if(IsMyTurn == true)
         {
-            UIManager.Instance.Notification(MyTurn);
+            UIManager.Inst.Notification(MyTurn);
 
             yield return oDelay;
 
@@ -122,7 +113,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.Notification(EnemyTurn);
+            UIManager.Inst.Notification(EnemyTurn);
             yield return oDelay;
         }
 
@@ -147,18 +138,18 @@ public class TurnManager : MonoBehaviour
     }
 
     /** 스테이지 배경음을 세팅한다 */
-    private void StageBGMSetting(StageInfo.EnemyType StageEnemyTypeInfo)
+    private void StageBGMSetting(GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
         switch (StageEnemyTypeInfo)
         {
-            case StageInfo.EnemyType.NORMAL:
-                AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Normal);
+            case GameManager.StageInfo.EnemyType.NORMAL:
+                AudioManager.Inst.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Normal);
                 break;
-            case StageInfo.EnemyType.ELITE:
-                AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Elite);
+            case GameManager.StageInfo.EnemyType.ELITE:
+                AudioManager.Inst.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Elite);
                 break;
-            case StageInfo.EnemyType.BOSS:
-                AudioManager.Instance.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Boss);
+            case GameManager.StageInfo.EnemyType.BOSS:
+                AudioManager.Inst.PlayBGM(AudioManager.BGMEnum.Battle_BGM_Boss);
                 break;
         }
     }
