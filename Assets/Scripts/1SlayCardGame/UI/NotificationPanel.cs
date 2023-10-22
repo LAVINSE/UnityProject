@@ -11,12 +11,6 @@ public class NotificationPanel : Popup
     #endregion // 변수
 
     #region 함수
-    /** 초기화 */
-    private void Start()
-    {
-        
-    }
-
     /** 턴 시작 알림창을 종료한다 */
     public void Close()
     {

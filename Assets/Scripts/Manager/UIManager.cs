@@ -13,8 +13,6 @@ public class UIManager : CSingleton<UIManager>
     #endregion // 변수
 
     #region 프로퍼티
-    public bool IsDeckListShow = false;
-
     public GameObject oPopupRoot { get; set; }
     public GameObject oDropUIRoot { get; set; }
     public GameObject oLeavePanelRoot { get; set; }
@@ -35,7 +33,7 @@ public class UIManager : CSingleton<UIManager>
     {
         OptionShow();
 
-        // TODO : 수정해야됨, 생각필요
+        // TODO : 수정해야됨, 씬 매니저 만들어서 상속 구조로 설정 
         Setting();
     }
 
@@ -122,25 +120,25 @@ public class UIManager : CSingleton<UIManager>
         }
     }
 
+    /** 덱 리스트를 보여준다 */
+    public void DeckListShow()
+    {
+        var DeckList = oDeckListShowRoot.GetComponentInChildren<DeckListUI>();
+
+        if(DeckList != null)
+        {
+            DeckList.PopupClose();
+        }
+        else
+        {
+            DeckList = DeckListUI.CreateDeckList(oDeckListShowRoot);
+        }
+    }
+
     /** 덱 버튼을 누를경우 덱 리스트를 보여준다 */
     public void ShowDeckList()
     {
-        IsDeckListShow = true;
-        CardManager.Instance.CardDeckCreate();
-        DeckListShowObject.SetActive(true);
-    }
-
-    /** 덱 리스트에서 취소를 누를경우 */
-    public void CancelShowDeckList()
-    {
-        IsDeckListShow = false;
-        var DeckComponents = DeckListShowObject.GetComponentsInChildren<CardDeckSetting>();
-        for (int i =0; i < DeckComponents.Length; i++)
-        {
-            DeckComponents[i].DespawnCardDeck();
-            Debug.Log("123");
-        }
-        DeckListShowObject.SetActive(false);
+        DeckListShow();
     }
 
     /** 객체 초기화 */

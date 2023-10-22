@@ -30,8 +30,10 @@ public class GameManager : CSingleton<GameManager>
     #region 변수
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private StageInfo.EnemyType StageEnemyType = StageInfo.EnemyType.NONE;
-    #endregion // 변수
 
+    [Header("=====> 플레이어 카드 덱 <=====")]
+    [SerializeField] private List<CardScirptTable> CardBasicTableDeck = new List<CardScirptTable>();
+    #endregion // 변수
 
     #region 프로퍼티
     public ObjectPoolManager PoolManager { get; private set; } = null;
@@ -41,6 +43,11 @@ public class GameManager : CSingleton<GameManager>
     {
         get => StageEnemyType;
         set => StageEnemyType = value;
+    }
+    public List<CardScirptTable> oCardBasicTableDeck
+    {
+        get => CardBasicTableDeck;
+        set => CardBasicTableDeck = value;
     }
     #endregion // 프로퍼티
 
@@ -57,15 +64,7 @@ public class GameManager : CSingleton<GameManager>
     /** 초기화 >> 상태를 갱신한다 */
     private void Update()
     {
-        // TODO : 게임 시작 방법을 바꿔야함
-        if (IsGameStart == true)
-        {
-            // 게임을 시작한다
-            StartGame(oStageEnemyType);
-            IsGameStart = false;
-        }
-
-        // 에디터에서 사용가능한 치트키
+        // 치트키
 #if UNITY_EDITOR
         InputCheatKey();
 #endif // UNITY_EDITOR
@@ -88,14 +87,14 @@ public class GameManager : CSingleton<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            TurnManager.Inst.NextTurn();
+            TurnManager.Instane.NextTurn();
         }
     }
 
     /** 게임을 시작한다 */
     public void StartGame(StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        StartCoroutine(TurnManager.Inst.StartGameCo(StageEnemyTypeInfo));
+        StartCoroutine(TurnManager.Instane.StartGameCo(StageEnemyTypeInfo));
     }
 
     /** 씬을 이동한다 */

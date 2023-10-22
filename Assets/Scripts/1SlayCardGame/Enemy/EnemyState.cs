@@ -76,7 +76,7 @@ public class EnemyWaitState : State
         // 적이 살아있을 경우
         if (EnemyManager.Instance.IsEnemyAlive == true)
         {
-            if (TurnManager.Inst.bIsMyTurn == false && TurnManager.Inst.bIsLoading == false)
+            if (TurnManager.Instane.bIsMyTurn == false && TurnManager.Instane.bIsLoading == false)
             {
                 eState.EnemyChangeState(EnemyState.eEnemyState.ATTACK);
             }
@@ -105,7 +105,7 @@ public class EnemyAttackState : State
         Debug.Log("공격 시작");
         EnemyManager.Instance.IsEnemyAttackReady = true;
         // 적 턴일 경우
-        if (TurnManager.Inst.bIsMyTurn == false)
+        if (TurnManager.Instane.bIsMyTurn == false)
         {
             // 적이 공격 준비 상태 일 경우
             if (EnemyManager.Instance.IsEnemyAttackReady == true)
@@ -121,7 +121,7 @@ public class EnemyAttackState : State
         if(EnemyManager.Instance.IsEnemyAttackReady == false)
         {
             eState.EnemyChangeState(EnemyState.eEnemyState.WAIT);
-            TurnManager.Inst.NextTurn();
+            TurnManager.Instane.NextTurn();
         }
     }
 

@@ -22,6 +22,7 @@ public class LoadingScene : MonoBehaviour
         SceneManager.LoadScene("LoadingScene");
     }
 
+    /***/
     private IEnumerator LoadSceneProcess()
     {
         AsyncOperation Oper = SceneManager.LoadSceneAsync(NextScene);

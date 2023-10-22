@@ -123,9 +123,9 @@ public class CardManager : MonoBehaviour
         CardBuffer = new List<CardScirptTable>();
 
         // CardData에 있는 리스트 수 만큼 반복
-        for(int i = 0; i< CardDeck.Inst.oCardBasicTableDeck.Count; i++)
+        for(int i = 0; i< GameManager.Inst.oCardBasicTableDeck.Count; i++)
         {
-            CardScirptTable Data = CardDeck.Inst.oCardBasicTableDeck[i];
+            CardScirptTable Data = GameManager.Inst.oCardBasicTableDeck[i];
             for(int j = 0; j< Data.CardCount; j++)
             {
                 CardBuffer.Add(Data);
@@ -221,15 +221,15 @@ public class CardManager : MonoBehaviour
     /** 카드를 움직일 수 있는 상태를 정한다 */
     private void SetECardState()
     {
-        if(TurnManager.Inst.bIsLoading == true)
+        if(TurnManager.Instane.bIsLoading == true)
         {
             CardState = ECardState.NOTHING;
         }
-        else if(TurnManager.Inst.bIsMyTurn == false)
+        else if(TurnManager.Instane.bIsMyTurn == false)
         {
             CardState = ECardState.CANMOUSEOVER;
         }
-        else if(TurnManager.Inst.bIsMyTurn == true)
+        else if(TurnManager.Instane.bIsMyTurn == true)
         {
             CardState = ECardState.CANMOUSEDRAG;
         }
@@ -408,7 +408,7 @@ public class CardManager : MonoBehaviour
     /** 카드 덱을 생성한다 */
     public void CardDeckCreate()
     {
-        var oCardDeck = CardDeck.Inst.oCardBasicTableDeck;
+        var oCardDeck = GameManager.Inst.oCardBasicTableDeck;
 
         if (oCardDeck != null)
         {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnManager : CSingleton<TurnManager>
+public class TurnManager : MonoBehaviour
 {
     private enum ETurnMode
     {
@@ -34,6 +34,7 @@ public class TurnManager : CSingleton<TurnManager>
     #endregion // 변수
 
     #region 프로퍼티
+    public static TurnManager Instane { get; private set; }
     public bool bIsLoading
     {
         get => IsLoading;
@@ -48,6 +49,24 @@ public class TurnManager : CSingleton<TurnManager>
     #endregion // 프로퍼티
 
     #region 함수
+    /** 초기화 */
+    private void Awake()
+    {
+        Instane = this;
+    }
+
+    /** 초기화 */
+    private void Update()
+    {
+        // TODO : 게임 시작 방법을 바꿔야함
+        if (GameManager.Inst.IsGameStart == true)
+        {
+            // 게임을 시작한다
+            StartCoroutine(StartGameCo(GameManager.Inst.oStageEnemyType));
+            GameManager.Inst.IsGameStart = false;
+        }
+    }
+
     /** 카드 배분을 관리한다 */
     private void GameSetup()
     {

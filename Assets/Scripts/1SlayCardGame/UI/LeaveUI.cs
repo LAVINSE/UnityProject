@@ -15,6 +15,12 @@ public class LeaveUI : Popup
         base.PopupClose();
     }
 
+    /** 씬을 바꾼다 */
+    public void ChangeScene()
+    {
+        LoadingScene.LoadScene("MainMenu");
+    }
+
     /** 나가기 패널을 생성한다 */
     public static LeaveUI CreateLeavePanel(GameObject RootObject)
     {
