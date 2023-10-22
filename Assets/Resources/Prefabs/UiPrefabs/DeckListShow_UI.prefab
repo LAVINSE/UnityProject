@@ -734,6 +734,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fb1253c5911454592ab851e9146220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CardListGroupRoot: {fileID: 3423921562812540765}
+  CardDeckPrefab: {fileID: 2516436039898939822, guid: 3970a4e88888c0547b415e1b018bef4d, type: 3}
 --- !u!1 &3423921563389999313
 GameObject:
   m_ObjectHideFlags: 0

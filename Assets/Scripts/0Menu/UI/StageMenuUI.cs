@@ -14,10 +14,21 @@ public class StageMenuUI : MonoBehaviour
     [SerializeField] private TMP_Text StageTitleText = null;
     [SerializeField] private Image StageImg = null;
 
+    [Header("=====> Stage Title Button <=====")]
+    [SerializeField] private Button MenuButton = null;
+    [SerializeField] private Button DeckButton = null;
+
     private int CurrentStage = 0;
     #endregion // 변수
 
     #region 함수
+    /** 초기화 */
+    private void Awake()
+    {
+        MenuButton.onClick.AddListener(OnClickPopShow);
+        DeckButton.onClick.AddListener(OnClickDeckListShow);
+    }
+
     /** 초기화 */
     private void Start()
     {
@@ -68,6 +79,18 @@ public class StageMenuUI : MonoBehaviour
     public void OnClickBackButton()
     {
         AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.LeaveButton);
+    }
+
+    /** 버튼을 눌렀을때 메뉴 버튼을 보여준다 */
+    private void OnClickPopShow()
+    {
+        UIManager.Inst.OptionShow(true);
+    }
+
+    /** 버튼을 눌렀을때 덱 리스트를 보여준다 */
+    private void OnClickDeckListShow()
+    {
+        UIManager.Inst.DeckListShow();
     }
     #endregion // 함수
 }

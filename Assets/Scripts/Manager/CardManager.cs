@@ -33,10 +33,6 @@ public class CardManager : MonoBehaviour
     [SerializeField] private PlayerData oPlayerData;
     [SerializeField] private SpellCard PlayerSpellCard;
 
-    [Header("=====> 플레이어 덱 <=====")]
-    [SerializeField] private GameObject CardListGroupRoot; // 카드 덱 오브젝트 하위에 생성될 위치
-    [SerializeField] private GameObject CardDeckPrefab; // 카드 덱 원본 객체
-
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private List<CardScirptTable> CardBuffer; // 카드 데이터에 들어있는 카드를 리스트에 넣는다
     [SerializeField] private List<CardSetting> DespawnCard; // 사용한 카드를 리스트에 넣는다
@@ -403,46 +399,6 @@ public class CardManager : MonoBehaviour
 
         Card.SetActive(true);
         return Card.GetComponent<CardSetting>();
-    }
-
-    /** 카드 덱을 생성한다 */
-    public void CardDeckCreate()
-    {
-        var oCardDeck = GameManager.Inst.oCardBasicTableDeck;
-
-        if (oCardDeck != null)
-        {
-            for (int i = 0; i < oCardDeck.Count; i++)
-            {
-                var CardDeckObject = CardDeckObjectPool(CardDeckPrefab, CardListGroupRoot);
-                var Card = CardDeckObject.GetComponent<CardDeckSetting>();
-                Card.SettingCardDeck(oCardDeck[i]);
-            }
-        }
-    }
-
-    /** 카드 덱을 디스폰 시킨다 */
-    public void CardDeckListDespawn(GameObject CardDeck)
-    {
-        GameManager.Inst.PoolManager.DeSpawnObj<CardDeckSetting>(CardDeck, CardDeckCompleteDespawn);
-    }
-
-    /** 카드 덱 비활성화가 완료 되었을 경우 */
-    private void CardDeckCompleteDespawn(object Obj)
-    {
-        (Obj as GameObject).SetActive(false);
-    }
-
-    /** 카드 덱을 오브젝트 풀링한다 */
-    public CardDeckSetting CardDeckObjectPool(GameObject CardDeckPrefab, GameObject CardListGroupRoot)
-    {
-        var CardDeckObejct = GameManager.Inst.PoolManager.SpawnObj<CardDeckSetting>(() =>
-        {
-            return CFactory.CreateCloneObj("CardDeck", CardDeckPrefab, CardListGroupRoot, Vector3.zero, Vector3.one, Vector3.zero);
-        }) as GameObject;
-        
-        CardDeckObejct.SetActive(true);
-        return CardDeckObejct.GetComponent<CardDeckSetting>();
     }
     #endregion // 함수
 }

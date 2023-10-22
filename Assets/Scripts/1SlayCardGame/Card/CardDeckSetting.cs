@@ -7,12 +7,15 @@ using UnityEngine.UI;
 public class CardDeckSetting : MonoBehaviour
 {
     #region 변수 
+    [Header("=====> 카드 정보 <=====")]
     [SerializeField] private Image CardMainImg = null;
     [SerializeField] private TMP_Text CardNameText = null;
     [SerializeField] private TMP_Text CardDescText = null;
     [SerializeField] private TMP_Text CardAtkText = null;
     [SerializeField] private TMP_Text CardCostText = null;
+    [SerializeField] private TMP_Text CardIndexText = null; // 중복 카드 개수 표시
 
+    [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private CardScirptTable CardTable = null;
     #endregion // 변수
 
@@ -27,12 +30,6 @@ public class CardDeckSetting : MonoBehaviour
         CardDescText.text = CardTable.CardDesc;
         CardAtkText.text = CardTable.CardAttack.ToString();
         CardCostText.text = CardTable.CardCost.ToString();
-    }
-
-    /** 카드 덱을 디스폰 한다 */
-    public void DespawnCardDeck()
-    {
-        CardManager.Instance.CardDeckListDespawn(this.gameObject);
     }
     #endregion // 함수
 }
