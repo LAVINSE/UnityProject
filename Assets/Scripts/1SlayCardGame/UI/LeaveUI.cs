@@ -27,6 +27,7 @@ public class LeaveUI : Popup
     /** 씬을 바꾼다 */
     public void ChangeScene(string SceneName)
     {
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
         LoadingScene.LoadScene(SceneName);
     }
 

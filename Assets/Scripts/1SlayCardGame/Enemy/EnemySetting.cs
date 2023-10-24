@@ -73,7 +73,7 @@ public class EnemySetting : MonoBehaviour
         // 드랍 아이템 창 보여주기
         if (TurnManager.Instane.oIsEnemyDie == true)
         {
-            UIManager.Inst.DropUIShow();
+            CSceneManager.Instance.DropUIShow();
         }
 
         // 사망 애니메이션

@@ -132,6 +132,12 @@ public class OptionPopup : Popup
         AudioManager.Inst.oSFXVolume = Volume;
     }
 
+    /** 효과음을 생성한다 */
+    public void SFXCreate()
+    {
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
+    }
+
     /** 매개 변수를 생성한다 */
     public static OptionParams MakeParams(string Title, string ContinueText, string CancleText)
     {

@@ -12,6 +12,7 @@ public class StageMenuUI : MonoBehaviour
 
     [Header("=====> Stage UI <=====")]
     [SerializeField] private TMP_Text StageTitleText = null;
+    [SerializeField] private TMP_Text PlayerNameText = null;
     [SerializeField] private Image StageImg = null;
 
     [Header("=====> Stage Title Button <=====")]
@@ -34,6 +35,22 @@ public class StageMenuUI : MonoBehaviour
     {
         SettingStageInfo();
         AudioManager.Inst.PlayBGM(AudioManager.BGMEnum.MenuBGM);
+    }
+
+    /** 초기화 => 상태를 갱신한다 */
+    private void Update()
+    {
+        if(GameManager.Inst.IsChangeName == false && GameManager.Inst.oPlayerName != string.Empty)
+        {
+            ChangeNameText();
+            GameManager.Inst.IsChangeName = true;
+        }
+    }
+
+    /** 이름 텍스트를 변경한다 */
+    private void ChangeNameText()
+    {
+        PlayerNameText.text = GameManager.Inst.oPlayerName;
     }
 
     /** Next 스테이지 버튼을 눌렀을 때*/
@@ -84,13 +101,13 @@ public class StageMenuUI : MonoBehaviour
     /** 버튼을 눌렀을때 메뉴 버튼을 보여준다 */
     private void OnClickPopShow()
     {
-        UIManager.Inst.OptionShow(true);
+        CSceneManager.Instance.OptionShow(true);
     }
 
     /** 버튼을 눌렀을때 덱 리스트를 보여준다 */
     private void OnClickDeckListShow()
-    {
-        UIManager.Inst.DeckListShow();
+    { 
+        CSceneManager.Instance.DeckListShow();   
     }
     #endregion // 함수
 }

@@ -18,7 +18,7 @@ public class PlayerUI : MonoBehaviour
 
     [Header("=====> Player TopUI <=====")]
     [SerializeField] private TMP_Text PlayerHpTextUI = null; // 상단바 HP 텍스트
-    [SerializeField] private TMP_Text PlayerGoldTextUI = null; // 상단바 Gold 텍스트
+    [SerializeField] private TMP_Text PlayerManaTextUI = null; // 상단바 HP 텍스트
 
     [Header("=====> Player Mana Slider <=====")]
     [SerializeField] private GameObject IntegratedManaObject = null; // 통합 마나 오브젝트
@@ -115,7 +115,7 @@ public class PlayerUI : MonoBehaviour
     private void TopUISetup()
     {
         PlayerHpTextUI.text = (oPlayerData.oCurrentHp.ToString() + "/" + oPlayerData.oMaxHp.ToString());
-        PlayerGoldTextUI.text = (oPlayerData.oGold.ToString());
+        PlayerManaTextUI.text = PlayerManaText.text = (oPlayerData.oCurrentCost.ToString() + "/" + oPlayerData.oMaxCost.ToString());
     }
     #endregion // 함수
 }

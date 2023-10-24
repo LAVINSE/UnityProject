@@ -15,7 +15,6 @@ public class PlayerData : MonoBehaviour
     [Header("=====> Player Data Current <=====")]
     [SerializeField] private float CurrentHp = 0; // 현재 체력
     [SerializeField] private float CurrentCost = 0; // 현재 코스트
-    [SerializeField] private float CurrentGold = 50; // 현재 골드  
 
     private Animator PlayerAnim;
     #endregion //변수
@@ -33,13 +32,6 @@ public class PlayerData : MonoBehaviour
         // 최대 코스트가 0 아래로 내려가지 않게 설정
         get => MaxCost;
         set => MaxCost = Mathf.Max(0, value);
-    }
-
-    public float oGold
-    {
-        // 골드가 0 아래로 내려가지 않게 설정
-        get => CurrentGold;
-        set => CurrentGold = Mathf.Max(0, value);
     }
 
     public float oMaxHp
@@ -89,7 +81,7 @@ public class PlayerData : MonoBehaviour
         if (TurnManager.Instane.oIsPlayerDie)
         {
             PlayerAnim.SetTrigger("Die");
-            UIManager.Inst.LeavePanelShow();
+            CSceneManager.Instance.LeavePanelShow();
             // TODO : 메인메뉴로 돌아가는 창 띄우기
         }
 

@@ -138,7 +138,7 @@ public class TurnManager : MonoBehaviour
         // 내 턴일 경우
         if(IsMyTurn == true)
         {
-            UIManager.Inst.Notification(MyTurn);
+            CSceneManager.Instance.Notification(MyTurn);
 
             yield return oDelay;
 
@@ -147,7 +147,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            UIManager.Inst.Notification(EnemyTurn);
+            CSceneManager.Instance.Notification(EnemyTurn);
             yield return oDelay;
         }
 

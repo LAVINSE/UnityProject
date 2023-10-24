@@ -16,6 +16,7 @@ public class DeckListUI : Popup
     /** 덱 리스트를 닫는다 */
     public void OnClickCancle()
     {
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
         Destroy(this.gameObject);
     }
 

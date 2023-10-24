@@ -22,7 +22,7 @@ public class DropUI : Popup
     /** 나가기 창을 보여준다 */
     public void LeaveShow()
     {
-        UIManager.Inst.LeavePanelShow();
+        CSceneManager.Instance.LeavePanelShow();
     }
 
     /** 드랍 UI를 닫는다 */

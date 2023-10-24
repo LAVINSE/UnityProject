@@ -28,6 +28,9 @@ public class GameManager : CSingleton<GameManager>
     }
 
     #region 변수
+    [Header("=====> 정보 <=====")]
+    [SerializeField] private string PlayerName = string.Empty;
+
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private StageInfo.EnemyType StageEnemyType = StageInfo.EnemyType.NONE;
 
@@ -38,6 +41,13 @@ public class GameManager : CSingleton<GameManager>
     #region 프로퍼티
     public ObjectPoolManager PoolManager { get; private set; } = null;
     public bool IsGameStart { get; set; } = false;
+    public bool IsChangeName { get; set; } = false;
+
+    public string oPlayerName
+    {
+        get => PlayerName;
+        set => PlayerName = value;
+    }
 
     public StageInfo.EnemyType oStageEnemyType
     {
@@ -56,7 +66,7 @@ public class GameManager : CSingleton<GameManager>
     public override void Awake()
     {
         base.Awake();
-
+        PlayerName = PlayerPrefs.GetString("CurrentPlayerName");
         PoolManager = CFactory.CreateObject<ObjectPoolManager>("ObjectPoolManager", this.gameObject,
             Vector3.zero, Vector3.one, Vector3.zero);
     }
@@ -101,6 +111,12 @@ public class GameManager : CSingleton<GameManager>
     public void ChangeScene(string SceneName)
     {
         LoadingScene.LoadScene(SceneName);
+    }
+
+    /** 플레이어 이름을 저장한다 */
+    public void PlayerNameSave()
+    {
+        PlayerName = PlayerPrefs.GetString("CurrentPlayerName");
     }
     #endregion // 함수
 }
