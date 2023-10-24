@@ -9,6 +9,15 @@ public class LeaveUI : Popup
     #endregion // 변수
 
     #region 함수
+    /** 초기화 */
+    private void Awake()
+    {
+        if(TurnManager.Instane.oIsPlayerDie == false)
+        {
+            ReTryButton.SetActive(false);
+        }
+    }
+
     /** 나가기 패널을 닫는다 */
     public void Close()
     {
@@ -16,9 +25,9 @@ public class LeaveUI : Popup
     }
 
     /** 씬을 바꾼다 */
-    public void ChangeScene()
+    public void ChangeScene(string SceneName)
     {
-        LoadingScene.LoadScene("MainMenu");
+        LoadingScene.LoadScene(SceneName);
     }
 
     /** 나가기 패널을 생성한다 */

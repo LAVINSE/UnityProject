@@ -17,7 +17,6 @@ public class PlayerData : MonoBehaviour
     [SerializeField] private float CurrentCost = 0; // 현재 코스트
     [SerializeField] private float CurrentGold = 50; // 현재 골드  
 
-    private bool IsPlayerDie = false;
     private Animator PlayerAnim;
     #endregion //변수
 
@@ -56,12 +55,6 @@ public class PlayerData : MonoBehaviour
         get => CurrentHp;
         set => CurrentHp = Mathf.Max(0, value);
     }
-
-    public bool oIsPlayerDie
-    {
-        get => IsPlayerDie;
-        set => IsPlayerDie = value;
-    }
     #endregion // 프로퍼티
 
     #region 함수
@@ -80,7 +73,7 @@ public class PlayerData : MonoBehaviour
 
         if (CurrentHp <= 0)
         {
-            IsPlayerDie = true;
+            TurnManager.Instane.oIsPlayerDie = true;
             StartCoroutine(PlayerDie());
         }
     }
@@ -93,10 +86,10 @@ public class PlayerData : MonoBehaviour
         PlayerAnim.SetBool("IsLive", false);
 
         // 플레이어가 죽었을 경우
-        if (IsPlayerDie)
+        if (TurnManager.Instane.oIsPlayerDie)
         {
             PlayerAnim.SetTrigger("Die");
-            // TODO : 다시하기 창 띄우기
+            UIManager.Inst.LeavePanelShow();
             // TODO : 메인메뉴로 돌아가는 창 띄우기
         }
 

@@ -25,7 +25,6 @@ public class EnemyManager : MonoBehaviour
     [Header("=====> Enemy UI <=====")]
     [SerializeField] private GameObject EnemyHpSlider;
     [SerializeField] private GameObject EnemyHpSliderRoot;
-    [SerializeField] private Transform CanvasTransform;
     [SerializeField] private Vector3 Distance;
 
     [Header("=====> Scriptable Objects <=====")]
@@ -134,7 +133,7 @@ public class EnemyManager : MonoBehaviour
     {
         var HpSlider = CFactory.CreateCloneObj("EnemyHpSlider", EnemyHpSlider, EnemyHpSliderRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
-        //HpSlider.transform.SetParent(CanvasTransform);
+
         HpSlider.transform.localScale = Vector3.one;
         HpSlider.GetComponent<SliderPositionAuto>().Setup(Enemy.transform, Distance);
         HpSlider.GetComponent<EnemySliderViewer>().Setup(Enemy.GetComponent<EnemySetting>());
@@ -200,7 +199,7 @@ public class EnemyManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        if(oPlayerData.oIsPlayerDie == false)
+        if(TurnManager.Instane.oIsPlayerDie == false)
         {
             oPlayerData.TakeDamage(EnemyATK);
         }
@@ -231,7 +230,7 @@ public class EnemyManager : MonoBehaviour
 
         while (ParticleDuration > 0)
         {
-            if (oPlayerData.oIsPlayerDie == false)
+            if (TurnManager.Instane.oIsPlayerDie == false)
             {
                 oPlayerData.TakeDamage(EnemyATK);
             }

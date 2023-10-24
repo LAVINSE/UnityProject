@@ -17,7 +17,7 @@ public class NextButtonUI : MonoBehaviour
 
     private void Update()
     {
-        if(TurnManager.Instane.bIsMyTurn == false)
+        if(TurnManager.Instane.oIsMyTurn == false)
         {
             NextTurnButton.interactable = false;
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class DeckListUI : Popup
     #endregion // 변수
 
     #region 함수
+    /** 덱 리스트를 닫는다 */
     public void OnClickCancle()
     {
         Destroy(this.gameObject);
@@ -27,18 +29,27 @@ public class DeckListUI : Popup
     public void CardDeckCreate()
     {
         var oCardDeck = GameManager.Inst.oCardBasicTableDeck;
+        List<CardScirptTable> DistinctList = oCardDeck.Distinct().ToList(); 
 
         if (oCardDeck != null)
         {
-            for (int i = 0; i < oCardDeck.Count; i++)
+            for (int i = 0; i < DistinctList.Count; i++)
             {
                 var CardDeckObject = CardDeckObjectPool(CardDeckPrefab, CardListGroupRoot);
                 var Card = CardDeckObject.GetComponent<CardDeckSetting>();
-                Card.SettingCardDeck(oCardDeck[i]);
-                // TODO : 카드 덱 중복시 인덱스 증가
-                // 인벤토리 구현 함수 참고
+
+                for (int j = 0; j < oCardDeck.Count; j++)
+                {
+                    if (DistinctList[i].CardName == oCardDeck[j].CardName)
+                    {
+                        Card.DupCardIndex(oCardDeck[j]);
+                        Card.SettingCardDeck(DistinctList[i]);
+                    }
+                }  
             }
         }
+
+        DistinctList.Clear();
     }
 
     /** 카드 덱 오브젝트를 생성한다 */

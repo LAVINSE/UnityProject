@@ -16,8 +16,6 @@ public class EnemySetting : MonoBehaviour
 
     [Header("=====> 적 데이터 셋업 후 보여지는 데이터 <=====")]
     [SerializeField] private EnemyBasicData EnemyDataSet = null;
-
-    private bool IsEnemyDie = false;
     #endregion // 변수
 
     #region 프로퍼티
@@ -33,12 +31,6 @@ public class EnemySetting : MonoBehaviour
         set => CurrentHp = Mathf.Max(0, value);
     }
 
-    public bool oIsEnemyDie
-    {
-        get => IsEnemyDie;
-        set => IsEnemyDie = value;
-    }
-
     public EnemyBasicData oEnemyDataSet => EnemyDataSet;
     #endregion // 프로퍼티
 
@@ -47,7 +39,6 @@ public class EnemySetting : MonoBehaviour
     {
         // 적 설정
         EnemyManager.Instance.SeletedEnemy(this);
-        oIsEnemyDie = false;
     }
 
     /** 적 데이터를 세팅한다 */
@@ -67,7 +58,7 @@ public class EnemySetting : MonoBehaviour
 
         if(CurrentHp <= 0)
         {
-            IsEnemyDie = true;
+            TurnManager.Instane.oIsEnemyDie = true;
             StartCoroutine(EnemyOnDie());
         }
     }
@@ -80,7 +71,7 @@ public class EnemySetting : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
         // 드랍 아이템 창 보여주기
-        if (IsEnemyDie == true)
+        if (TurnManager.Instane.oIsEnemyDie == true)
         {
             UIManager.Inst.DropUIShow();
         }

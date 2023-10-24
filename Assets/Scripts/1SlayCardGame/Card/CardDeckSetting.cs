@@ -17,7 +17,12 @@ public class CardDeckSetting : MonoBehaviour
 
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private CardScirptTable CardTable = null;
+
+    private int Index = 1; // 기본 카드 수량
     #endregion // 변수
+
+    #region 프로퍼티 
+    #endregion // 프로퍼티
 
     #region 함수
     /** 카드 덱을 세팅한다 */
@@ -30,6 +35,16 @@ public class CardDeckSetting : MonoBehaviour
         CardDescText.text = CardTable.CardDesc;
         CardAtkText.text = CardTable.CardAttack.ToString();
         CardCostText.text = CardTable.CardCost.ToString();
+        CardIndexText.text = Index.ToString();
+    }
+
+    /** 중복 카드가 있을 경우 증가 */
+    public void DupCardIndex(CardScirptTable CardTable)
+    {
+        if(this.CardTable == CardTable)
+        {
+            Index += 1;
+        }
     }
     #endregion // 함수
 }

@@ -81,7 +81,7 @@ public class SpellCard : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        if (EnemyManager.Instance.SelectEnemy.oIsEnemyDie == false)
+        if (TurnManager.Instane.oIsEnemyDie == false)
         {
             EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
         }
@@ -109,7 +109,7 @@ public class SpellCard : MonoBehaviour
 
         while (ParticleDuration > 0)
         {
-            if (EnemyManager.Instance.SelectEnemy.oIsEnemyDie == false)
+            if (TurnManager.Instane.oIsEnemyDie == false)
             {
                 EnemyManager.Instance.SelectEnemy.TakeDamage(oCardAttack);
             }

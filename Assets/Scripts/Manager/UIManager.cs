@@ -87,7 +87,6 @@ public class UIManager : CSingleton<UIManager>
         }
         else
         {
-            AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
             LeavePanel = LeaveUI.CreateLeavePanel(oLeavePanelRoot);
         }
     }

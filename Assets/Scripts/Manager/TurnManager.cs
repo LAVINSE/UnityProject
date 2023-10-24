@@ -27,6 +27,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private PlayerData oPlayerData; // 플레이어 데이터
     [SerializeField] private string MyTurn;
     [SerializeField] private string EnemyTurn;
+    [SerializeField] private bool IsPlayerDie = false;
+    [SerializeField] private bool IsEnemyDie = false;
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
     public static Action<bool> IsOnAddCard; // 카드 뽑는 델리게이트
@@ -35,16 +37,28 @@ public class TurnManager : MonoBehaviour
 
     #region 프로퍼티
     public static TurnManager Instane { get; private set; }
-    public bool bIsLoading
+    public bool oIsLoading
     {
         get => IsLoading;
         set => IsLoading = value;
     }
      
-    public bool bIsMyTurn
+    public bool oIsMyTurn
     {
         get => IsMyTurn;
         set => IsMyTurn = value;
+    }
+
+    public bool oIsPlayerDie
+    {
+        get => IsPlayerDie;
+        set => IsPlayerDie = value;
+    }
+
+    public bool oIsEnemyDie
+    {
+        get => IsEnemyDie;
+        set => IsEnemyDie = value;
     }
     #endregion // 프로퍼티
 
@@ -53,12 +67,13 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         Instane = this;
+        oIsEnemyDie = false;
+        oIsPlayerDie = false;
     }
 
     /** 초기화 */
     private void Update()
     {
-        // TODO : 게임 시작 방법을 바꿔야함
         if (GameManager.Inst.IsGameStart == true)
         {
             // 게임을 시작한다
@@ -145,15 +160,6 @@ public class TurnManager : MonoBehaviour
     {
         IsMyTurn = !IsMyTurn;
         StartCoroutine(StartTurnCo());
-    }
-
-    /** 턴을 넘기는 버튼을 활성화 한다 */
-    public void ClickNextTurnButton()
-    {
-        if(IsMyTurn == true)
-        {
-            NextTurn();
-        }
     }
 
     /** 스테이지 배경음을 세팅한다 */

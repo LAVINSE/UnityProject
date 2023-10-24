@@ -111,11 +111,11 @@ public class OptionPopup : Popup
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-
             PopupClose();
             return;
         }
 
+        AudioManager.Inst.StopBGM();
         LoadingScene.LoadScene("MainMenu");
         PopupClose();
     }
