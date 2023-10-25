@@ -1,8 +1,7 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
+using DG.Tweening;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -19,6 +18,7 @@ public class EnemyManager : MonoBehaviour
     [Header("=====> Enemy Option <=====")]
     [SerializeField] private List<GameObject> ParticleDisappearList = new List<GameObject>();
     [SerializeField] private List<GameObject> ParticleContinuousList = new List<GameObject>();
+    [SerializeField] private GameObject EnemySpawnEffect;
     [SerializeField] private GameObject EnemyOriginRoot;
     [SerializeField] private GameObject EnemySpellRoot;
 
@@ -53,18 +53,17 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        TurnManager.IsSpawnEnemy += SpawnEnemy;
-    }
-
-    /** 초기화 => 삭제될때 호출*/
-    private void OnDestroy()
-    {
-        TurnManager.IsSpawnEnemy -= SpawnEnemy;
     }
 
     /** 적을 소환한다 */
-    private void SpawnEnemy(GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
+    public IEnumerator SpawnEnemy(GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
+        var Effect = CFactory.CreateCloneObj("SpawnEnemyEffect", EnemySpawnEffect, EnemyOriginRoot,
+            Vector3.zero, Vector3.one * 1.5f, Vector3.zero);
+        var EffectComponent = Effect.GetComponent<ParticleSystem>();
+        var Duration = EffectComponent.main.duration;
+
+        yield return new WaitForSeconds(Duration);
         CreateEnemy(EnemyOriginRoot, StageEnemyTypeInfo);
     }
 
@@ -73,12 +72,17 @@ public class EnemyManager : MonoBehaviour
     {
         var Enemy = CFactory.CreateCloneObj("Enemy", SpawnReadyEnemy(StageEnemyTypeInfo).oEnemyObject, EnemyRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
-        var EnemyComponent = Enemy.GetComponent<EnemySetting>();
-        EnemyComponent.EnemySetup(SpawnReadyEnemy(StageEnemyTypeInfo));
+        var EnemyMainComponent = Enemy.GetComponent<EnemyMain>();
+        var EnemySettingComponent = Enemy.GetComponent<EnemySetting>();
+
+        // 적 투명도 설정
+        StartCoroutine(EnemyMainComponent.EnemyAlpha());
+
+        EnemySettingComponent.EnemySetup(SpawnReadyEnemy(StageEnemyTypeInfo));
         CreateEnemyHpSlider(Enemy);
     }
 
-    /** 적을 선택해 소환할 준비를 한다 */
+    /** 적 타입을 선택한다 */
     private EnemyBasicData SpawnReadyEnemy(GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
         if(EnemyBuffer.Count == 0)

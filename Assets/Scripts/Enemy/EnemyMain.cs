@@ -56,5 +56,21 @@ public class EnemyMain : MonoBehaviour
             HitRender.ExitHitRenderer(Mount, Body, WingRight, WingLeft, BasicEnemyPos, 0.1f);
         }
     }
+
+    /** 색상 설정 */
+    public IEnumerator EnemyAlpha()
+    {
+        float FadeCount = 0;
+        while(FadeCount < 1.0f)
+        {
+            FadeCount += 0.01f;
+
+            yield return new WaitForSeconds(0.01f);
+            Mount.color = new Color(1.0f, 1.0f, 1.0f, FadeCount);
+            Body.color = new Color(1.0f, 1.0f, 1.0f, FadeCount);
+            WingRight.color = new Color(1.0f, 1.0f, 1.0f, FadeCount);
+            WingLeft.color = new Color(1.0f, 1.0f, 1.0f, FadeCount);
+        }
+    }
     #endregion // 함수
 }

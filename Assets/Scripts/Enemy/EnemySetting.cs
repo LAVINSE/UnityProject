@@ -69,17 +69,15 @@ public class EnemySetting : MonoBehaviour
         AudioManager.Inst.StopBGM();
         AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.GameOver);
 
+        // 사망 애니메이션
+
         yield return new WaitForSeconds(2.0f);
+
         // 드랍 아이템 창 보여주기
         if (TurnManager.Instane.oIsEnemyDie == true)
         {
             CSceneManager.Instance.DropUIShow();
-        }
-
-        // 사망 애니메이션
-
-        // 객체 비활성화
-        this.gameObject.SetActive(false);
+        }      
     }
     #endregion // 함수
 }

@@ -75,17 +75,19 @@ public class PlayerData : MonoBehaviour
     {
         AudioManager.Inst.StopBGM();
         AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.GameOver);
+
         PlayerAnim.SetBool("IsLive", false);
 
-        // 플레이어가 죽었을 경우
-        if (TurnManager.Instane.oIsPlayerDie)
-        {
-            PlayerAnim.SetTrigger("Die");
-            CSceneManager.Instance.LeavePanelShow();
-            // TODO : 메인메뉴로 돌아가는 창 띄우기
-        }
+        // 사망 애니메이션
+        PlayerAnim.SetTrigger("Die");
 
-        yield return null;
+        yield return new WaitForSeconds(2.0f);
+
+        // 플레이어가 죽었을 경우
+        if (TurnManager.Instane.oIsPlayerDie == true)
+        {
+            CSceneManager.Instance.LeavePanelShow();
+        }
     }
 
     /** 플레이어를 데이터를 세팅한다 */

@@ -32,7 +32,6 @@ public class TurnManager : MonoBehaviour
 
     private WaitForSeconds oDelay = new WaitForSeconds(0.5f); // 딜레이 시간
     public static Action<bool> IsOnAddCard; // 카드 뽑는 델리게이트
-    public static Action<GameManager.StageInfo.EnemyType> IsSpawnEnemy; // 적 소환 델리게이트
     #endregion // 변수
 
     #region 프로퍼티
@@ -120,10 +119,11 @@ public class TurnManager : MonoBehaviour
             IsOnAddCard?.Invoke(IsFrontCard);
         }
 
+        // 배경음 세팅
         StageBGMSetting(StageEnemyTypeInfo);
 
-        // TODO : 적 출현 이펙트 추가 예정
-        IsSpawnEnemy(StageEnemyTypeInfo);
+        // 적 소환이펙트, 적 소환
+        StartCoroutine(EnemyManager.Instance.SpawnEnemy(StageEnemyTypeInfo));
 
         // 카드 배분이 끝나면
         StartCoroutine(StartTurnCo());
