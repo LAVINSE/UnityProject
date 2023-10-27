@@ -97,14 +97,14 @@ public class GameManager : CSingleton<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            TurnManager.Instane.NextTurn();
+            TurnManager.Instance.NextTurn();
         }
     }
 
     /** 게임을 시작한다 */
     public void StartGame(StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        StartCoroutine(TurnManager.Instane.StartGameCo(StageEnemyTypeInfo));
+        StartCoroutine(TurnManager.Instance.StartGameCo(StageEnemyTypeInfo));
     }
 
     /** 씬을 이동한다 */

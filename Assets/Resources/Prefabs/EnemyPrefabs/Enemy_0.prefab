@@ -460,6 +460,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 0
   CurrentHp: 0
+  Atk: 0
+  Mount: {fileID: 9004148123409344353}
+  EnemyDrop: {fileID: 11400000, guid: a20cc26ff0f93be4091597d12c955d86, type: 2}
   EnemyDataSet:
     oEnemyObject: {fileID: 0}
     MaxHp: 0

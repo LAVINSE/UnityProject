@@ -44,7 +44,6 @@ public class EnemyManager : MonoBehaviour
     public GameObject oEnemyHpSlider => EnemyHpSlider;
     public EnemyPeturnRandom o_ePeturnRandom => ePeturnRandom;
     public bool IsEnemyAttackReady { get; set; } = false;
-    public bool IsEnemyAlive { get; set; } = true;
     public bool IsPeturn { get; set; } = false;
     #endregion // 프로퍼티
 
@@ -70,15 +69,17 @@ public class EnemyManager : MonoBehaviour
     /** 적을 생성한다 */
     private void CreateEnemy(GameObject EnemyRoot, GameManager.StageInfo.EnemyType StageEnemyTypeInfo)
     {
-        var Enemy = CFactory.CreateCloneObj("Enemy", SpawnReadyEnemy(StageEnemyTypeInfo).oEnemyObject, EnemyRoot,
+        var EnemyInfo = SpawnReadyEnemy(StageEnemyTypeInfo);
+        var Enemy = CFactory.CreateCloneObj("Enemy", EnemyInfo.oEnemyObject, EnemyRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
+        
         var EnemyMainComponent = Enemy.GetComponent<EnemyMain>();
         var EnemySettingComponent = Enemy.GetComponent<EnemySetting>();
 
         // 적 투명도 설정
         StartCoroutine(EnemyMainComponent.EnemyAlpha());
 
-        EnemySettingComponent.EnemySetup(SpawnReadyEnemy(StageEnemyTypeInfo));
+        EnemySettingComponent.EnemySetup(EnemyInfo);
         CreateEnemyHpSlider(Enemy);
     }
 
@@ -155,11 +156,11 @@ public class EnemyManager : MonoBehaviour
         switch (Random)
         {
             case EnemyPeturnRandom.NONE:
-                Debug.Log("없음");
+                Debug.Log("기본공격");
                 ePeturnRandom = EnemyPeturnRandom.NONE;
                 break;
              case EnemyPeturnRandom.MAGIC:
-                Debug.Log("MAGIC");
+                Debug.Log("마법공격");
                 ePeturnRandom = EnemyPeturnRandom.MAGIC;
                 break;
         }
@@ -192,7 +193,7 @@ public class EnemyManager : MonoBehaviour
     /** NONE 패턴을 사용한다 */
     private IEnumerator EnemyNonePeturn()
     {
-        var EnemyATK = SelectEnemy.oEnemyDataSet.ATK;
+        var EnemyATK = SelectEnemy.oAtk;
         var PlayerPosition = oPlayerData.transform.position;
 
         yield return new WaitForSeconds(3f);
@@ -203,7 +204,7 @@ public class EnemyManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        if(TurnManager.Instane.oIsPlayerDie == false)
+        if(TurnManager.Instance.oIsPlayerDie == false)
         {
             oPlayerData.TakeDamage(EnemyATK);
         }
@@ -218,7 +219,7 @@ public class EnemyManager : MonoBehaviour
     /** Magic 패턴을 사용한다 */
     private IEnumerator EnemyMagicPeturn()
     {
-        var EnemyATK = SelectEnemy.oEnemyDataSet.ATK;
+        var EnemyATK = SelectEnemy.oAtk;
         var PlayerPosition = oPlayerData.transform.position;
 
         yield return new WaitForSeconds(3f);
@@ -234,7 +235,7 @@ public class EnemyManager : MonoBehaviour
 
         while (ParticleDuration > 0)
         {
-            if (TurnManager.Instane.oIsPlayerDie == false)
+            if (TurnManager.Instance.oIsPlayerDie == false)
             {
                 oPlayerData.TakeDamage(EnemyATK);
             }

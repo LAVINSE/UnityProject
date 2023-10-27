@@ -35,7 +35,7 @@ public class TurnManager : MonoBehaviour
     #endregion // 변수
 
     #region 프로퍼티
-    public static TurnManager Instane { get; private set; }
+    public static TurnManager Instance { get; private set; }
     public bool oIsLoading
     {
         get => IsLoading;
@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour
     /** 초기화 */
     private void Awake()
     {
-        Instane = this;
+        Instance = this;
         oIsEnemyDie = false;
         oIsPlayerDie = false;
     }

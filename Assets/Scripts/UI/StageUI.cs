@@ -39,9 +39,9 @@ public class StageUI : MonoBehaviour
     /** 턴을 넘기는 버튼을 활성화 한다 */
     public void ClickNextTurnButton()
     {
-        if (TurnManager.Instane.oIsMyTurn == true)
+        if (TurnManager.Instance.oIsMyTurn == true)
         {
-            TurnManager.Instane.NextTurn();
+            TurnManager.Instance.NextTurn();
         }
     }
     #endregion // 함수

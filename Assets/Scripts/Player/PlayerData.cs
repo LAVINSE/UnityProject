@@ -65,7 +65,7 @@ public class PlayerData : MonoBehaviour
 
         if (CurrentHp <= 0)
         {
-            TurnManager.Instane.oIsPlayerDie = true;
+            TurnManager.Instance.oIsPlayerDie = true;
             StartCoroutine(PlayerDie());
         }
     }
@@ -84,7 +84,7 @@ public class PlayerData : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
 
         // 플레이어가 죽었을 경우
-        if (TurnManager.Instane.oIsPlayerDie == true)
+        if (TurnManager.Instance.oIsPlayerDie == true)
         {
             CSceneManager.Instance.LeavePanelShow();
         }

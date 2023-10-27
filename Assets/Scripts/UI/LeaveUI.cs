@@ -1,20 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LeaveUI : Popup
 {
     #region 변수
-    [SerializeField] private GameObject ReTryButton;
+    [SerializeField] private GameObject ReTryButton = null;
+    [SerializeField] private TMP_Text TitleText = null;
     #endregion // 변수
 
     #region 함수
     /** 초기화 */
     private void Awake()
     {
-        if(TurnManager.Instane.oIsPlayerDie == false)
+        if(TurnManager.Instance.oIsPlayerDie == false)
         {
             ReTryButton.SetActive(false);
+            TitleText.text = "승리";
+        }
+        else
+        {
+            TitleText.text = "패배";
         }
     }
 

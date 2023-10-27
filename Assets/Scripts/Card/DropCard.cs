@@ -7,9 +7,6 @@ using UnityEngine.UI;
 public class DropCard : MonoBehaviour
 {
     #region 변수
-    [Header("=====> Card ScriptTableList Drop Deck <=====")]
-    [SerializeField] private CardDropScirptTable CardDropTable;
-
     [Header("=====> Card Option <=====")]
     [SerializeField] private Image CardMainImg;
     [SerializeField] private TMP_Text Card_Name;
@@ -19,9 +16,17 @@ public class DropCard : MonoBehaviour
 
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField]private List<CardScirptTable> CardBuffer = new List<CardScirptTable>();
+
+    private CardDropScirptTable CardDropTable = null;
     #endregion // 변수
 
     #region 함수
+    /** 초기화 */
+    private void Awake()
+    {
+        CardDropTable = EnemyManager.Instance.SelectEnemy.oEnemyDrop;
+    }
+
     /** 랜덤으로 선택된 카드를 보여준다 */
     public void ShowDropCard()
     {

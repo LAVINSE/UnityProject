@@ -217,15 +217,15 @@ public class CardManager : MonoBehaviour
     /** 카드를 움직일 수 있는 상태를 정한다 */
     private void SetECardState()
     {
-        if(TurnManager.Instane.oIsLoading == true)
+        if(TurnManager.Instance.oIsLoading == true)
         {
             CardState = ECardState.NOTHING;
         }
-        else if(TurnManager.Instane.oIsMyTurn == false)
+        else if(TurnManager.Instance.oIsMyTurn == false)
         {
             CardState = ECardState.CANMOUSEOVER;
         }
-        else if(TurnManager.Instane.oIsMyTurn == true)
+        else if(TurnManager.Instance.oIsMyTurn == true)
         {
             CardState = ECardState.CANMOUSEDRAG;
         }

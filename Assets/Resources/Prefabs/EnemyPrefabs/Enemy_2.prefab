@@ -460,6 +460,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 0
   CurrentHp: 0
+  Atk: 0
+  Mount: {fileID: 991401980445993594}
+  EnemyDrop: {fileID: 11400000, guid: a20cc26ff0f93be4091597d12c955d86, type: 2}
   EnemyDataSet:
     oEnemyObject: {fileID: 0}
     MaxHp: 0
@@ -476,7 +479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00200c6dd7946ac498441a0996ffcc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitRender: {fileID: 0}
   BasicEnemyPos: {x: 5, y: 0.7, z: 0}
   Mount: {fileID: 991401980445993596}
   Body: {fileID: 991401980010903933}

@@ -11,8 +11,10 @@ public class EnemySetting : MonoBehaviour
 {
     #region 변수
     [Header("=====> 적 정보 <=====")]
-    [SerializeField] private float MaxHp = 0f; // 최대 체력
+    [SerializeField] private float MaxHp = 0.0f; // 최대 체력
     [SerializeField] private float CurrentHp = 0.0f; // 현재 체력
+    [SerializeField] private float Atk = 0.0f;
+    [SerializeField] private CardDropScirptTable EnemyDrop = null;
 
     [Header("=====> 적 데이터 셋업 후 보여지는 데이터 <=====")]
     [SerializeField] private EnemyBasicData EnemyDataSet = null;
@@ -31,7 +33,13 @@ public class EnemySetting : MonoBehaviour
         set => CurrentHp = Mathf.Max(0, value);
     }
 
-    public EnemyBasicData oEnemyDataSet => EnemyDataSet;
+    public float oAtk
+    {
+        get => Atk;
+        set => Atk = Mathf.Max(0, value);
+    }
+
+    public CardDropScirptTable oEnemyDrop => EnemyDrop;
     #endregion // 프로퍼티
 
     #region 함수
@@ -49,6 +57,7 @@ public class EnemySetting : MonoBehaviour
         // 체력 세팅
         this.MaxHp = EnemyDataSetup.MaxHp;
         this.CurrentHp = this.MaxHp;
+        this.Atk = EnemyDataSetup.ATK;
     }
 
     /** 데미지를 받는다 */
@@ -58,7 +67,7 @@ public class EnemySetting : MonoBehaviour
 
         if(CurrentHp <= 0)
         {
-            TurnManager.Instane.oIsEnemyDie = true;
+            TurnManager.Instance.oIsEnemyDie = true;
             StartCoroutine(EnemyOnDie());
         }
     }
@@ -69,12 +78,12 @@ public class EnemySetting : MonoBehaviour
         AudioManager.Inst.StopBGM();
         AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.GameOver);
 
-        // 사망 애니메이션
+        // 사망 애니메이션 >> 상태 바꾸는 함수에서 실행 예정
 
         yield return new WaitForSeconds(2.0f);
 
         // 드랍 아이템 창 보여주기
-        if (TurnManager.Instane.oIsEnemyDie == true)
+        if (TurnManager.Instance.oIsEnemyDie == true)
         {
             CSceneManager.Instance.DropUIShow();
         }      
