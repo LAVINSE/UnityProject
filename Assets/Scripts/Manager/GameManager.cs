@@ -28,8 +28,10 @@ public class GameManager : CSingleton<GameManager>
     }
 
     #region 변수
-    [Header("=====> 정보 <=====")]
+    [Header("=====> 플레이어 정보 <=====")]
     [SerializeField] private string PlayerName = string.Empty;
+    [SerializeField] private float PlayerMaxHp = 0.0f;
+    [SerializeField] private float PlayerMaxCost = 0.0f;
 
     [Header("=====> 인스펙터 확인용 <=====")]
     [SerializeField] private StageInfo.EnemyType StageEnemyType = StageInfo.EnemyType.NONE;
@@ -47,6 +49,19 @@ public class GameManager : CSingleton<GameManager>
     {
         get => PlayerName;
         set => PlayerName = value;
+    }
+    public float oPlayerMaxHp
+    {
+        // 체력이 0 아래로 내려가지 않게 설정
+        get => PlayerMaxHp;
+        set => PlayerMaxHp = Mathf.Max(0, value);
+    }
+
+    public float oPlayerMaxCost
+    {
+        // 최대 코스트가 0 아래로 내려가지 않게 설정
+        get => PlayerMaxCost;
+        set => PlayerMaxCost = Mathf.Max(0, value);
     }
 
     public StageInfo.EnemyType oStageEnemyType

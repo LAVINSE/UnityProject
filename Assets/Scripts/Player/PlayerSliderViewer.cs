@@ -27,9 +27,9 @@ public class PlayerSliderViewer : MonoBehaviour
     /** 체력 정보를 HpSlider에 세팅한다 */
     private void EnemyHpViewerUpdate()
     {
-        HpSlider.maxValue = PlayerHp.oMaxHp;
+        HpSlider.maxValue = GameManager.Inst.oPlayerMaxHp;
         HpSlider.value = PlayerHp.oCurrentHp;
-        EnemyHpText.text = (PlayerHp.oCurrentHp.ToString() + "/" + PlayerHp.oMaxHp.ToString());
+        EnemyHpText.text = (PlayerHp.oCurrentHp.ToString() + "/" + GameManager.Inst.oPlayerMaxHp.ToString());
     }
 
     /** 적 체력 정보를 가져온다 */

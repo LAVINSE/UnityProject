@@ -44,7 +44,6 @@ public class LoadingScene : MonoBehaviour
                 if(ProgressBar.fillAmount >= 1f)
                 {
                     Oper.allowSceneActivation = true;
-                    yield break;
                 }
             }
         }

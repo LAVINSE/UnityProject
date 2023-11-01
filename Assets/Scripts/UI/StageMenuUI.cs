@@ -16,8 +16,9 @@ public class StageMenuUI : MonoBehaviour
     [SerializeField] private Image StageImg = null;
 
     [Header("=====> Stage Title Button <=====")]
-    [SerializeField] private Button MenuButton = null;
+    [SerializeField] private Button InfoButton = null;
     [SerializeField] private Button DeckButton = null;
+    [SerializeField] private Button MenuButton = null;
 
     private int CurrentStage = 0;
     #endregion // 변수
@@ -28,6 +29,7 @@ public class StageMenuUI : MonoBehaviour
     {
         MenuButton.onClick.AddListener(OnClickPopShow);
         DeckButton.onClick.AddListener(OnClickDeckListShow);
+        InfoButton.onClick.AddListener(OnClickInfoShow);
     }
 
     /** 초기화 */
@@ -108,6 +110,12 @@ public class StageMenuUI : MonoBehaviour
     private void OnClickDeckListShow()
     { 
         CSceneManager.Instance.DeckListShow();   
+    }
+
+    /** 버튼을 눌렀을 때 정보창을 보여준다 */
+    private void OnClickInfoShow()
+    {
+        CSceneManager.Instance.InfoShow();
     }
     #endregion // 함수
 }

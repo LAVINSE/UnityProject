@@ -8,10 +8,6 @@ using UnityEngine.UI;
 public class PlayerData : MonoBehaviour
 {
     #region 변수
-    [Header("=====> Player Data MAX <=====")]
-    [SerializeField] private float MaxHp = 20.0f; // 최대 체력
-    [SerializeField] private float MaxCost = 5; // 최대 코스트
-
     [Header("=====> Player Data Current <=====")]
     [SerializeField] private float CurrentHp = 0; // 현재 체력
     [SerializeField] private float CurrentCost = 0; // 현재 코스트
@@ -25,20 +21,6 @@ public class PlayerData : MonoBehaviour
         // 현재 코스트가 0 아래로 내려가지 않게 설정
         get => CurrentCost;
         set => CurrentCost = Mathf.Max(0, value);
-    }
-
-    public float oMaxCost
-    {
-        // 최대 코스트가 0 아래로 내려가지 않게 설정
-        get => MaxCost;
-        set => MaxCost = Mathf.Max(0, value);
-    }
-
-    public float oMaxHp
-    {
-        // 체력이 0 아래로 내려가지 않게 설정
-        get => MaxHp;
-        set => MaxHp = Mathf.Max(0, value);
     }
 
     public float oCurrentHp
@@ -93,8 +75,8 @@ public class PlayerData : MonoBehaviour
     /** 플레이어를 데이터를 세팅한다 */
     public void PlayerDataSetting()
     {
-        CurrentHp = MaxHp; // 현재 체력을 최대 체력과 같게 설정
-        CurrentCost = MaxCost; // 현재 코스트를 최대 코스트와 같게 설정
+        CurrentHp = GameManager.Inst.oPlayerMaxHp; // 현재 체력을 최대 체력과 같게 설정
+        CurrentCost = GameManager.Inst.oPlayerMaxCost; // 현재 코스트를 최대 코스트와 같게 설정
     }
     #endregion // 함수
 }

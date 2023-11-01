@@ -98,24 +98,24 @@ public class PlayerUI : MonoBehaviour
         Vector3 ScreenPos = Camera.main.WorldToScreenPoint(this.transform.position);
         PlayerHpSliderRect.position = ScreenPos + Distance;
 
-        PlayerHpSlider.maxValue = oPlayerData.oMaxHp;
+        PlayerHpSlider.maxValue = GameManager.Inst.oPlayerMaxHp; ;
         PlayerHpSlider.value = oPlayerData.oCurrentHp;
-        PlayerHpSliderText.text = (oPlayerData.oCurrentHp.ToString() + "/" + oPlayerData.oMaxHp.ToString());
+        PlayerHpSliderText.text = (oPlayerData.oCurrentHp.ToString() + "/" + GameManager.Inst.oPlayerMaxHp.ToString());
     }
 
     /** 마나 슬라이더를 세팅한다 */
     private void SetUpManaSlider()
     {
-        PlayerManaSlider.maxValue = oPlayerData.oMaxCost;
+        PlayerManaSlider.maxValue = GameManager.Inst.oPlayerMaxCost;
         PlayerManaSlider.value = oPlayerData.oCurrentCost;
-        PlayerManaText.text = (oPlayerData.oCurrentCost.ToString() + "/" + oPlayerData.oMaxCost.ToString());
+        PlayerManaText.text = (oPlayerData.oCurrentCost.ToString() + "/" + GameManager.Inst.oPlayerMaxCost.ToString());
     }
 
     /** 상단 바 UI를 세팅한다 */
     private void TopUISetup()
     {
-        PlayerHpTextUI.text = (oPlayerData.oCurrentHp.ToString() + "/" + oPlayerData.oMaxHp.ToString());
-        PlayerManaTextUI.text = PlayerManaText.text = (oPlayerData.oCurrentCost.ToString() + "/" + oPlayerData.oMaxCost.ToString());
+        PlayerHpTextUI.text = (oPlayerData.oCurrentHp.ToString() + "/" + GameManager.Inst.oPlayerMaxHp.ToString());
+        PlayerManaTextUI.text = PlayerManaText.text = (oPlayerData.oCurrentCost.ToString() + "/" + GameManager.Inst.oPlayerMaxCost.ToString());
     }
     #endregion // 함수
 }

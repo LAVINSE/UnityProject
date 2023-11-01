@@ -8,11 +8,6 @@ public class CSceneManager : MonoBehaviour
     #region 프로퍼티
     public static CSceneManager Instance { get; set; }
     public GameObject PopupRoot { get; private set; } = null;
-    public GameObject DropUIRoot { get; private set; } = null;
-    public GameObject LeavePanelRoot { get; private set; } = null;
-    public GameObject DeckListShowRoot { get; private set; } = null;
-    public GameObject NotiPanelRoot { get; private set; } = null;
-    
     #endregion // 프로퍼티
 
     #region 함수
@@ -21,26 +16,16 @@ public class CSceneManager : MonoBehaviour
     {
         var RootObjs = this.gameObject.scene.GetRootGameObjects();
 
-        for(int i = 0; i < RootObjs.Length; i++)
+        for (int i = 0; i < RootObjs.Length; i++)
         {
             this.PopupRoot = this.PopupRoot ??
                 RootObjs[i].transform.Find("Canvas/PopupRoot")?.gameObject;
 
-            this.DropUIRoot = this.DropUIRoot ??
-                RootObjs[i].transform.Find("Canvas/DropUIRoot")?.gameObject;
-
-            this.LeavePanelRoot = this.LeavePanelRoot ??
-                RootObjs[i].transform.Find("Canvas/LeavePanelRoot")?.gameObject;
-
-            this.DeckListShowRoot = this.DeckListShowRoot ??
-                RootObjs[i].transform.Find("Canvas/DeckListShowRoot")?.gameObject;
-
-            this.NotiPanelRoot = this.NotiPanelRoot ??
-                RootObjs[i].transform.Find("Canvas/NotiPanelRoot")?.gameObject;
-
-            Instance = this;
         }
+
+        Instance = this;
     }
+
 
     /** 초기화 => 상태를 갱신한다 */
     private void Update()
@@ -89,7 +74,7 @@ public class CSceneManager : MonoBehaviour
     /** 나가기 패널을 보여준다 */
     public void LeavePanelShow()
     {
-        var LeavePanel = LeavePanelRoot.GetComponentInChildren<LeaveUI>();
+        var LeavePanel = PopupRoot.GetComponentInChildren<LeaveUI>();
 
         // 나가기 패널이 존재 할 경우
         if (LeavePanel != null)
@@ -99,33 +84,44 @@ public class CSceneManager : MonoBehaviour
         else
         {
             AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
-            LeavePanel = LeaveUI.CreateLeavePanel(LeavePanelRoot);
+            LeavePanel = LeaveUI.CreateLeavePanel(PopupRoot);
         }
     }
 
     /** 턴 시작을 알림을 보여준다 */
     public void Notification(string Message)
     {
-        var NotiPanel = NotiPanelRoot.GetComponentInChildren<NotificationPanel>();
+        var NotiPanel = PopupRoot.GetComponentInChildren<NotificationPanel>();
 
         // 턴 시작 알림창이 없을 경우
         if (NotiPanel == null)
         {
-            NotiPanel = NotificationPanel.CreateNotiPanel(NotiPanelRoot);
+            NotiPanel = NotificationPanel.CreateNotiPanel(PopupRoot);
 
             NotiPanel.Show(Message);
+        }
+    }
+
+    /** 정보 UI를 보여준다 */
+    public void InfoShow()
+    {
+        var InfoPanel = PopupRoot.GetComponentInChildren<InfoUI>();
+        
+        if(InfoPanel == null)
+        {
+            InfoPanel = InfoUI.CreateInfoUI(PopupRoot);
         }
     }
 
     /** 드랍 UI를 보여준다 */
     public void DropUIShow()
     {
-        var DropUIPanel = DropUIRoot.GetComponentInChildren<DropUI>();
+        var DropUIPanel = PopupRoot.GetComponentInChildren<DropUI>();
 
         // DropUI가 존재하지 않을 경우
         if (DropUIPanel == null)
         {
-            DropUIPanel = DropUI.CreateDropUI(DropUIRoot);
+            DropUIPanel = DropUI.CreateDropUI(PopupRoot);
 
             DropUIPanel.DropShow();
         }
@@ -134,7 +130,7 @@ public class CSceneManager : MonoBehaviour
     /** 덱 리스트를 보여준다 */
     public void DeckListShow()
     {
-        var DeckList = DeckListShowRoot.GetComponentInChildren<DeckListUI>();
+        var DeckList = PopupRoot.GetComponentInChildren<DeckListUI>();
 
         if (DeckList != null)
         {
@@ -143,7 +139,7 @@ public class CSceneManager : MonoBehaviour
         else
         {
             AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
-            DeckList = DeckListUI.CreateDeckList(DeckListShowRoot);
+            DeckList = DeckListUI.CreateDeckList(PopupRoot);
         }
     }
     #endregion // 함수

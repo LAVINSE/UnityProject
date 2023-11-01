@@ -29,7 +29,7 @@ public class CardSetting : MonoBehaviour
     #endregion // 프로퍼티
 
     #region 함수
-    /** 초기화 >> 마우스를 올렸을 때*/
+    /** 초기화 >> 마우스를 올렸을 때 */
     private void OnMouseOver()
     {
         if (IsFront == true)

@@ -5,9 +5,9 @@ using DG.Tweening;
 
 public class EnemyManager : MonoBehaviour
 {
-    public enum EnemyPeturnRandom
+    public enum EnemyPatternRandom
     {
-        NONE = 0,
+        Basic = 0,
         MAGIC,
     }
     #region 변수
@@ -25,7 +25,9 @@ public class EnemyManager : MonoBehaviour
     [Header("=====> Enemy UI <=====")]
     [SerializeField] private GameObject EnemyHpSlider;
     [SerializeField] private GameObject EnemyHpSliderRoot;
-    [SerializeField] private Vector3 Distance;
+    [SerializeField] private GameObject EnemyPatternSprite;
+    [SerializeField] private Vector3 EnemyPatternPositionY;
+    [SerializeField] private Vector3 HpSliderDistance;
 
     [Header("=====> Scriptable Objects <=====")]
     [SerializeField] private EnemyBasic EnemyNormal; // 적 스크립트 테이블
@@ -33,8 +35,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private EnemyBasic EnemyBoss; // 적 스크립트 테이블
     
     [Header("=====> 개발자 인스펙터 확인용 <=====")]
-    [SerializeField] private EnemyPeturnRandom ePeturnRandom;
-    [SerializeField] private bool IsSelectPeturn = false;
+    [SerializeField] private EnemyPatternRandom ePatternRandom;
+    [SerializeField] private bool IsSelectPattern = false;
     [SerializeField] private List<EnemyBasicData> EnemyBuffer = new List<EnemyBasicData>(); // 적을 리스트에 넣는다
     #endregion // 변수
 
@@ -42,9 +44,9 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager Instance { get; private set; }
     public EnemySetting SelectEnemy { get; set; }
     public GameObject oEnemyHpSlider => EnemyHpSlider;
-    public EnemyPeturnRandom o_ePeturnRandom => ePeturnRandom;
+    public EnemyPatternRandom o_ePatternRandom => ePatternRandom;
     public bool IsEnemyAttackReady { get; set; } = false;
-    public bool IsPeturn { get; set; } = false;
+    public bool IsPattern { get; set; } = false;
     #endregion // 프로퍼티
 
     #region 함수
@@ -72,7 +74,13 @@ public class EnemyManager : MonoBehaviour
         var EnemyInfo = SpawnReadyEnemy(StageEnemyTypeInfo);
         var Enemy = CFactory.CreateCloneObj("Enemy", EnemyInfo.oEnemyObject, EnemyRoot,
                                             Vector3.zero, Vector3.one, Vector3.zero);
-        
+
+        // TODO : 적 생성되면서 무슨 패턴인지 알려주는 객체 생성, 적 머리위에
+        var EnemyPatternImg = CFactory.CreateCloneObj("PatternImage", EnemyPatternSprite,
+            Enemy, Vector3.zero, Vector3.one, Vector3.zero);
+
+        EnemyPatternImg.transform.position = EnemyPatternImg.transform.position + EnemyPatternPositionY;
+
         var EnemyMainComponent = Enemy.GetComponent<EnemyMain>();
         var EnemySettingComponent = Enemy.GetComponent<EnemySetting>();
 
@@ -140,58 +148,58 @@ public class EnemyManager : MonoBehaviour
                                             Vector3.zero, Vector3.one, Vector3.zero);
 
         HpSlider.transform.localScale = Vector3.one;
-        HpSlider.GetComponent<SliderPositionAuto>().Setup(Enemy.transform, Distance);
+        HpSlider.GetComponent<SliderPositionAuto>().Setup(Enemy.transform, HpSliderDistance);
         HpSlider.GetComponent<EnemySliderViewer>().Setup(Enemy.GetComponent<EnemySetting>());
     }
 
     /** 패턴을 선택한다 */
-    public void EnemySelectPeturn()
+    public void EnemySelectPattern()
     {
-        if(IsSelectPeturn == true)
+        if(IsSelectPattern == true)
         {
             return;
         }
 
-        var Random = RandomPeturnEnum();
+        var Random = RandomPatternEnum();
         switch (Random)
         {
-            case EnemyPeturnRandom.NONE:
+            case EnemyPatternRandom.Basic:
                 Debug.Log("기본공격");
-                ePeturnRandom = EnemyPeturnRandom.NONE;
+                ePatternRandom = EnemyPatternRandom.Basic;
                 break;
-             case EnemyPeturnRandom.MAGIC:
+             case EnemyPatternRandom.MAGIC:
                 Debug.Log("마법공격");
-                ePeturnRandom = EnemyPeturnRandom.MAGIC;
+                ePatternRandom = EnemyPatternRandom.MAGIC;
                 break;
         }
 
     }
 
     /** 패턴을 랜덤하게 선택한다 */
-    private EnemyPeturnRandom RandomPeturnEnum()
+    private EnemyPatternRandom RandomPatternEnum()
     {
-        var EnumValues = System.Enum.GetValues(enumType: typeof(EnemyPeturnRandom));
-        return (EnemyPeturnRandom)EnumValues.GetValue(Random.Range(0, EnumValues.Length));
+        var EnumValues = System.Enum.GetValues(enumType: typeof(EnemyPatternRandom));
+        return (EnemyPatternRandom)EnumValues.GetValue(Random.Range(0, EnumValues.Length));
     }
 
     /** 패턴을 사용한다 */
-    public void EnemyExecutePeturn()
+    public void EnemyExecutePattern()
     {
-        switch (o_ePeturnRandom)
+        switch (o_ePatternRandom)
         {
-            case EnemyPeturnRandom.NONE:
-                StopCoroutine(EnemyNonePeturn());
-                StartCoroutine(EnemyNonePeturn());
+            case EnemyPatternRandom.Basic:
+                StopCoroutine(EnemyNonePattern());
+                StartCoroutine(EnemyNonePattern());
                 break;
-            case EnemyPeturnRandom.MAGIC:
-                StopCoroutine(EnemyMagicPeturn());
-                StartCoroutine(EnemyMagicPeturn());
+            case EnemyPatternRandom.MAGIC:
+                StopCoroutine(EnemyMagicPattern());
+                StartCoroutine(EnemyMagicPattern());
                 break;
         }
     }
 
     /** NONE 패턴을 사용한다 */
-    private IEnumerator EnemyNonePeturn()
+    private IEnumerator EnemyNonePattern()
     {
         var EnemyATK = SelectEnemy.oAtk;
         var PlayerPosition = oPlayerData.transform.position;
@@ -217,7 +225,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     /** Magic 패턴을 사용한다 */
-    private IEnumerator EnemyMagicPeturn()
+    private IEnumerator EnemyMagicPattern()
     {
         var EnemyATK = SelectEnemy.oAtk;
         var PlayerPosition = oPlayerData.transform.position;

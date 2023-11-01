@@ -15,10 +15,10 @@ MonoBehaviour:
   MainList:
   - oEnemyObject: {fileID: 9004148124358793283, guid: 34a3833850ccfea4d8e03f8f79f95a8e, type: 3}
     MaxHp: 20
-    ATK: 1
-  - oEnemyObject: {fileID: 8177106075341488768, guid: 0e280cd4ce521994eb618b6731c6a2f4, type: 3}
-    MaxHp: 15
     ATK: 2
-  - oEnemyObject: {fileID: 991401981467936336, guid: 2193cfa0c41207e4399c5aa3be1aa7e1, type: 3}
+  - oEnemyObject: {fileID: 8177106075341488768, guid: 0e280cd4ce521994eb618b6731c6a2f4, type: 3}
     MaxHp: 10
     ATK: 3
+  - oEnemyObject: {fileID: 991401981467936336, guid: 2193cfa0c41207e4399c5aa3be1aa7e1, type: 3}
+    MaxHp: 30
+    ATK: 1

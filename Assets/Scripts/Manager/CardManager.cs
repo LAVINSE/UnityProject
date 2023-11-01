@@ -107,7 +107,6 @@ public class CardManager : MonoBehaviour
         }
 
         // 맨 앞에 있는 카드를 뽑는다
-        // FIXME : Queue에 넣어서 사용해도됨
         CardScirptTable Data = CardBuffer[0];
         CardBuffer.RemoveAt(0);
         return Data;
@@ -174,7 +173,6 @@ public class CardManager : MonoBehaviour
     {
         List<PRS> OriginCardPRS = new List<PRS>();
 
-        // FIXME : 뒷면 카드 위치 조정 필요
         // 앞면 일 경우
         if(IsFront == true)
         {
@@ -182,7 +180,8 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            OriginCardPRS = RoundAlignment(PlayerCardLeft, PlayerCardRight, BackCards.Count, 0.5f, Vector3.one);
+            // TODO : 사용 X
+            //OriginCardPRS = RoundAlignment(PlayerCardLeft, PlayerCardRight, BackCards.Count, 0.5f, Vector3.one);
         }
 
         var TargetCards = IsFront ? FrontCards : BackCards; // 앞면 뒷면 판단

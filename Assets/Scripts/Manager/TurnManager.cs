@@ -142,7 +142,7 @@ public class TurnManager : MonoBehaviour
 
             yield return oDelay;
 
-            oPlayerData.oCurrentCost = oPlayerData.oMaxCost; // 최대 마나랑 같게 설정
+            oPlayerData.oCurrentCost = GameManager.Inst.oPlayerMaxCost; // 최대 마나랑 같게 설정
             IsOnAddCard?.Invoke(IsFrontCard); // 턴 시작시 앞면 카드 한장 뽑기
         }
         else

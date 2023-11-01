@@ -65,7 +65,7 @@ public class EnemyWaitState : State
     public override void EnemyStateEnter(EnemyState eState)
     {
         // 적 패턴 선택
-        EnemyManager.Instance.EnemySelectPeturn();
+        EnemyManager.Instance.EnemySelectPattern();
     }
 
     /** 적 상태 갱신 */
@@ -115,7 +115,7 @@ public class EnemyAttackState : State
             // 적이 공격 준비 상태 일 경우
             if (EnemyManager.Instance.IsEnemyAttackReady == true)
             {
-                EnemyManager.Instance.EnemyExecutePeturn();
+                EnemyManager.Instance.EnemyExecutePattern();
             }
         }
     }
