@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc323c3cb2600d3418729f70fe349638, type: 3}
   m_Name: DropCardTest
   m_EditorClassIdentifier: 
-  Total: 100
+  Total: 90
   DropTableList:
+  - CardTable: {fileID: 11400000, guid: f0f53c9e2ca47f44c912ffbe51d3b087, type: 2}
+    Weight: 30
+  - CardTable: {fileID: 11400000, guid: 0bd03c4dc75a89f44a196a19f428c3a1, type: 2}
+    Weight: 30
   - CardTable: {fileID: 11400000, guid: 925ad94cd9d87244ab82c5523b2a7719, type: 2}
-    Weight: 100
+    Weight: 30

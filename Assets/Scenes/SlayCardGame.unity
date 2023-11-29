@@ -3687,16 +3687,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oPlayerData: {fileID: 311529633}
   oPlayer: {fileID: 311529630}
-  ParticleDisappearList:
-  - {fileID: 6823302871133167919, guid: 3138a83bedbd6ad4481ba0b061da2eb6, type: 3}
-  ParticleContinuousList:
-  - {fileID: 7957833072274404953, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
+  EnemyDisappear: {fileID: 11400000, guid: 6adc83986b837174da90c1ea64640b15, type: 2}
+  EnemyContinuous: {fileID: 11400000, guid: ee224a3ea2131e14590726ac95e9a7e2, type: 2}
   EnemySpawnEffect: {fileID: 4617036660772024948, guid: 52c7d057cba585641bb68312c10d7791, type: 3}
   EnemyOriginRoot: {fileID: 1483788964}
   EnemySpellRoot: {fileID: 768135091}
   EnemyHpSlider: {fileID: 3158318128952580528, guid: cbdae99e1cf6424429a0463ba2c32c2a, type: 3}
   EnemyHpSliderRoot: {fileID: 1161021325}
-  EnemyPatternSprite: {fileID: 1509928779021764118, guid: 2b8d573f5c668714395ac7e23e7226b1, type: 3}
+  EnemyPatternSprite: {fileID: 7450739148765688949, guid: f82948b7ffed3454989803565cb73cdd, type: 3}
   EnemyPatternPositionY: {x: 0, y: 2, z: 0}
   HpSliderDistance: {x: 0, y: -110, z: 0}
   EnemyNormal: {fileID: 11400000, guid: 6bb2eec59bbf7074f925c8fe7ca71332, type: 2}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,8 +8,11 @@ using UnityEngine.EventSystems;
 public class EnemyPatternSprite : MonoBehaviour
 {
     #region 변수
-    [SerializeField] private Renderer thisRend;
     [SerializeField] private List<Sprite> PatternSpriteList = new List<Sprite>();
+    [SerializeField] private GameObject PatternDescBackground;
+    [SerializeField] private TMP_Text PatternNameText;
+    [SerializeField] private TMP_Text PatternDescText;
+
     private Dictionary<string, Sprite> Dic = new Dictionary<string, Sprite>();
     private SpriteRenderer SpriteRender;
     private PointerEventData Data;
@@ -19,6 +23,8 @@ public class EnemyPatternSprite : MonoBehaviour
     private void Awake()
     {
         SpriteRender = GetComponent<SpriteRenderer>();
+
+        PatternDescBackground.SetActive(false);
 
         foreach (var Sprite in PatternSpriteList)
         {
@@ -37,9 +43,31 @@ public class EnemyPatternSprite : MonoBehaviour
     }
 
     /** 초기화 >> 마우스를 올렸을 때 */
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
-        Debug.Log("Test");
+        switch(EnemyManager.Instance.o_ePatternRandom)
+        {
+            case EnemyManager.EnemyPatternRandom.Basic:
+                PatternDescBackground.SetActive(true);
+                var DisName = EnemyManager.Instance.oEnemyDisappear.PatternList[0].PatternName;
+                var DisDesc = EnemyManager.Instance.oEnemyDisappear.PatternList[0].PatternDesc;
+                PatternNameText.text = DisName;
+                PatternDescText.text = string.Format(DisDesc,EnemyManager.Instance.SelectEnemy.oAtk);
+                break;
+            case EnemyManager.EnemyPatternRandom.MAGIC:
+                PatternDescBackground.SetActive(true);
+                var ContiName = EnemyManager.Instance.oEnemyContinuous.PatternList[0].PatternName;
+                var ContiDesc = EnemyManager.Instance.oEnemyContinuous.PatternList[0].PatternDesc;
+                PatternNameText.text = ContiName;
+                PatternDescText.text = string.Format(ContiDesc, EnemyManager.Instance.SelectEnemy.oAtk);
+                break;
+        }
+    }
+
+    /** 초기화 >> 마우스가 나갔을 때 */
+    private void OnMouseExit()
+    {
+        PatternDescBackground.SetActive(false);
     }
     #endregion // 함수
 }

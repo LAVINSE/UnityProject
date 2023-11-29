@@ -109,6 +109,7 @@ public class CSceneManager : MonoBehaviour
         
         if(InfoPanel == null)
         {
+            AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
             InfoPanel = InfoUI.CreateInfoUI(PopupRoot);
         }
     }

@@ -26,6 +26,7 @@ public class InfoUI : MonoBehaviour
     /** 정보 UI를 닫는다 */
     public void CloseInfo()
     {
+        AudioManager.Inst.PlaySFX(AudioManager.SFXEnum.OptionButton);
         Destroy(this.gameObject);
     }    
 

@@ -16,8 +16,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject oPlayer;
 
     [Header("=====> Enemy Option <=====")]
-    [SerializeField] private List<GameObject> ParticleDisappearList = new List<GameObject>();
-    [SerializeField] private List<GameObject> ParticleContinuousList = new List<GameObject>();
+    [SerializeField] private EnemyPatternTable EnemyDisappear;
+    [SerializeField] private EnemyPatternTable EnemyContinuous;
     [SerializeField] private GameObject EnemySpawnEffect;
     [SerializeField] private GameObject EnemyOriginRoot;
     [SerializeField] private GameObject EnemySpellRoot;
@@ -47,6 +47,17 @@ public class EnemyManager : MonoBehaviour
     public EnemyPatternRandom o_ePatternRandom => ePatternRandom;
     public bool IsEnemyAttackReady { get; set; } = false;
     public bool IsPattern { get; set; } = false;
+
+    public EnemyPatternTable oEnemyDisappear
+    {
+        get => EnemyDisappear;
+        set => EnemyDisappear = value;
+    }
+    public EnemyPatternTable oEnemyContinuous
+    {
+        get => EnemyContinuous;
+        set => EnemyContinuous = value;
+    }
     #endregion // 프로퍼티
 
     #region 함수
@@ -66,6 +77,7 @@ public class EnemyManager : MonoBehaviour
 
         yield return new WaitForSeconds(Duration);
         CreateEnemy(EnemyOriginRoot, StageEnemyTypeInfo);
+        Destroy(Effect);
     }
 
     /** 적을 생성한다 */
@@ -188,8 +200,8 @@ public class EnemyManager : MonoBehaviour
         switch (o_ePatternRandom)
         {
             case EnemyPatternRandom.Basic:
-                StopCoroutine(EnemyNonePattern());
-                StartCoroutine(EnemyNonePattern());
+                StopCoroutine(EnemyBasicPattern());
+                StartCoroutine(EnemyBasicPattern());
                 break;
             case EnemyPatternRandom.MAGIC:
                 StopCoroutine(EnemyMagicPattern());
@@ -198,15 +210,16 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    /** NONE 패턴을 사용한다 */
-    private IEnumerator EnemyNonePattern()
+    /** Basic 패턴을 사용한다 */
+    private IEnumerator EnemyBasicPattern()
     {
         var EnemyATK = SelectEnemy.oAtk;
         var PlayerPosition = oPlayerData.transform.position;
 
         yield return new WaitForSeconds(3f);
-        var oParticle = CFactory.CreateCloneObj("Disappear_Type", ParticleDisappearList[0], EnemySpellRoot,
-                                                Vector3.zero, Vector3.one, Vector3.zero);
+        var oParticle = CFactory.CreateCloneObj("Disappear_Type",
+            EnemyDisappear.PatternList[0].PatternEffectObject, EnemySpellRoot,
+            Vector3.zero, Vector3.one, Vector3.zero);
 
         ParticleMove(oParticle, PlayerPosition, true, 0.2f);
 
@@ -232,7 +245,8 @@ public class EnemyManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        var oParticle = CFactory.CreateCloneObj("Continuous_Type", ParticleContinuousList[0], EnemySpellRoot,
+        var oParticle = CFactory.CreateCloneObj("Continuous_Type",
+            EnemyContinuous.PatternList[0].PatternEffectObject, EnemySpellRoot,
                                                 Vector3.zero, Vector3.one, Vector3.zero);
 
         ParticleMove(oParticle, PlayerPosition, true, 0.2f);
