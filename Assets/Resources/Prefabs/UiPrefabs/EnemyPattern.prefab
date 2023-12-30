@@ -398,7 +398,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!65 &1024880043144820263
@@ -427,8 +427,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PatternSpriteList:
-  - {fileID: 21300000, guid: 3470248b14cfc4144a1cf55ffd1af7e6, type: 3}
-  - {fileID: 21300000, guid: 3390647031b5c794eba542e6cd263c27, type: 3}
+  - {fileID: 21300000, guid: 934b614e0caf77449b34f626a7f58ac2, type: 3}
+  - {fileID: 21300000, guid: b7b09d810eef6a34e9c2586d0aee1b20, type: 3}
   PatternDescBackground: {fileID: 2707628909462056668}
   PatternNameText: {fileID: 2203555938124992404}
   PatternDescText: {fileID: 2021405936103393557}

@@ -42,6 +42,19 @@ public class EnemyPatternSprite : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        switch (EnemyManager.Instance.o_ePatternRandom)
+        {
+            case EnemyManager.EnemyPatternRandom.Basic:
+                SpriteRender.sprite = Dic["Basic"];
+                break;
+            case EnemyManager.EnemyPatternRandom.MAGIC:
+                SpriteRender.sprite = Dic["Magic"];
+                break;
+        }
+    }
+
     /** 초기화 >> 마우스를 올렸을 때 */
     private void OnMouseEnter()
     {
