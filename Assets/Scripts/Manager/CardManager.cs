@@ -67,11 +67,11 @@ public class CardManager : MonoBehaviour
             // 태그가 카드일 경우
             if (HitData.transform != null && HitData.transform.CompareTag("Card"))
             {
-                oCardPanel.CardInfoPanelTrue();
+                oCardPanel.CardInfoPanel(true);
             }
             else
             {
-                oCardPanel.CardInfoPanelFalse();
+                oCardPanel.CardInfoPanel(false);
             }
         }
 

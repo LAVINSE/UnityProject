@@ -21,22 +21,22 @@ public class CardPanel : MonoBehaviour
 
     #region 함수
     /** 카드 패널을 활성화 시킨다 */
-    public void CardInfoPanelTrue()
+    public void CardInfoPanel(bool IsActive)
     {
-        // 선택된 카드가 있을 경우
-        if (CardManager.Instance.SelectCard != null)
+        if (IsActive)
+        {// 선택된 카드가 있을 경우
+            if (CardManager.Instance.SelectCard != null)
+            {
+                CardInfoImgPanel.SetActive(true);
+                CardPanelSetup();
+            }
+        }
+        else
         {
-            CardInfoImgPanel.SetActive(true);
-            CardPanelSetup();
-        }       
+            CardInfoImgPanel.SetActive(false);
+        }
+          
     }
-
-    /** 카드 패널을 비활성화 시킨다 */
-    public void CardInfoPanelFalse()
-    {
-        CardInfoImgPanel.SetActive(false);
-    }
-
 
     /** 카드 패널 정보를 업데이트 한다 */
     public void CardPanelSetup()
