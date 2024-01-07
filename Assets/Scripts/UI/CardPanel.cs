@@ -24,7 +24,8 @@ public class CardPanel : MonoBehaviour
     public void CardInfoPanel(bool IsActive)
     {
         if (IsActive)
-        {// 선택된 카드가 있을 경우
+        {
+            // 선택된 카드가 있을 경우
             if (CardManager.Instance.SelectCard != null)
             {
                 CardInfoImgPanel.SetActive(true);
