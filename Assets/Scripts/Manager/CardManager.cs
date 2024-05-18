@@ -131,6 +131,7 @@ public class CardManager : MonoBehaviour
         for(int i = 0; i< CardBuffer.Count; i++)
         {
             int Rand = Random.Range(i, CardBuffer.Count);
+
             CardScirptTable Temp = CardBuffer[i]; 
             CardBuffer[i] = CardBuffer[Rand]; 
             CardBuffer[Rand] = Temp;
